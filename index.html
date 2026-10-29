@@ -3,190 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAGFLOW - Completo</title>
+<title>PAGFLOW V5</title>
 <style>
-:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--blue:#6bb8ff;--yellow:#ffd86b;--text:#fff;--muted:#9aa0b8;--line:#23263d}
+:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--blue:#6bb8ff;--yellow:#ffd86b;--line:#23263d;--text:#fff;--muted:#9aa0b8}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
-header{padding:14px 16px;background:#15182a;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
-#menuBtn{font-size:28px;background:none;border:none;color:#fff;cursor:pointer}
-#sideMenu{position:fixed;top:0;left:-300px;width:285px;height:100%;background:#1a1d2e;transition:0.3s;z-index:30;overflow:auto;padding-bottom:30px}
+header{padding:14px;background:#15182a;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between}
+#menuBtn{font-size:26px;background:none;border:none;color:#fff}
+#sideMenu{position:fixed;top:0;left:-300px;width:285px;height:100%;background:#1a1d2e;z-index:30;transition:.3s;overflow:auto}
 #sideMenu.open{left:0}
-.menu-head{padding:18px;font-weight:900;letter-spacing:2px;background:#15182a;position:sticky;top:0}
-.menu-item{padding:13px 18px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.menu-item:active{background:#23263d}
+.menu-head{padding:16px;background:#15182a;font-weight:900}
+.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between}
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:20}
 #overlay.show{display:block}
-main{padding:14px}
-.card{background:var(--card);border-radius:16px;padding:14px;margin:12px 0;border-left:4px solid var(--green)}
+main{padding:12px}
+.card{background:var(--card);border-radius:14px;padding:12px;margin:10px 0;border-left:4px solid var(--green)}
 .card.red{border-color:var(--red)}.card.blue{border-color:var(--blue)}.card.yellow{border-color:var(--yellow)}
-.row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);gap:8px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);gap:6px}
 .small{font-size:11px;color:var(--muted)}
-input,select{width:100%;padding:11px;border-radius:10px;border:none;background:#23263d;color:#fff;margin-top:6px}
-button{padding:12px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
-.btn-green{background:var(--green);color:#000;width:100%;margin-top:8px}
-.btn-sm{padding:6px 10px;font-size:12px;background:#23263d;color:#fff;border-radius:8px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
-.tabs{display:flex;gap:6px;margin:10px 0}
-.tab{padding:7px 12px;background:#23263d;border-radius:20px;font-size:11px;cursor:pointer}
+input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#23263d;color:#fff;margin-top:5px}
+button{padding:10px;border-radius:8px;border:none;font-weight:800;cursor:pointer}
+.btn-green{background:var(--green);color:#000;width:100%;margin-top:6px}
+.btn-sm{padding:5px 9px;background:#23263d;color:#fff;font-size:11px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center}
+.tab{padding:6px 10px;background:#23263d;border-radius:20px;font-size:11px;cursor:pointer}
 .tab.active{background:var(--green);color:#000}
-#editModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:40;align-items:center;justify-content:center;padding:16px}
-#editModal.show{display:flex}
-.modalBox{background:var(--card);border-radius:16px;padding:16px;width:100%;max-width:360px}
+@media print{header,#sideMenu,#overlay,.noPrint{display:none}body{background:#fff;color:#000}.card{border:1px solid #000;break-inside:avoid}}
 </style>
 </head>
 <body>
 <div id="overlay" onclick="toggleMenu()"></div>
 <div id="sideMenu">
 <div class="menu-head">PAGFLOW MENU</div>
-<div class="menu-item" onclick="openCat('pagar')">Contas a pagar <span id="b-pagar" class="small">R$ 0</span></div>
-<div class="menu-item" onclick="openCat('receber')">Contas a receber <span id="b-receber" class="small" style="color:var(--green)">R$ 0</span></div>
-<div class="menu-item" onclick="openCat('carro')">Parcelas do carro <span id="b-carro" class="small"></span></div>
-<div class="menu-item" onclick="openCat('medicenter')">Parcelas Medicenter <span id="b-medicenter" class="small"></span></div>
-<div class="menu-item" onclick="openCat('carol')">Parcelas Carol <span id="b-carol" class="small"></span></div>
-<div class="menu-item" onclick="openCat('bancos')">Dívidas em bancos <span id="b-bancos" class="small"></span></div>
-<div class="menu-item" onclick="openCat('caixinha')">💰 Minha caixinha <span id="b-caixinha" class="small" style="color:var(--yellow)"></span></div>
-<div class="menu-item" onclick="openCat('viagem')">✈️ Planejamento viagem <span id="b-viagem" class="small"></span></div>
-<div class="menu-item" onclick="openCat('casa')">🏠 Planejamento casa <span id="b-casa" class="small"></span></div>
-<div class="menu-item" onclick="openCat('pais')">🌍 Sair do país <span id="b-pais" class="small"></span></div>
-<div class="menu-item" onclick="openCat('combustivel')">⛽ Combustível <span id="b-combustivel" class="small"></span></div>
-<div class="menu-item" onclick="openCat('reparos')">🔧 Reparos no carro <span id="b-reparos" class="small"></span></div>
-<div class="menu-item" onclick="openCat('aparelhagem')">🎧 Invest. aparelhagem <span id="b-aparelhagem" class="small"></span></div>
-<div class="menu-item" onclick="openCat('extras')">💸 Gastos extras <span id="b-extras" class="small"></span></div>
-<div class="menu-item" onclick="openCat('familia')">👨‍👩‍👧 Passeio família <span id="b-familia" class="small"></span></div>
-<div class="menu-item" onclick="openCat('mercado')">🛒 Supermercados <span id="b-mercado" class="small"></span></div>
-<div class="menu-item" onclick="openCat('saude')">❤️ Saúde <span id="b-saude" class="small"></span></div>
-<div class="menu-item" onclick="openCat('roupas')">👕 Roupas <span id="b-roupas" class="small"></span></div>
-<div class="menu-item" onclick="openCat('aluguel')">🏠 Aluguel <span id="b-aluguel" class="small"></span></div>
+<div class="menu-item" onclick="openCat('pagar')">Contas a pagar</div>
+<div class="menu-item" onclick="openCat('receber')">Contas a receber</div>
+<div class="menu-item" onclick="openCat('carro')">Parcelas do carro</div>
+<div class="menu-item" onclick="openCat('medicenter')">Parcelas Medicenter</div>
+<div class="menu-item" onclick="openCat('carol')">Parcelas Carol</div>
+<div class="menu-item" onclick="openCat('bancos')">Dívidas em bancos</div>
+<div class="menu-item" onclick="openCat('caixinha')">💰 Minha caixinha</div>
+<div class="menu-item" onclick="openCat('viagem')">✈️ Viagem</div>
+<div class="menu-item" onclick="openCat('casa')">🏠 Casa</div>
+<div class="menu-item" onclick="openCat('pais')">🌍 Sair do país</div>
+<div class="menu-item" onclick="openCat('combustivel')">⛽ Combustível</div>
+<div class="menu-item" onclick="openCat('reparos')">🔧 Reparos carro</div>
+<div class="menu-item" onclick="openCat('aparelhagem')">🎧 Aparelhagem</div>
+<div class="menu-item" onclick="openCat('extras')">💸 Extras</div>
+<div class="menu-item" onclick="openCat('familia')">👨‍👩‍👧 Família</div>
+<div class="menu-item" onclick="openCat('mercado')">🛒 Mercado</div>
+<div class="menu-item" onclick="openCat('saude')">❤️ Saúde</div>
+<div class="menu-item" onclick="openCat('roupas')">👕 Roupas</div>
+<div class="menu-item" onclick="openCat('aluguel')">🏠 Aluguel</div>
+<div class="menu-item" style="margin-top:10px;background:#15182a" onclick="openRelatorio()">📊 RELATÓRIO COMPLETO</div>
+<div class="menu-item" onclick="window.print()">🖨️ IMPRIMIR / PDF</div>
+<div class="menu-item" onclick="instalar()">📲 INSTALAÇÃO APP</div>
 </div>
 
 <header>
-<h1 style="margin:0;letter-spacing:3px">PAGFLOW</h1>
+<h1 style="margin:0;letter-spacing:2px">PAGFLOW</h1>
 <button id="menuBtn" onclick="toggleMenu()">☰</button>
 </header>
 
 <main>
 <div class="card">
 <div class="grid3">
-<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0,00</b></div>
-<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0,00</b></div>
-<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0,00</b></div>
+<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0</b></div>
+<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0</b></div>
+<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0</b></div>
 </div>
-<div class="tabs">
-<div class="tab active" id="tab-mensal" onclick="setVis('mensal')">MENSAL</div>
-<div class="tab" id="tab-anual" onclick="setVis('anual')">ANUAL (x12)</div>
-<div class="tab" id="tab-2032" onclick="setVis('2032')">ATÉ 2032 (x84)</div>
+<div class="grid2" style="margin-top:8px">
+<div><small class="small">Filtrar por dia:</small><input id="filtroDia" type="date" onchange="render()"></div>
+<div><small class="small">Ver:</small><select id="filtroTipo" onchange="render()"><option value="todos">Todos os dias</option><option value="dia">Só do dia</option><option value="atrasado">Atrasados</option></select></div>
 </div>
-<div class="small">Fórmula: Total = Qtd × Valor Unit. ÷ Parcelas se necessário</div>
 </div>
 
-<div class="card yellow" id="catBox">
-<h3 id="catTitle" style="margin:0 0 4px 0">Selecione no menu ☰</h3>
-<div class="small" id="catDesc"></div>
+<div id="areaRelatorio" class="card blue" style="display:none">
+<h3 style="margin:0">📊 Relatório Financeiro</h3>
+<div id="relConteudo"></div>
+<button class="btn-green noPrint" onclick="window.print()">🖨️ Imprimir este relatório</button>
+<button class="btn-sm noPrint" onclick="document.getElementById('areaRelatorio').style.display='none'">Fechar</button>
+</div>
 
-<div id="catList" style="margin-top:10px"></div>
+<div class="card yellow">
+<h3 id="catTitle" style="margin:0">Contas a pagar</h3>
+<div id="catList"></div>
 
-<div style="margin-top:14px;background:#15182a;padding:12px;border-radius:12px">
-<div style="font-weight:800;font-size:13px;margin-bottom:6px">+ ADICIONAR / CALCULAR</div>
-<input id="f_nome" placeholder="Nome ex: Parcela 3/10 Gol">
+<div class="noPrint" style="margin-top:12px;background:#15182a;padding:10px;border-radius:10px">
+<b style="font-size:12px">+ ADICIONAR COM DATA</b>
+<input id="f_nome" placeholder="Ex: Conta luz">
 <div class="grid2">
-<div><small class="small">Qtd / Parcelas</small><input id="f_qtd" type="number" value="1" oninput="calcPreview()"></div>
-<div><small class="small">Valor Unit. R$</small><input id="f_valor" type="number" step="0.01" placeholder="0,00" oninput="calcPreview()"></div>
+<input id="f_qtd" type="number" value="1" placeholder="Qtd">
+<input id="f_valor" type="number" step="0.01" placeholder="Valor R$">
 </div>
 <div class="grid2">
-<div><small class="small">Dividir por (meses)</small><input id="f_div" type="number" value="1" oninput="calcPreview()"></div>
-<div><small class="small">Tipo</small><select id="f_tipo"><option value="mensal">Mensal</option><option value="unica">Única</option><option value="parcelado">Parcelado</option></select></div>
+<div><small class="small">Vencimento</small><input id="f_data" type="date"></div>
+<div><small class="small">Dividir por</small><input id="f_div" type="number" value="1"></div>
 </div>
-<div style="margin-top:8px;padding:8px;background:#23263d;border-radius:8px;display:flex;justify-content:space-between">
-<span class="small">PREVIEW: Qtd × Valor ÷ Div = </span><b id="f_preview" style="color:var(--green)">R$ 0,00</b>
-</div>
-<button class="btn-green" onclick="addItem()">SALVAR NA <span id="btnCat">CATEGORIA</span></button>
-<div style="margin-top:8px" class="grid2">
-<div class="small">Subtotal desta:</div><b id="subCat" style="text-align:right">R$ 0,00</b>
-</div>
+<select id="f_tipoCat"><option value="mensal">Mensal</option><option value="unica">Única</option><option value="parcelado">Parcelado</option></select>
+<div class="small" style="margin-top:6px">Cálculo: <span id="preview">R$ 0,00</span> = Qtd × Valor ÷ Div</div>
+<button class="btn-green" onclick="addItem()">SALVAR</button>
+<div style="margin-top:8px;display:flex;justify-content:space-between"><span class="small">Subtotal categoria:</span><b id="subCat">R$ 0</b></div>
 </div>
 </div>
 </main>
 
-<div id="editModal" onclick="if(event.target==this)closeEdit()">
-<div class="modalBox">
-<h3 style="margin:0">Editar item</h3>
-<input id="e_nome" placeholder="Nome">
-<div class="grid2">
-<input id="e_qtd" type="number" placeholder="Qtd">
-<input id="e_valor" type="number" step="0.01" placeholder="Valor">
-</div>
-<input id="e_div" type="number" placeholder="Dividir por">
-<div class="grid2" style="margin-top:8px">
-<button class="btn-sm" onclick="closeEdit()">Cancelar</button>
-<button class="btn-green" style="margin:0" onclick="saveEdit()">Salvar edição</button>
-</div>
-</div>
-</div>
-
 <script>
-let vis='mensal', catAtual='pagar', editIndex=null;
-let dados=JSON.parse(localStorage.getItem('pagflow_v4')||'{}');
-const cats={
-pagar:{t:'Contas a pagar'},receber:{t:'Contas a receber'},carro:{t:'Parcelas do carro'},medicenter:{t:'Parcelas Medicenter'},carol:{t:'Parcelas Carol'},bancos:{t:'Dívidas em bancos'},caixinha:{t:'Minha caixinha 💰'},viagem:{t:'Planejamento viagem ✈️'},casa:{t:'Planejamento casa 🏠'},pais:{t:'Sair do país 🌍'},combustivel:{t:'Combustível ⛽'},reparos:{t:'Reparos no carro 🔧'},aparelhagem:{t:'Invest. aparelhagem 🎧'},extras:{t:'Gastos extras 💸'},familia:{t:'Passeio família 👨‍👩‍👧'},mercado:{t:'Supermercados 🛒'},saude:{t:'Saúde ❤️'},roupas:{t:'Roupas 👕'},aluguel:{t:'Aluguel 🏠'}
-};
+let catAtual='pagar', deferredPrompt=null;
+let dados=JSON.parse(localStorage.getItem('pagflow_v5')||'{}');
+const cats={pagar:'Contas a pagar',receber:'Contas a receber',carro:'Parcelas do carro',medicenter:'Medicenter',carol:'Carol',bancos:'Dívidas bancos',caixinha:'Minha caixinha',viagem:'Viagem',casa:'Casa',pais:'Sair do país',combustivel:'Combustível',reparos:'Reparos',aparelhagem:'Aparelhagem',extras:'Extras',familia:'Família',mercado:'Supermercados',saude:'Saúde',roupas:'Roupas',aluguel:'Aluguel'};
+
 function toggleMenu(){document.getElementById('sideMenu').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
 function openCat(c){catAtual=c;toggleMenu();render();}
-function calcItem(it){let q=parseFloat(it.qtd)||1;let v=parseFloat(it.valor)||0;let d=parseFloat(it.div)||1;return (q*v)/d;}
-function calcPreview(){let q=document.getElementById('f_qtd').value||1;let v=document.getElementById('f_valor').value||0;let d=document.getElementById('f_div').value||1;let r=(q*v)/d;document.getElementById('f_preview').innerText='R$ '+r.toFixed(2);}
+function calcItem(it){return (parseFloat(it.qtd||1)*parseFloat(it.valor||0))/(parseFloat(it.div||1));}
+
+document.getElementById('f_qtd').addEventListener('input',upPrev);document.getElementById('f_valor').addEventListener('input',upPrev);document.getElementById('f_div').addEventListener('input',upPrev);
+function upPrev(){let q=document.getElementById('f_qtd').value||1,v=document.getElementById('f_valor').value||0,d=document.getElementById('f_div').value||1;document.getElementById('preview').innerText='R$ '+((q*v)/d).toFixed(2);}
+
 function render(){
-let info=cats[catAtual];
-document.getElementById('catTitle').innerText=info.t;
-document.getElementById('btnCat').innerText=info.t.toUpperCase();
+let filtroDia=document.getElementById('filtroDia').value;
+let filtroTipo=document.getElementById('filtroTipo').value;
+document.getElementById('catTitle').innerText=cats[catAtual];
 let lista=dados[catAtual]||[];
-let html=lista.map((it,i)=>`
-<div class="row">
-<div><b>${it.nome}</b><br><span class="small">${it.qtd} × R$ ${Number(it.valor).toFixed(2)} ÷ ${it.div} = <b style="color:var(--green)">R$ ${calcItem(it).toFixed(2)}</b> • ${it.tipo}</span></div>
-<div style="display:flex;gap:4px">
-<button class="btn-sm" onclick="startEdit(${i})">✎</button>
-<button class="btn-sm" style="color:var(--red)" onclick="delItem(${i})">✕</button>
-</div>
-</div>`).join('');
-document.getElementById('catList').innerHTML=html||'<div class="small">Nenhum item. Adicione abaixo.</div>';
-let sub=lista.reduce((s,it)=>s+calcItem(it),0);
+let listaFiltrada=lista.filter(it=>{
+if(!filtroDia||filtroTipo==='todos')return true;
+if(filtroTipo==='dia')return it.data===filtroDia;
+if(filtroTipo==='atrasado'){return it.data && it.data < new Date().toISOString().split('T')[0];}
+return true;
+});
+let html=listaFiltrada.map((it,realIdx)=>{
+let idx=lista.indexOf(it);
+let atrasado=it.data && it.data < new Date().toISOString().split('T')[0] ? '🔴' : '📅';
+return `<div class="row"><div><b>${it.nome}</b> ${atrasado}<br><span class="small">${it.data||'sem data'} • ${it.qtd}×R$${Number(it.valor).toFixed(2)}÷${it.div}= <b style="color:var(--green)">R$${calcItem(it).toFixed(2)}</b></span></div><div><button class="btn-sm" onclick="editItem(${idx})">✎</button> <button class="btn-sm" style="color:var(--red)" onclick="delItem(${idx})">✕</button></div></div>`;
+}).join('');
+document.getElementById('catList').innerHTML=html||'<div class="small">Nenhum item neste filtro. Mude o dia ou adicione.</div>';
+let sub=listaFiltrada.reduce((s,it)=>s+calcItem(it),0);
 document.getElementById('subCat').innerText='R$ '+sub.toFixed(2);
 calcTotals();
 }
 function addItem(){
 let nome=document.getElementById('f_nome').value||'Item';
 let qtd=document.getElementById('f_qtd').value||1;
-let valor=document.getElementById('f_valor').value||0;
-if(!valor||valor==0)return alert('Digite o valor!');
+let valor=document.getElementById('f_valor').value;
+if(!valor)return alert('Valor!');
+let data=document.getElementById('f_data').value;
 let div=document.getElementById('f_div').value||1;
-let tipo=document.getElementById('f_tipo').value;
+let tipo=document.getElementById('f_tipoCat').value;
 if(!dados[catAtual])dados[catAtual]=[];
-dados[catAtual].push({nome,qtd,valor,div,tipo});
-save();
-document.getElementById('f_nome').value='';document.getElementById('f_valor').value='';document.getElementById('f_qtd').value=1;document.getElementById('f_div').value=1;
-render();
+dados[catAtual].push({nome,qtd,valor,data,div,tipo});
+localStorage.setItem('pagflow_v5',JSON.stringify(dados));
+document.getElementById('f_nome').value='';document.getElementById('f_valor').value='';render();
 }
-function delItem(i){if(confirm('Apagar?')){dados[catAtual].splice(i,1);save();render();}}
-function startEdit(i){editIndex=i;let it=dados[catAtual][i];document.getElementById('e_nome').value=it.nome;document.getElementById('e_qtd').value=it.qtd;document.getElementById('e_valor').value=it.valor;document.getElementById('e_div').value=it.div;document.getElementById('editModal').classList.add('show');}
-function closeEdit(){document.getElementById('editModal').classList.remove('show');}
-function saveEdit(){let it=dados[catAtual][editIndex];it.nome=document.getElementById('e_nome').value;it.qtd=document.getElementById('e_qtd').value;it.valor=document.getElementById('e_valor').value;it.div=document.getElementById('e_div').value;save();render();closeEdit();}
-function save(){localStorage.setItem('pagflow_v4',JSON.stringify(dados));}
-function calcTotals(){
-let pagar=0,receber=0;
-Object.keys(cats).forEach(k=>{
-let lista=dados[k]||[];
-let sum=lista.reduce((s,it)=>s+calcItem(it),0);
-let el=document.getElementById('b-'+k);
-if(el)el.innerText='R$ '+sum.toFixed(0);
-if(k==='receber'||k==='caixinha')receber+=sum;else pagar+=sum;
-});
-let mult={mensal:1,anual:12,'2032':84}[vis];
-document.getElementById('totalPagar').innerText='R$ '+(pagar*mult).toFixed(2);
-document.getElementById('totalReceber').innerText='R$ '+(receber*mult).toFixed(2);
-document.getElementById('totalSaldo').innerText='R$ '+((receber-pagar)*mult).toFixed(2);
-document.getElementById('totalSaldo').style.color=(receber-pagar)>=0?'var(--green)':'var(--red)';
-}
-function setVis(v){vis=v;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+v).classList.add('active');calcTotals();}
-render();calcPreview();
-</script>
-</body>
-</html>
+function delItem(i){if(confirm('Apagar?')){dados[catAtual].s
