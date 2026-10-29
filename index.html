@@ -3,57 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAGFLOW</title>
+<title>PAGFLOW - Completo</title>
 <style>
-:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--blue:#6bb8ff;--yellow:#ffd86b;--text:#fff;--muted:#9aa0b8}
+:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--blue:#6bb8ff;--yellow:#ffd86b;--text:#fff;--muted:#9aa0b8;--line:#23263d}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
-header{display:flex;justify-content:space-between;align-items:center;padding:16px;background:#15182a;position:sticky;top:0;z-index:10}
-#menuBtn{font-size:28px;background:none;border:none;color:#fff}
-#sideMenu{position:fixed;top:0;left:-300px;width:280px;height:100%;background:#1a1d2e;padding:0;transition:0.3s;z-index:30;overflow:auto}
+header{padding:14px 16px;background:#15182a;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
+#menuBtn{font-size:28px;background:none;border:none;color:#fff;cursor:pointer}
+#sideMenu{position:fixed;top:0;left:-300px;width:285px;height:100%;background:#1a1d2e;transition:0.3s;z-index:30;overflow:auto;padding-bottom:30px}
 #sideMenu.open{left:0}
-.menu-head{padding:20px;background:#15182a;font-weight:900;letter-spacing:2px}
-.menu-item{display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #23263d;cursor:pointer}
-.menu-item:hover{background:#23263d}
-.menu-item small{color:var(--muted)}
-#overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:20}
+.menu-head{padding:18px;font-weight:900;letter-spacing:2px;background:#15182a;position:sticky;top:0}
+.menu-item{padding:13px 18px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.menu-item:active{background:#23263d}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:20}
 #overlay.show{display:block}
-main{padding:16px}
-.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;border-left:4px solid var(--green)}
+main{padding:14px}
+.card{background:var(--card);border-radius:16px;padding:14px;margin:12px 0;border-left:4px solid var(--green)}
 .card.red{border-color:var(--red)}.card.blue{border-color:var(--blue)}.card.yellow{border-color:var(--yellow)}
-.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #23263d}
-input,select,button{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;background:#23263d;color:#fff}
-button.green{background:var(--green);color:#000;font-weight:900}
-.tabs{display:flex;gap:6px;margin:10px 0;overflow:auto}
-.tab{padding:8px 14px;background:#23263d;border-radius:20px;font-size:12px;white-space:nowrap}
+.row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);gap:8px}
+.small{font-size:11px;color:var(--muted)}
+input,select{width:100%;padding:11px;border-radius:10px;border:none;background:#23263d;color:#fff;margin-top:6px}
+button{padding:12px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+.btn-green{background:var(--green);color:#000;width:100%;margin-top:8px}
+.btn-sm{padding:6px 10px;font-size:12px;background:#23263d;color:#fff;border-radius:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
+.tabs{display:flex;gap:6px;margin:10px 0}
+.tab{padding:7px 12px;background:#23263d;border-radius:20px;font-size:11px;cursor:pointer}
 .tab.active{background:var(--green);color:#000}
-.hidden{display:none}
-.badge{background:#23263d;padding:2px 8px;border-radius:10px;font-size:11px}
+#editModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:40;align-items:center;justify-content:center;padding:16px}
+#editModal.show{display:flex}
+.modalBox{background:var(--card);border-radius:16px;padding:16px;width:100%;max-width:360px}
 </style>
 </head>
 <body>
 <div id="overlay" onclick="toggleMenu()"></div>
 <div id="sideMenu">
 <div class="menu-head">PAGFLOW MENU</div>
-<div class="menu-item" onclick="openCat('pagar')">Contas a pagar <small id="b-pagar"></small></div>
-<div class="menu-item" onclick="openCat('receber')">Contas a receber <small id="b-receber" style="color:var(--green)"></small></div>
-<div class="menu-item" onclick="openCat('carro')">Parcelas do carro <small id="b-carro"></small></div>
-<div class="menu-item" onclick="openCat('medicenter')">Parcelas Medicenter <small id="b-medicenter"></small></div>
-<div class="menu-item" onclick="openCat('carol')">Parcelas Carol <small id="b-carol"></small></div>
-<div class="menu-item" onclick="openCat('bancos')">Dívidas em bancos <small id="b-bancos"></small></div>
-<div class="menu-item" onclick="openCat('caixinha')">💰 Minha caixinha <small id="b-caixinha" style="color:var(--yellow)"></small></div>
-<div class="menu-item" onclick="openCat('viagem')">✈️ Planejamento viagem <small id="b-viagem"></small></div>
-<div class="menu-item" onclick="openCat('casa')">🏠 Planejamento casa <small id="b-casa"></small></div>
-<div class="menu-item" onclick="openCat('pais')">🌍 Sair do país <small id="b-pais"></small></div>
-<div class="menu-item" onclick="openCat('combustivel')">⛽ Combustível <small id="b-combustivel"></small></div>
-<div class="menu-item" onclick="openCat('reparos')">🔧 Reparos no carro <small id="b-reparos"></small></div>
-<div class="menu-item" onclick="openCat('aparelhagem')">🎧 Invest. aparelhagem <small id="b-aparelhagem"></small></div>
-<div class="menu-item" onclick="openCat('extras')">💸 Gastos extras <small id="b-extras"></small></div>
-<div class="menu-item" onclick="openCat('familia')">👨‍👩‍👧 Passeio família <small id="b-familia"></small></div>
-<div class="menu-item" onclick="openCat('mercado')">🛒 Supermercados <small id="b-mercado"></small></div>
-<div class="menu-item" onclick="openCat('saude')">❤️ Saúde <small id="b-saude"></small></div>
-<div class="menu-item" onclick="openCat('roupas')">👕 Roupas <small id="b-roupas"></small></div>
-<div class="menu-item" onclick="openCat('aluguel')">🏠 Aluguel <small id="b-aluguel"></small></div>
-<div class="menu-item" style="margin-top:20px;color:var(--red)" onclick="clearAll()">🗑️ Zerar tudo</div>
+<div class="menu-item" onclick="openCat('pagar')">Contas a pagar <span id="b-pagar" class="small">R$ 0</span></div>
+<div class="menu-item" onclick="openCat('receber')">Contas a receber <span id="b-receber" class="small" style="color:var(--green)">R$ 0</span></div>
+<div class="menu-item" onclick="openCat('carro')">Parcelas do carro <span id="b-carro" class="small"></span></div>
+<div class="menu-item" onclick="openCat('medicenter')">Parcelas Medicenter <span id="b-medicenter" class="small"></span></div>
+<div class="menu-item" onclick="openCat('carol')">Parcelas Carol <span id="b-carol" class="small"></span></div>
+<div class="menu-item" onclick="openCat('bancos')">Dívidas em bancos <span id="b-bancos" class="small"></span></div>
+<div class="menu-item" onclick="openCat('caixinha')">💰 Minha caixinha <span id="b-caixinha" class="small" style="color:var(--yellow)"></span></div>
+<div class="menu-item" onclick="openCat('viagem')">✈️ Planejamento viagem <span id="b-viagem" class="small"></span></div>
+<div class="menu-item" onclick="openCat('casa')">🏠 Planejamento casa <span id="b-casa" class="small"></span></div>
+<div class="menu-item" onclick="openCat('pais')">🌍 Sair do país <span id="b-pais" class="small"></span></div>
+<div class="menu-item" onclick="openCat('combustivel')">⛽ Combustível <span id="b-combustivel" class="small"></span></div>
+<div class="menu-item" onclick="openCat('reparos')">🔧 Reparos no carro <span id="b-reparos" class="small"></span></div>
+<div class="menu-item" onclick="openCat('aparelhagem')">🎧 Invest. aparelhagem <span id="b-aparelhagem" class="small"></span></div>
+<div class="menu-item" onclick="openCat('extras')">💸 Gastos extras <span id="b-extras" class="small"></span></div>
+<div class="menu-item" onclick="openCat('familia')">👨‍👩‍👧 Passeio família <span id="b-familia" class="small"></span></div>
+<div class="menu-item" onclick="openCat('mercado')">🛒 Supermercados <span id="b-mercado" class="small"></span></div>
+<div class="menu-item" onclick="openCat('saude')">❤️ Saúde <span id="b-saude" class="small"></span></div>
+<div class="menu-item" onclick="openCat('roupas')">👕 Roupas <span id="b-roupas" class="small"></span></div>
+<div class="menu-item" onclick="openCat('aluguel')">🏠 Aluguel <span id="b-aluguel" class="small"></span></div>
 </div>
 
 <header>
@@ -63,98 +67,126 @@ button.green{background:var(--green);color:#000;font-weight:900}
 
 <main>
 <div class="card">
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
-<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0</b></div>
-<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0</b></div>
-<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0</b></div>
+<div class="grid3">
+<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0,00</b></div>
+<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0,00</b></div>
+<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0,00</b></div>
 </div>
 <div class="tabs">
-<div class="tab active" onclick="setVis('mensal',this)">Mensal</div>
-<div class="tab" onclick="setVis('anual',this)">Anual</div>
-<div class="tab" onclick="setVis('2032',this)">Até 2032</div>
+<div class="tab active" id="tab-mensal" onclick="setVis('mensal')">MENSAL</div>
+<div class="tab" id="tab-anual" onclick="setVis('anual')">ANUAL (x12)</div>
+<div class="tab" id="tab-2032" onclick="setVis('2032')">ATÉ 2032 (x84)</div>
 </div>
+<div class="small">Fórmula: Total = Qtd × Valor Unit. ÷ Parcelas se necessário</div>
 </div>
 
-<div id="view"></div>
+<div class="card yellow" id="catBox">
+<h3 id="catTitle" style="margin:0 0 4px 0">Selecione no menu ☰</h3>
+<div class="small" id="catDesc"></div>
 
-<div class="card yellow">
-<b id="catTitle">Selecione no menu ☰</b>
-<div class="small" id="catDesc">Toque no menu para gerenciar cada categoria</div>
-<div id="catList"></div>
-<div style="margin-top:12px;border-top:1px solid #23263d;padding-top:12px">
-<input id="itemNome" placeholder="Nome ex: Parcela 3/12">
-<input id="itemValor" type="number" step="0.01" placeholder="Valor R$">
-<select id="itemTipo"><option value="unica">Única</option><option value="mensal">Mensal</option><option value="parcelado">Parcelado</option></select>
-<button class="green" onclick="addItem()">+ ADICIONAR EM <span id="catBtn">CATEGORIA</span></button>
+<div id="catList" style="margin-top:10px"></div>
+
+<div style="margin-top:14px;background:#15182a;padding:12px;border-radius:12px">
+<div style="font-weight:800;font-size:13px;margin-bottom:6px">+ ADICIONAR / CALCULAR</div>
+<input id="f_nome" placeholder="Nome ex: Parcela 3/10 Gol">
+<div class="grid2">
+<div><small class="small">Qtd / Parcelas</small><input id="f_qtd" type="number" value="1" oninput="calcPreview()"></div>
+<div><small class="small">Valor Unit. R$</small><input id="f_valor" type="number" step="0.01" placeholder="0,00" oninput="calcPreview()"></div>
+</div>
+<div class="grid2">
+<div><small class="small">Dividir por (meses)</small><input id="f_div" type="number" value="1" oninput="calcPreview()"></div>
+<div><small class="small">Tipo</small><select id="f_tipo"><option value="mensal">Mensal</option><option value="unica">Única</option><option value="parcelado">Parcelado</option></select></div>
+</div>
+<div style="margin-top:8px;padding:8px;background:#23263d;border-radius:8px;display:flex;justify-content:space-between">
+<span class="small">PREVIEW: Qtd × Valor ÷ Div = </span><b id="f_preview" style="color:var(--green)">R$ 0,00</b>
+</div>
+<button class="btn-green" onclick="addItem()">SALVAR NA <span id="btnCat">CATEGORIA</span></button>
+<div style="margin-top:8px" class="grid2">
+<div class="small">Subtotal desta:</div><b id="subCat" style="text-align:right">R$ 0,00</b>
+</div>
 </div>
 </div>
 </main>
 
+<div id="editModal" onclick="if(event.target==this)closeEdit()">
+<div class="modalBox">
+<h3 style="margin:0">Editar item</h3>
+<input id="e_nome" placeholder="Nome">
+<div class="grid2">
+<input id="e_qtd" type="number" placeholder="Qtd">
+<input id="e_valor" type="number" step="0.01" placeholder="Valor">
+</div>
+<input id="e_div" type="number" placeholder="Dividir por">
+<div class="grid2" style="margin-top:8px">
+<button class="btn-sm" onclick="closeEdit()">Cancelar</button>
+<button class="btn-green" style="margin:0" onclick="saveEdit()">Salvar edição</button>
+</div>
+</div>
+</div>
+
 <script>
-let vis='mensal';
-let catAtual='pagar';
-let dados=JSON.parse(localStorage.getItem('pagflow_v3')||'{}');
-const categorias={
-pagar:{t:'Contas a pagar',d:'Água, luz, telefone, internet...',c:'red'},
-receber:{t:'Contas a receber',d:'Salário, freela, vendas...',c:'blue'},
-carro:{t:'Parcelas do carro',d:'Financiamento, IPVA...'},
-medicenter:{t:'Parcelas Medicenter',d:'Consultas, tratamentos...'},
-carol:{t:'Parcelas Carol',d:''},
-bancos:{t:'Dívidas em bancos',d:'Empréstimos, cartão...',c:'red'},
-caixinha:{t:'Minha caixinha',d:'Guardar dinheiro',c:'yellow'},
-viagem:{t:'Planejamento viagem',d:'Passagem, hotel...'},
-casa:{t:'Planejamento casa',d:'Móveis, reforma...'},
-pais:{t:'Planejamento sair do país',d:'Visto, passagem...'},
-combustivel:{t:'Combustível ⛽',d:'Gasolina, álcool...'},
-reparos:{t:'Reparos no carro',d:'Oficina, pneus...'},
-aparelhagem:{t:'Investimento aparelhagem',d:'Som, equipamentos...'},
-extras:{t:'Gastos extras',d:'Imprevistos...'},
-familia:{t:'Passeio com a família',d:'Cinema, parque...'},
-mercado:{t:'Supermercados',d:'Compras mês...'},
-saude:{t:'Saúde',d:'Remédio, médico...'},
-roupas:{t:'Roupas',d:''},
-aluguel:{t:'Aluguel',d:'Casa, apto...'}
+let vis='mensal', catAtual='pagar', editIndex=null;
+let dados=JSON.parse(localStorage.getItem('pagflow_v4')||'{}');
+const cats={
+pagar:{t:'Contas a pagar'},receber:{t:'Contas a receber'},carro:{t:'Parcelas do carro'},medicenter:{t:'Parcelas Medicenter'},carol:{t:'Parcelas Carol'},bancos:{t:'Dívidas em bancos'},caixinha:{t:'Minha caixinha 💰'},viagem:{t:'Planejamento viagem ✈️'},casa:{t:'Planejamento casa 🏠'},pais:{t:'Sair do país 🌍'},combustivel:{t:'Combustível ⛽'},reparos:{t:'Reparos no carro 🔧'},aparelhagem:{t:'Invest. aparelhagem 🎧'},extras:{t:'Gastos extras 💸'},familia:{t:'Passeio família 👨‍👩‍👧'},mercado:{t:'Supermercados 🛒'},saude:{t:'Saúde ❤️'},roupas:{t:'Roupas 👕'},aluguel:{t:'Aluguel 🏠'}
 };
 function toggleMenu(){document.getElementById('sideMenu').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
-function openCat(c){catAtual=c;toggleMenu();renderCat();}
-function renderCat(){
-let info=categorias[catAtual];
+function openCat(c){catAtual=c;toggleMenu();render();}
+function calcItem(it){let q=parseFloat(it.qtd)||1;let v=parseFloat(it.valor)||0;let d=parseFloat(it.div)||1;return (q*v)/d;}
+function calcPreview(){let q=document.getElementById('f_qtd').value||1;let v=document.getElementById('f_valor').value||0;let d=document.getElementById('f_div').value||1;let r=(q*v)/d;document.getElementById('f_preview').innerText='R$ '+r.toFixed(2);}
+function render(){
+let info=cats[catAtual];
 document.getElementById('catTitle').innerText=info.t;
-document.getElementById('catDesc').innerText=info.d;
-document.getElementById('catBtn').innerText=info.t.toUpperCase();
+document.getElementById('btnCat').innerText=info.t.toUpperCase();
 let lista=dados[catAtual]||[];
-document.getElementById('catList').innerHTML=lista.map((it,i)=>`<div class="row"><span>${it.nome} <span class="badge">${it.tipo}</span></span><span><b>R$ ${it.valor.toFixed(2)}</b> <span onclick="delItem(${i})" style="color:var(--red);cursor:pointer"> ✕</span></span></div>`).join('')||'<div class="small">Nenhum item ainda</div>';
+let html=lista.map((it,i)=>`
+<div class="row">
+<div><b>${it.nome}</b><br><span class="small">${it.qtd} × R$ ${Number(it.valor).toFixed(2)} ÷ ${it.div} = <b style="color:var(--green)">R$ ${calcItem(it).toFixed(2)}</b> • ${it.tipo}</span></div>
+<div style="display:flex;gap:4px">
+<button class="btn-sm" onclick="startEdit(${i})">✎</button>
+<button class="btn-sm" style="color:var(--red)" onclick="delItem(${i})">✕</button>
+</div>
+</div>`).join('');
+document.getElementById('catList').innerHTML=html||'<div class="small">Nenhum item. Adicione abaixo.</div>';
+let sub=lista.reduce((s,it)=>s+calcItem(it),0);
+document.getElementById('subCat').innerText='R$ '+sub.toFixed(2);
 calcTotals();
 }
 function addItem(){
-let nome=document.getElementById('itemNome').value||'Item';
-let valor=parseFloat(document.getElementById('itemValor').value);
-if(!valor)return alert('Valor?');
-let tipo=document.getElementById('itemTipo').value;
+let nome=document.getElementById('f_nome').value||'Item';
+let qtd=document.getElementById('f_qtd').value||1;
+let valor=document.getElementById('f_valor').value||0;
+if(!valor||valor==0)return alert('Digite o valor!');
+let div=document.getElementById('f_div').value||1;
+let tipo=document.getElementById('f_tipo').value;
 if(!dados[catAtual])dados[catAtual]=[];
-dados[catAtual].push({nome,valor,tipo});
-localStorage.setItem('pagflow_v3',JSON.stringify(dados));
-document.getElementById('itemNome').value='';document.getElementById('itemValor').value='';
-renderCat();
+dados[catAtual].push({nome,qtd,valor,div,tipo});
+save();
+document.getElementById('f_nome').value='';document.getElementById('f_valor').value='';document.getElementById('f_qtd').value=1;document.getElementById('f_div').value=1;
+render();
 }
-function delItem(i){dados[catAtual].splice(i,1);localStorage.setItem('pagflow_v3',JSON.stringify(dados));renderCat();}
+function delItem(i){if(confirm('Apagar?')){dados[catAtual].splice(i,1);save();render();}}
+function startEdit(i){editIndex=i;let it=dados[catAtual][i];document.getElementById('e_nome').value=it.nome;document.getElementById('e_qtd').value=it.qtd;document.getElementById('e_valor').value=it.valor;document.getElementById('e_div').value=it.div;document.getElementById('editModal').classList.add('show');}
+function closeEdit(){document.getElementById('editModal').classList.remove('show');}
+function saveEdit(){let it=dados[catAtual][editIndex];it.nome=document.getElementById('e_nome').value;it.qtd=document.getElementById('e_qtd').value;it.valor=document.getElementById('e_valor').value;it.div=document.getElementById('e_div').value;save();render();closeEdit();}
+function save(){localStorage.setItem('pagflow_v4',JSON.stringify(dados));}
 function calcTotals(){
 let pagar=0,receber=0;
-Object.keys(dados).forEach(k=>{
-let sum=(dados[k]||[]).reduce((s,it)=>s+it.valor,0);
+Object.keys(cats).forEach(k=>{
+let lista=dados[k]||[];
+let sum=lista.reduce((s,it)=>s+calcItem(it),0);
 let el=document.getElementById('b-'+k);
 if(el)el.innerText='R$ '+sum.toFixed(0);
 if(k==='receber'||k==='caixinha')receber+=sum;else pagar+=sum;
 });
-let f={mensal:1,anual:12,'2032':84}[vis];
-document.getElementById('totalPagar').innerText='R$ '+(pagar*f).toFixed(2);
-document.getElementById('totalReceber').innerText='R$ '+(receber*f).toFixed(2);
-document.getElementById('totalSaldo').innerText='R$ '+((receber-pagar)*f).toFixed(2);
+let mult={mensal:1,anual:12,'2032':84}[vis];
+document.getElementById('totalPagar').innerText='R$ '+(pagar*mult).toFixed(2);
+document.getElementById('totalReceber').innerText='R$ '+(receber*mult).toFixed(2);
+document.getElementById('totalSaldo').innerText='R$ '+((receber-pagar)*mult).toFixed(2);
+document.getElementById('totalSaldo').style.color=(receber-pagar)>=0?'var(--green)':'var(--red)';
 }
-function setVis(v,el){vis=v;document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');calcTotals();}
-function clearAll(){if(confirm('Apagar TUDO mesmo?')){dados={};localStorage.removeItem('pagflow_v3');renderCat();}}
-// inicial
-renderCat();
+function setVis(v){vis=v;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+v).classList.add('active');calcTotals();}
+render();calcPreview();
 </script>
 </body>
 </html>
