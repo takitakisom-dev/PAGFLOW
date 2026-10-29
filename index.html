@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAGFLOW V8</title>
+<title>PAGFLOW V9</title>
 <style>
 :root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--line:#23263d;--text:#fff;--muted:#9aa0b8}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
@@ -21,7 +21,7 @@ main{padding:12px}
 .small{font-size:11px;color:var(--muted)}
 input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#23263d;color:#fff;margin-top:6px;font-size:15px}
 .select-wrap{position:relative}
-.select-wrap::after{content:'▼';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#7CFF6B;pointer-events:none;font-size:12px}
+.select-wrap::after{content:'▼';position:absolute;right:14px;top:52%;color:#7CFF6B;pointer-events:none;font-size:12px}
 .btn-green{background:var(--green);color:#000;width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;margin-top:8px;font-size:16px}
 .btn-sm{padding:6px 10px;background:#23263d;color:#fff;border-radius:8px;border:none}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -32,7 +32,13 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 <div id="overlay" onclick="fecharMenu()"></div>
 <div id="sideMenu">
 <div class="menu-head">PAGFLOW MENU</div>
-<div id="menuList"></div>
+<div class="menu-item" onclick="mudarCat('pagar')">Contas a pagar</div>
+<div class="menu-item" onclick="mudarCat('receber')">Contas a receber</div>
+<div class="menu-item" onclick="mudarCat('carro')">Parcelas do carro</div>
+<div class="menu-item" onclick="mudarCat('medicenter')">Medicenter</div>
+<div class="menu-item" onclick="mudarCat('carol')">Carol</div>
+<div class="menu-item" onclick="mudarCat('bancos')">Dívidas bancos</div>
+<div class="menu-item" onclick="mudarCat('caixinha')">💰 Caixinha</div>
 <div class="menu-item" style="margin-top:12px;background:#15182a" onclick="gerarRelatorio()">📊 Relatório + Imprimir</div>
 </div>
 
@@ -51,10 +57,7 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 </div>
 </div>
 
-<div id="relArea" class="card" style="display:none">
-<pre id="relTxt" style="white-space:pre-wrap;font-size:12px"></pre>
-<button class="btn-green" onclick="window.print()">🖨️ IMPRIMIR / PDF</button>
-</div>
+<div id="relArea" class="card" style="display:none"><pre id="relTxt" style="white-space:pre-wrap"></pre><button class="btn-green" onclick="window.print()">🖨️ IMPRIMIR</button></div>
 
 <div class="card" style="border-color:#ffd86b">
 <h3 id="tituloCat" style="margin:0">Contas a pagar</h3>
@@ -63,68 +66,68 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 <div style="margin-top:14px;background:#15182a;padding:12px;border-radius:12px">
 <b style="font-size:13px">+ ADICIONAR COM DATA</b>
 
-<!-- AQUI ESTÁ A SETA QUE VOCÊ PEDIU -->
-<div style="margin-top:6px">
-<small class="small">Escolher categoria (com seta ▼)</small>
+<!-- SETA COM O QUE VOCÊ PEDIU -->
+<div style="margin-top:8px">
+<small class="small">O que é? (clique na seta ▼)</small>
 <div class="select-wrap">
-<select id="catSelect" onchange="trocarCategoriaForm()">
-<option value="pagar">Contas a pagar</option>
-<option value="receber">Contas a receber</option>
-<option value="carro">Parcelas do carro</option>
-<option value="medicenter">Parcelas Medicenter</option>
-<option value="carol">Parcelas Carol</option>
-<option value="bancos">Dívidas em bancos</option>
-<option value="caixinha">💰 Minha caixinha</option>
-<option value="viagem">✈️ Planejamento viagem</option>
-<option value="casa">🏠 Planejamento casa</option>
-<option value="pais">🌍 Sair do país</option>
-<option value="combustivel">⛽ Combustível</option>
-<option value="reparos">🔧 Reparos no carro</option>
-<option value="aparelhagem">🎧 Invest. aparelhagem</option>
-<option value="extras">💸 Gastos extras</option>
-<option value="familia">👨‍👩‍👧 Passeio família</option>
-<option value="mercado">🛒 Supermercados</option>
-<option value="saude">❤️ Saúde</option>
-<option value="roupas">👕 Roupas</option>
-<option value="aluguel">🏠 Aluguel</option>
+<select id="tipoConta" onchange="preencherNome()">
+<option value="">-- Escolha --</option>
+<option value="LUZ">LUZ</option>
+<option value="Água">Água</option>
+<option value="Combustível">Combustível</option>
+<option value="Internet">Internet</option>
+<option value="Telefone">Telefone</option>
+<option value="Carro">Carro</option>
+<option value="Supermercado">Supermercado</option>
+<option value="Carol">Carol</option>
+<option value="Passeio">Passeio</option>
+<option value="RAÇÃO CACHORRO 🐶">RAÇÃO CACHORRO 🐶</option>
+<option value="RAÇÃO GATOS 😻">RAÇÃO GATOS 😻</option>
+<option value="ESPOSA">ESPOSA</option>
 </select>
 </div>
 </div>
 
-<input id="nome" placeholder="Ex: Luz" style="margin-top:8px">
+<input id="nome" placeholder="Ou digite um novo ex: Aluguel (vai pra seta)" style="margin-top:8px">
 <div class="grid2">
 <div><small class="small">Qtd</small><input id="qtd" type="number" value="1"></div>
 <div><small class="small">Valor R$</small><input id="valor" type="number" placeholder="Valor R$"></div>
 </div>
 <div class="grid2">
-<div><small class="small">Vencimento</small><input id="data" type="date" value="2026-11-10"></div>
+<div><small class="small">Vencimento</small><input id="data" type="date"></div>
 <div><small class="small">Dividir por</small><input id="div" type="number" value="1"></div>
 </div>
 <select id="tipo" style="margin-top:6px"><option>Mensal</option><option>Única</option><option>Parcelado</option></select>
-
 <div style="margin-top:8px;padding:8px;background:#23263d;border-radius:8px;display:flex;justify-content:space-between">
-<span class="small">Cálculo: Qtd × Valor ÷ Div =</span><b id="preview" style="color:#7CFF6B">R$ 0,00</b>
+<span class="small">Cálculo = Qtd × Valor ÷ Div</span><b id="preview" style="color:#7CFF6B">R$ 0,00</b>
 </div>
-<button type="button" class="btn-green" onclick="salvar()">SALVAR EM <span id="btnNomeCat">CONTAS A PAGAR</span></button>
-<div style="margin-top:10px;display:flex;justify-content:space-between"><span class="small">Subtotal desta categoria:</span><b id="subCat">R$ 0,00</b></div>
+<button type="button" class="btn-green" onclick="salvar()">SALVAR</button>
+<div style="margin-top:10px;display:flex;justify-content:space-between"><span class="small">Subtotal categoria:</span><b id="subCat">R$ 0,00</b></div>
 </div>
 </div>
 </main>
 
 <script>
 let cat='pagar';
-let DB=JSON.parse(localStorage.getItem('pagflow_v8')||'{}');
-const NOME_CATS={pagar:'Contas a pagar',receber:'Contas a receber',carro:'Parcelas do carro',medicenter:'Parcelas Medicenter',carol:'Parcelas Carol',bancos:'Dívidas em bancos',caixinha:'💰 Minha caixinha',viagem:'✈️ Planejamento viagem',casa:'🏠 Planejamento casa',pais:'🌍 Sair do país',combustivel:'⛽ Combustível',reparos:'🔧 Reparos no carro',aparelhagem:'🎧 Invest. aparelhagem',extras:'💸 Gastos extras',familia:'👨‍👩‍👧 Passeio família',mercado:'🛒 Supermercados',saude:'❤️ Saúde',roupas:'👕 Roupas',aluguel:'🏠 Aluguel'};
+let DB=JSON.parse(localStorage.getItem('pagflow_v9')||'{}');
+let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos')||'["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA"]');
 
-function montarMenu(){
-let html='';
-for(let k in NOME_CATS){html+=`<div class="menu-item" onclick="mudarCat('${k}')">${NOME_CATS[k]}</div>`;}
-document.getElementById('menuList').innerHTML=html;
-}
 function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
 function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
-function mudarCat(c){cat=c;document.getElementById('catSelect').value=c;document.getElementById('tituloCat').innerText=NOME_CATS[c];document.getElementById('btnNomeCat').innerText=NOME_CATS[c].toUpperCase();fecharMenu();mostrar();}
-function trocarCategoriaForm(){cat=document.getElementById('catSelect').value;document.getElementById('tituloCat').innerText=NOME_CATS[cat];document.getElementById('btnNomeCat').innerText=NOME_CATS[cat].toUpperCase();mostrar();}
+function mudarCat(c){cat=c;document.getElementById('tituloCat').innerText=c;fecharMenu();mostrar();}
+
+function preencherNome(){
+let v=document.getElementById('tipoConta').value;
+if(v) document.getElementById('nome').value=v;
+}
+
+function renderTipos(){
+let sel=document.getElementById('tipoConta');
+let atual=sel.value;
+sel.innerHTML='<option value="">-- Escolha --</option>';
+TIPOS.forEach(t=>{sel.innerHTML+=`<option value="${t}">${t}</option>`;});
+sel.value=atual;
+}
 
 function calcItem(it){let q=parseFloat(it.qtd)||0;let v=parseFloat(it.valor)||0;let d=parseFloat(it.div)||1;if(d==0)d=1;return (q*v)/d;}
 
@@ -135,7 +138,7 @@ let d=parseFloat(document.getElementById('div').value)||1;
 if(d==0)d=1;
 document.getElementById('preview').innerText='R$ '+((q*v)/d).toFixed(2);
 }
-['qtd','valor','div'].forEach(id=>{document.getElementById(id).addEventListener('input',atualizarPreview);});
+['qtd','valor','div'].forEach(id=>document.getElementById(id).addEventListener('input',atualizarPreview));
 
 function mostrar(){
 let dia=document.getElementById('filtroDia').value;
@@ -147,9 +150,8 @@ filtrada.forEach(it=>{
 let idx=lista.indexOf(it);
 html+=`<div class="row"><div><b>${it.nome}</b><br><span class="small">${it.data||'--'} • ${it.qtd} x R$ ${it.valor} ÷ ${it.div} = <b style="color:#7CFF6B">R$ ${calcItem(it).toFixed(2)}</b></span></div><div><button class="btn-sm" onclick="editar(${idx})">✎</button> <button class="btn-sm" onclick="apagar(${idx})" style="color:#ff6b6b">✕</button></div></div>`;
 });
-document.getElementById('lista').innerHTML=html||'<div class="small">Nenhum item nesta categoria</div>';
-let sub=filtrada.reduce((s,it)=>s+calcItem(it),0);
-document.getElementById('subCat').innerText='R$ '+sub.toFixed(2);
+document.getElementById('lista').innerHTML=html||'<div class="small">Nenhum item</div>';
+document.getElementById('subCat').innerText='R$ '+filtrada.reduce((s,it)=>s+calcItem(it),0).toFixed(2);
 let pagar=0,receber=0;
 for(let k in DB){let s=DB[k].reduce((a,it)=>a+calcItem(it),0);if(k==='receber'||k==='caixinha')receber+=s;else pagar+=s;}
 document.getElementById('totalPagar').innerText='R$ '+pagar.toFixed(2);
@@ -158,28 +160,40 @@ document.getElementById('totalSaldo').innerText='R$ '+(receber-pagar).toFixed(2)
 }
 
 function salvar(){
-let nome=document.getElementById('nome').value||'Item';
+let nome=document.getElementById('nome').value.trim();
+let tipoSel=document.getElementById('tipoConta').value;
+if(!nome && tipoSel) nome=tipoSel;
+if(!nome){alert('Escolha na seta ou digite o nome!');return;}
 let qtd=document.getElementById('qtd').value||1;
 let valor=document.getElementById('valor').value;
 let data=document.getElementById('data').value;
 let div=document.getElementById('div').value||1;
 let tipo=document.getElementById('tipo').value;
-if(!valor){alert('Digite o valor R$!');return;}
+if(!valor){alert('Digite o valor!');return;}
+
+// SE FOR NOVO, ADICIONA NA SETA
+if(!TIPOS.includes(nome)){
+TIPOS.push(nome);
+localStorage.setItem('pagflow_tipos',JSON.stringify(TIPOS));
+renderTipos();
+}
+
 if(!DB[cat])DB[cat]=[];
 DB[cat].push({nome,qtd,valor,data,div,tipo});
-localStorage.setItem('pagflow_v8',JSON.stringify(DB));
+localStorage.setItem('pagflow_v9',JSON.stringify(DB));
 document.getElementById('nome').value='';
 document.getElementById('valor').value='';
+document.getElementById('tipoConta').value='';
 mostrar();atualizarPreview();
 }
 
-function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);localStorage.setItem('pagflow_v8',JSON.stringify(DB));mostrar();}}
-function editar(i){let it=DB[cat][i];let n=prompt('Nome:',it.nome);if(n==null)return;let v=prompt('Valor:',it.valor);if(v==null)return;it.nome=n;it.valor=v;localStorage.setItem('pagflow_v8',JSON.stringify(DB));mostrar();}
+function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);localStorage.setItem('pagflow_v9',JSON.stringify(DB));mostrar();}}
+function editar(i){let it=DB[cat][i];let n=prompt('Nome:',it.nome);if(n==null)return;let v=prompt('Valor:',it.valor);if(v==null)return;it.nome=n;it.valor=v;localStorage.setItem('pagflow_v9',JSON.stringify(DB));mostrar();}
 function gerarRelatorio(){
-let dia=document.getElementById('filtroDia').value||'Todos os dias';
+let dia=document.getElementById('filtroDia').value||'Todos';
 let txt='PAGFLOW - '+dia+'\n\n';let p=0,r=0;
 for(let k in DB){
-let lista=dia==='Todos os dias'?DB[k]:DB[k].filter(it=>it.data===dia);
+let lista=dia==='Todos'?DB[k]:DB[k].filter(it=>it.data===dia);
 if(!lista.length)continue;
 let sum=lista.reduce((s,it)=>s+calcItem(it),0);
 txt+=k.toUpperCase()+': R$ '+sum.toFixed(2)+'\n';
@@ -191,7 +205,9 @@ txt+=`PAGAR R$ ${p.toFixed(2)}\nRECEBER R$ ${r.toFixed(2)}\nSALDO R$ ${(r-p).toF
 document.getElementById('relTxt').innerText=txt;
 document.getElementById('relArea').style.display='block';
 }
-montarMenu();mostrar();atualizarPreview();
+
+document.getElementById('data').valueAsDate=new Date();
+renderTipos();mostrar();atualizarPreview();
 </script>
 </body>
 </html>
