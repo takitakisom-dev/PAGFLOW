@@ -5,131 +5,156 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAGFLOW</title>
 <style>
-:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--text:#fff;--muted:#9aa0b8}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text);padding:0}
+:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--blue:#6bb8ff;--yellow:#ffd86b;--text:#fff;--muted:#9aa0b8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
 header{display:flex;justify-content:space-between;align-items:center;padding:16px;background:#15182a;position:sticky;top:0;z-index:10}
-header h1{margin:0;font-size:28px;letter-spacing:3px}
-#menuBtn{font-size:28px;background:none;border:none;color:#fff;cursor:pointer}
-#sideMenu{position:fixed;top:0;left:-260px;width:250px;height:100%;background:#1a1d2e;padding:20px;transition:0.3s;z-index:20}
+#menuBtn{font-size:28px;background:none;border:none;color:#fff}
+#sideMenu{position:fixed;top:0;left:-300px;width:280px;height:100%;background:#1a1d2e;padding:0;transition:0.3s;z-index:30;overflow:auto}
 #sideMenu.open{left:0}
-#sideMenu a{display:block;padding:12px 0;color:#fff;text-decoration:none;border-bottom:1px solid #23263d}
-#overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:15}
+.menu-head{padding:20px;background:#15182a;font-weight:900;letter-spacing:2px}
+.menu-item{display:flex;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #23263d;cursor:pointer}
+.menu-item:hover{background:#23263d}
+.menu-item small{color:var(--muted)}
+#overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:20}
 #overlay.show{display:block}
 main{padding:16px}
-.card{background:var(--card);border-radius:18px;padding:16px;margin:14px 0;border-left:4px solid var(--green)}
+.card{background:var(--card);border-radius:18px;padding:16px;margin:12px 0;border-left:4px solid var(--green)}
+.card.red{border-color:var(--red)}.card.blue{border-color:var(--blue)}.card.yellow{border-color:var(--yellow)}
 .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #23263d}
-.tabs{display:flex;gap:8px;margin:12px 0;overflow:auto}
-.tab{padding:8px 16px;background:#23263d;border-radius:20px;font-size:12px;cursor:pointer;white-space:nowrap}
-.tab.active{background:var(--green);color:#000;font-weight:800}
-input,select,button{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;background:#23263d;color:#fff;font-size:14px}
-button.green{background:var(--green);color:#000;font-weight:900;cursor:pointer}
-.small{font-size:12px;color:var(--muted)}
+input,select,button{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;background:#23263d;color:#fff}
+button.green{background:var(--green);color:#000;font-weight:900}
+.tabs{display:flex;gap:6px;margin:10px 0;overflow:auto}
+.tab{padding:8px 14px;background:#23263d;border-radius:20px;font-size:12px;white-space:nowrap}
+.tab.active{background:var(--green);color:#000}
+.hidden{display:none}
+.badge{background:#23263d;padding:2px 8px;border-radius:10px;font-size:11px}
 </style>
 </head>
 <body>
-
 <div id="overlay" onclick="toggleMenu()"></div>
 <div id="sideMenu">
-<h2>PAGFLOW</h2>
-<a href="#" onclick="showSection('dashboard');toggleMenu()">📊 Dashboard</a>
-<a href="#" onclick="showSection('contas');toggleMenu()">💳 Minhas Contas</a>
-<a href="#" onclick="showSection('proj');toggleMenu()">📈 Projeção 2032</a>
-<a href="#" onclick="clearAll();toggleMenu()">🗑️ Limpar tudo</a>
-<div class="small" style="margin-top:20px">v2.0 • até 2032</div>
+<div class="menu-head">PAGFLOW MENU</div>
+<div class="menu-item" onclick="openCat('pagar')">Contas a pagar <small id="b-pagar"></small></div>
+<div class="menu-item" onclick="openCat('receber')">Contas a receber <small id="b-receber" style="color:var(--green)"></small></div>
+<div class="menu-item" onclick="openCat('carro')">Parcelas do carro <small id="b-carro"></small></div>
+<div class="menu-item" onclick="openCat('medicenter')">Parcelas Medicenter <small id="b-medicenter"></small></div>
+<div class="menu-item" onclick="openCat('carol')">Parcelas Carol <small id="b-carol"></small></div>
+<div class="menu-item" onclick="openCat('bancos')">Dívidas em bancos <small id="b-bancos"></small></div>
+<div class="menu-item" onclick="openCat('caixinha')">💰 Minha caixinha <small id="b-caixinha" style="color:var(--yellow)"></small></div>
+<div class="menu-item" onclick="openCat('viagem')">✈️ Planejamento viagem <small id="b-viagem"></small></div>
+<div class="menu-item" onclick="openCat('casa')">🏠 Planejamento casa <small id="b-casa"></small></div>
+<div class="menu-item" onclick="openCat('pais')">🌍 Sair do país <small id="b-pais"></small></div>
+<div class="menu-item" onclick="openCat('combustivel')">⛽ Combustível <small id="b-combustivel"></small></div>
+<div class="menu-item" onclick="openCat('reparos')">🔧 Reparos no carro <small id="b-reparos"></small></div>
+<div class="menu-item" onclick="openCat('aparelhagem')">🎧 Invest. aparelhagem <small id="b-aparelhagem"></small></div>
+<div class="menu-item" onclick="openCat('extras')">💸 Gastos extras <small id="b-extras"></small></div>
+<div class="menu-item" onclick="openCat('familia')">👨‍👩‍👧 Passeio família <small id="b-familia"></small></div>
+<div class="menu-item" onclick="openCat('mercado')">🛒 Supermercados <small id="b-mercado"></small></div>
+<div class="menu-item" onclick="openCat('saude')">❤️ Saúde <small id="b-saude"></small></div>
+<div class="menu-item" onclick="openCat('roupas')">👕 Roupas <small id="b-roupas"></small></div>
+<div class="menu-item" onclick="openCat('aluguel')">🏠 Aluguel <small id="b-aluguel"></small></div>
+<div class="menu-item" style="margin-top:20px;color:var(--red)" onclick="clearAll()">🗑️ Zerar tudo</div>
 </div>
 
 <header>
-<h1>PAGFLOW</h1>
+<h1 style="margin:0;letter-spacing:3px">PAGFLOW</h1>
 <button id="menuBtn" onclick="toggleMenu()">☰</button>
 </header>
 
 <main>
-<div id="dashboard">
-<div class="card" id="cardContas"></div>
-
 <div class="card">
-<b>Projeção até 2032</b>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0</b></div>
+<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0</b></div>
+<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0</b></div>
+</div>
 <div class="tabs">
-<div class="tab active" id="t-mensal" onclick="setProj('mensal')">Mensal</div>
-<div class="tab" id="t-anual" onclick="setProj('anual')">Anual</div>
-<div class="tab" id="t-2032" onclick="setProj('2032')">Até 2032</div>
+<div class="tab active" onclick="setVis('mensal',this)">Mensal</div>
+<div class="tab" onclick="setVis('anual',this)">Anual</div>
+<div class="tab" onclick="setVis('2032',this)">Até 2032</div>
 </div>
-<div id="projText" style="font-size:18px;font-weight:800;color:var(--green)"></div>
-<div class="small" id="projSmall"></div>
 </div>
 
-<div class="card">
-<b>➕ Adicionar conta</b>
-<select id="tipo"><option>Água</option><option>Luz</option><option>Telefone/Internet</option><option>Aluguel</option><option>Cartão</option><option>Internet</option><option>Gás</option><option>Mercado</option><option>Outro</option></select>
-<input id="nome" placeholder="Nome ex: Vivo Fibra (opcional)">
-<input id="valor" type="number" step="0.01" placeholder="Valor R$ ex: 89.90">
-<button class="green" onclick="addConta()">SALVAR</button>
-<div id="listaExtra" style="margin-top:10px"></div>
+<div id="view"></div>
+
+<div class="card yellow">
+<b id="catTitle">Selecione no menu ☰</b>
+<div class="small" id="catDesc">Toque no menu para gerenciar cada categoria</div>
+<div id="catList"></div>
+<div style="margin-top:12px;border-top:1px solid #23263d;padding-top:12px">
+<input id="itemNome" placeholder="Nome ex: Parcela 3/12">
+<input id="itemValor" type="number" step="0.01" placeholder="Valor R$">
+<select id="itemTipo"><option value="unica">Única</option><option value="mensal">Mensal</option><option value="parcelado">Parcelado</option></select>
+<button class="green" onclick="addItem()">+ ADICIONAR EM <span id="catBtn">CATEGORIA</span></button>
 </div>
 </div>
 </main>
 
 <script>
-let proj='mensal';
-let contasPadrao=[
-{name:'💧 Água',valor:85},
-{name:'💡 Luz',valor:180},
-{name:'📞 Telefone/Internet',valor:89.90},
-{name:'🏠 Aluguel',valor:1800},
-{name:'💳 Cartão',valor:943.10}
-];
-let contas=JSON.parse(localStorage.getItem('pagflow')||'null')||[...contasPadrao];
-
-function toggleMenu(){
-document.getElementById('sideMenu').classList.toggle('open');
-document.getElementById('overlay').classList.toggle('show');
+let vis='mensal';
+let catAtual='pagar';
+let dados=JSON.parse(localStorage.getItem('pagflow_v3')||'{}');
+const categorias={
+pagar:{t:'Contas a pagar',d:'Água, luz, telefone, internet...',c:'red'},
+receber:{t:'Contas a receber',d:'Salário, freela, vendas...',c:'blue'},
+carro:{t:'Parcelas do carro',d:'Financiamento, IPVA...'},
+medicenter:{t:'Parcelas Medicenter',d:'Consultas, tratamentos...'},
+carol:{t:'Parcelas Carol',d:''},
+bancos:{t:'Dívidas em bancos',d:'Empréstimos, cartão...',c:'red'},
+caixinha:{t:'Minha caixinha',d:'Guardar dinheiro',c:'yellow'},
+viagem:{t:'Planejamento viagem',d:'Passagem, hotel...'},
+casa:{t:'Planejamento casa',d:'Móveis, reforma...'},
+pais:{t:'Planejamento sair do país',d:'Visto, passagem...'},
+combustivel:{t:'Combustível ⛽',d:'Gasolina, álcool...'},
+reparos:{t:'Reparos no carro',d:'Oficina, pneus...'},
+aparelhagem:{t:'Investimento aparelhagem',d:'Som, equipamentos...'},
+extras:{t:'Gastos extras',d:'Imprevistos...'},
+familia:{t:'Passeio com a família',d:'Cinema, parque...'},
+mercado:{t:'Supermercados',d:'Compras mês...'},
+saude:{t:'Saúde',d:'Remédio, médico...'},
+roupas:{t:'Roupas',d:''},
+aluguel:{t:'Aluguel',d:'Casa, apto...'}
+};
+function toggleMenu(){document.getElementById('sideMenu').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
+function openCat(c){catAtual=c;toggleMenu();renderCat();}
+function renderCat(){
+let info=categorias[catAtual];
+document.getElementById('catTitle').innerText=info.t;
+document.getElementById('catDesc').innerText=info.d;
+document.getElementById('catBtn').innerText=info.t.toUpperCase();
+let lista=dados[catAtual]||[];
+document.getElementById('catList').innerHTML=lista.map((it,i)=>`<div class="row"><span>${it.nome} <span class="badge">${it.tipo}</span></span><span><b>R$ ${it.valor.toFixed(2)}</b> <span onclick="delItem(${i})" style="color:var(--red);cursor:pointer"> ✕</span></span></div>`).join('')||'<div class="small">Nenhum item ainda</div>';
+calcTotals();
 }
-function showSection(s){window.scrollTo(0,0);}
-
-function renderContas(){
-let total=contas.reduce((a,c)=>a+c.valor,0);
-let html=contas.map((c,i)=>`<div class="row"><span>${c.name}</span><span><b>R$ ${c.valor.toFixed(2)}</b> <span style="color:#ff7b7b;cursor:pointer" onclick="rem(${i})">✕</span></span></div>`).join('');
-html+=`<div style="margin-top:10px;font-weight:900;color:var(--green)">TOTAL: R$ ${total.toFixed(2)} / mês</div>`;
-document.getElementById('cardContas').innerHTML=html;
-updateProj();
-renderExtra();
+function addItem(){
+let nome=document.getElementById('itemNome').value||'Item';
+let valor=parseFloat(document.getElementById('itemValor').value);
+if(!valor)return alert('Valor?');
+let tipo=document.getElementById('itemTipo').value;
+if(!dados[catAtual])dados[catAtual]=[];
+dados[catAtual].push({nome,valor,tipo});
+localStorage.setItem('pagflow_v3',JSON.stringify(dados));
+document.getElementById('itemNome').value='';document.getElementById('itemValor').value='';
+renderCat();
 }
-function updateProj(){
-let total=contas.reduce((a,c)=>a+c.valor,0);
-let txt=document.getElementById('projText');
-let small=document.getElementById('projSmall');
-if(proj==='mensal'){txt.innerText=`R$ ${total.toFixed(2)} por mês`;small.innerText=`Diário: R$ ${(total/30).toFixed(2)} | Semanal: R$ ${(total/4.3).toFixed(2)}`;}
-if(proj==='anual'){txt.innerText=`R$ ${(total*12).toFixed(2)} por ano`;small.innerText=`12 meses x R$ ${total.toFixed(2)}`;}
-if(proj==='2032'){txt.innerText=`R$ ${(total*12*7).toFixed(2)} até 2032`;small.innerText=`7 anos (2026-2032) • ${total.toFixed(2)} x 84 meses`;}
+function delItem(i){dados[catAtual].splice(i,1);localStorage.setItem('pagflow_v3',JSON.stringify(dados));renderCat();}
+function calcTotals(){
+let pagar=0,receber=0;
+Object.keys(dados).forEach(k=>{
+let sum=(dados[k]||[]).reduce((s,it)=>s+it.valor,0);
+let el=document.getElementById('b-'+k);
+if(el)el.innerText='R$ '+sum.toFixed(0);
+if(k==='receber'||k==='caixinha')receber+=sum;else pagar+=sum;
+});
+let f={mensal:1,anual:12,'2032':84}[vis];
+document.getElementById('totalPagar').innerText='R$ '+(pagar*f).toFixed(2);
+document.getElementById('totalReceber').innerText='R$ '+(receber*f).toFixed(2);
+document.getElementById('totalSaldo').innerText='R$ '+((receber-pagar)*f).toFixed(2);
 }
-function setProj(p){
-proj=p;
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-document.getElementById('t-'+p).classList.add('active');
-updateProj();
-}
-function addConta(){
-let v=parseFloat(document.getElementById('valor').value);
-if(!v)return alert('Digite o valor!');
-let t=document.getElementById('tipo').value;
-let n=document.getElementById('nome').value;
-let nome=n ? n : t;
-contas.push({name:nome,valor:v});
-localStorage.setItem('pagflow',JSON.stringify(contas));
-document.getElementById('valor').value='';
-document.getElementById('nome').value='';
-renderContas();
-}
-function rem(i){
-contas.splice(i,1);
-localStorage.setItem('pagflow',JSON.stringify(contas));
-renderContas();
-}
-function renderExtra(){}
-function clearAll(){
-if(confirm('Apagar tudo?')){contas=[...contasPadrao];localStorage.removeItem('pagflow');renderContas();}
-}
-renderContas();
+function setVis(v,el){vis=v;document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');calcTotals();}
+function clearAll(){if(confirm('Apagar TUDO mesmo?')){dados={};localStorage.removeItem('pagflow_v3');renderCat();}}
+// inicial
+renderCat();
 </script>
 </body>
 </html>
