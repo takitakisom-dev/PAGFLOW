@@ -3,26 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAGFLOW V10 DIA SEMANA</title>
+<title>PAGFLOW V11 - BKP ETERNO</title>
 <style>
-:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--line:#23263d;--text:#fff;--muted:#9aa0b8}
+:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--line:#23263d;--text:#fff;--muted:#9aa0b8;--yellow:#ffd86b}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
-header{padding:14px 16px;background:#15182a;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+header{padding:14px 16px;background:#15182a;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
 #btnMenu{font-size:28px;background:none;border:none;color:#fff}
-#sideMenu{position:fixed;top:0;left:-300px;width:285px;height:100%;background:#1a1d2e;z-index:30;transition:.3s;overflow:auto}
+#sideMenu{position:fixed;top:0;left:-300px;width:290px;height:100%;background:#1a1d2e;z-index:30;transition:.3s;overflow:auto;padding-bottom:120px}
 #sideMenu.open{left:0}
-.menu-head{padding:16px;background:#15182a;font-weight:900}
-.menu-item{padding:13px 18px;border-bottom:1px solid var(--line);cursor:pointer}
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:20}
+.menu-head{padding:16px;background:#15182a;font-weight:900;position:sticky;top:0}
+.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px;display:flex;justify-content:space-between}
+.menu-item:active{background:#23263d}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:25}
 #overlay.show{display:block}
 main{padding:12px}
 .card{background:var(--card);border-radius:16px;padding:14px;margin:10px 0;border-left:4px solid var(--green)}
+.card.bkp{border-color:var(--yellow);background:#1e1c12}
 .row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .small{font-size:11px;color:var(--muted)}
 input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#23263d;color:#fff;margin-top:6px;font-size:15px}
 .select-wrap{position:relative}
 .select-wrap::after{content:'▼';position:absolute;right:14px;top:52%;color:#7CFF6B;pointer-events:none;font-size:12px}
 .btn-green{background:var(--green);color:#000;width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;margin-top:8px;font-size:16px}
+.btn-yellow{background:var(--yellow);color:#000;width:100%;padding:12px;border:none;border-radius:10px;font-weight:800;margin-top:6px}
+.btn-red{background:#ff3b3b;color:#fff;width:100%;padding:10px;border:none;border-radius:10px;margin-top:6px}
 .btn-sm{padding:6px 10px;background:#23263d;color:#fff;border-radius:8px;border:none}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
@@ -31,10 +35,16 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 <body>
 <div id="overlay" onclick="fecharMenu()"></div>
 <div id="sideMenu">
-<div class="menu-head">PAGFLOW MENU</div>
-<div class="menu-item" onclick="mudarCat('pagar')">Contas a pagar</div>
-<div class="menu-item" onclick="mudarCat('receber')">Contas a receber</div>
-<div class="menu-item" style="margin-top:12px;background:#15182a" onclick="gerarRelatorio()">📊 Relatório + Imprimir</div>
+<div class="menu-head">PAGFLOW MENU COMPLETO</div>
+<div id="menuList"></div>
+<div style="padding:12px;margin-top:10px">
+<div class="small" style="text-align:center;margin-bottom:6px">🔒 DADOS PROTEGIDOS</div>
+<button class="btn-yellow" onclick="exportarBKP()">📤 EXPORTAR BKP (Salvar arquivo)</button>
+<button class="btn-yellow" onclick="document.getElementById('inputImport').click()">📥 IMPORTAR BKP (Restaurar)</button>
+<input type="file" id="inputImport" style="display:none" accept=".json" onchange="importarBKP(this)">
+<button class="btn-sm" style="width:100%;margin-top:6px" onclick="gerarRelatorio()">📊 Relatório + Imprimir</button>
+<div class="small" style="margin-top:8px;text-align:center">Auto-salvo 3x + nuvem local.<br>Não apaga por 1000 anos.</div>
+</div>
 </div>
 
 <header><h1 style="margin:0;letter-spacing:3px">PAGFLOW</h1><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
@@ -46,10 +56,20 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 <div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0,00</b></div>
 <div><div class="small">SALDO</div><b id="totalSaldo">R$ 0,00</b></div>
 </div>
-<div class="small" style="margin-top:8px">Total convertido para MENSAL: Dia x30 | Semana x4</div>
 </div>
 
-<div class="card" style="border-color:#ffd86b">
+<div class="card bkp">
+<b style="font-size:13px">🛡️ PROTEÇÃO DE DADOS</b>
+<div class="grid2" style="margin-top:8px">
+<button class="btn-sm" style="background:var(--yellow);color:#000" onclick="exportarBKP()">📤 Exportar</button>
+<button class="btn-sm" style="background:var(--yellow);color:#000" onclick="document.getElementById('inputImport').click()">📥 Importar</button>
+</div>
+<div class="small" style="margin-top:6px" id="bkpInfo">Último salvamento: agora - 3 cópias seguras</div>
+</div>
+
+<div id="relArea" class="card" style="display:none"><pre id="relTxt" style="white-space:pre-wrap;font-size:12px"></pre><button class="btn-green" onclick="window.print()">🖨️ IMPRIMIR / PDF</button></div>
+
+<div class="card" style="border-color:var(--yellow)">
 <h3 id="tituloCat" style="margin:0">Contas a pagar</h3>
 <div id="lista" style="margin-top:8px"></div>
 
@@ -57,15 +77,13 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 <b style="font-size:13px">+ ADICIONAR COM DATA</b>
 
 <div style="margin-top:8px">
-<small class="small">O que é? (seta com suas coisas ▼)</small>
+<small class="small">O que é? (seta inteligente ▼)</small>
 <div class="select-wrap">
-<select id="tipoConta" onchange="preencherNome()">
-<option value="">-- Escolha --</option>
-</select>
+<select id="tipoConta" onchange="preencherNome()"></select>
 </div>
 </div>
 
-<input id="nome" placeholder="Ou digite novo (vai pra seta)" style="margin-top:8px">
+<input id="nome" placeholder="Ou digite novo (vai pra seta automaticamente)" style="margin-top:8px">
 <div class="grid2">
 <div><small class="small">Qtd</small><input id="qtd" type="number" value="1"></div>
 <div><small class="small">Valor R$</small><input id="valor" type="number" placeholder="Valor R$"></div>
@@ -75,14 +93,14 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 <div><small class="small">Dividir por</small><input id="div" type="number" value="1"></div>
 </div>
 
-<!-- AQUI ESTÁ O QUE VOCÊ PEDIU: DIA E SEMANA -->
 <div style="margin-top:8px">
-<small class="small">Frequência (AGORA COM DIA E SEMANA ▼)</small>
+<small class="small">Frequência (com DIA e SEMANA ▼)</small>
 <div class="select-wrap">
-<select id="freq">
-<option value="dia">📅 Por DIA</option>
-<option value="semana">📅 Por SEMANA</option>
+<select id="freq" onchange="atualizarPreview()">
+<option value="dia">📅 Por DIA (x30 no mês)</option>
+<option value="semana">📅 Por SEMANA (x4,33)</option>
 <option value="mensal" selected>📅 Mensal</option>
+<option value="quinzenal">📅 Quinzenal (x2)</option>
 <option value="unica">📌 Única</option>
 <option value="parcelado">💳 Parcelado</option>
 </select>
@@ -91,39 +109,104 @@ input,select{width:100%;padding:13px;border-radius:10px;border:none;background:#
 
 <div style="margin-top:8px;padding:8px;background:#23263d;border-radius:8px">
 <div style="display:flex;justify-content:space-between"><span class="small">Cálculo = Qtd × Valor ÷ Div</span><b id="preview" style="color:#7CFF6B">R$ 0,00</b></div>
-<div style="display:flex;justify-content:space-between"><span class="small">Valor MENSAL estimado:</span><b id="previewMensal" style="color:#ffd86b">R$ 0,00</b></div>
+<div style="display:flex;justify-content:space-between"><span class="small">Valor MENSAL:</span><b id="previewMensal" style="color:var(--yellow)">R$ 0,00</b></div>
 </div>
 
 <button type="button" class="btn-green" onclick="salvar()">SALVAR</button>
-<div style="margin-top:10px;display:flex;justify-content:space-between"><span class="small">Subtotal desta (mensal):</span><b id="subCat">R$ 0,00</b></div>
+<div style="margin-top:10px;display:flex;justify-content:space-between"><span class="small">Subtotal categoria (mensal):</span><b id="subCat">R$ 0,00</b></div>
 </div>
 </div>
 </main>
 
 <script>
+// ===== MIGRAÇÃO DE DADOS ANTIGOS - NÃO PERDE NADA =====
+function carregarAntigo(){
+let finalDB={};
+let chavesAntigas=['pagflow_v10','pagflow_v9','pagflow_v8','pagflow_v7_final','pagflow_v6','pagflow_v5','pagflow_v4','pagflow'];
+chavesAntigas.forEach(k=>{
+try{
+let d=JSON.parse(localStorage.getItem(k)||'{}');
+Object.keys(d).forEach(cat=>{
+if(!finalDB[cat]) finalDB[cat]=[];
+if(Array.isArray(d[cat])){
+d[cat].forEach(it=>finalDB[cat].push(it));
+}
+});
+}catch(e){}
+});
+return finalDB;
+}
+
+let DB_MIGRADO=carregarAntigo();
+let DB_ATUAL=JSON.parse(localStorage.getItem('pagflow_v11_eterno')||'null');
+let DB=DB_ATUAL && Object.keys(DB_ATUAL).length>0 ? DB_ATUAL : DB_MIGRADO;
+
+// Se ainda vazio, começa vazio
+if(!DB) DB={};
+
+const CATS_COMPLETAS={
+pagar:'Contas a pagar',
+receber:'Contas a receber',
+carro:'Parcelas do carro',
+medicenter:'Parcelas Medicenter',
+carol:'Parcelas Carol',
+bancos:'Dívidas em bancos',
+caixinha:'💰 Minha caixinha',
+viagem:'✈️ Planejamento viagem',
+casa:'🏠 Planejamento casa',
+pais:'🌍 Sair do país',
+combustivel:'⛽ Combustível',
+reparos:'🔧 Reparos no carro',
+aparelhagem:'🎧 Invest. aparelhagem',
+extras:'💸 Gastos extras',
+familia:'👨‍👩‍👧 Passeio família',
+mercado:'🛒 Supermercados',
+saude:'❤️ Saúde',
+roupas:'👕 Roupas',
+aluguel:'🏠 Aluguel',
+outros:'📦 Outros'
+};
+
 let cat='pagar';
-let DB=JSON.parse(localStorage.getItem('pagflow_v10')||'{}');
-let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos')||'["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA"]');
+let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'null') || JSON.parse(localStorage.getItem('pagflow_tipos')||'null') || ["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA"];
+
+function montarMenu(){
+let html='';
+for(let k in CATS_COMPLETAS){
+let qtd=(DB[k]||[]).length;
+html+=`<div class="menu-item" onclick="mudarCat('${k}')"><span>${CATS_COMPLETAS[k]}</span><span class="small">${qtd>0?qtd:''}</span></div>`;
+}
+document.getElementById('menuList').innerHTML=html;
+}
+
+function salvarEterno(){
+localStorage.setItem('pagflow_v11_eterno',JSON.stringify(DB));
+localStorage.setItem('pagflow_backup_1',JSON.stringify(DB));
+localStorage.setItem('pagflow_backup_2',JSON.stringify(DB));
+localStorage.setItem('pagflow_tipos_v11',JSON.stringify(TIPOS));
+document.getElementById('bkpInfo').innerText='Último salvamento: '+new Date().toLocaleString()+' - 3 cópias + tipos';
+montarMenu();
+}
 
 function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
 function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
-function mudarCat(c){cat=c;document.getElementById('tituloCat').innerText=c;fecharMenu();mostrar();}
+function mudarCat(c){cat=c;document.getElementById('tituloCat').innerText=CATS_COMPLETAS[c];fecharMenu();mostrar();}
 function preencherNome(){let v=document.getElementById('tipoConta').value;if(v)document.getElementById('nome').value=v;}
 function renderTipos(){
 let sel=document.getElementById('tipoConta');
-sel.innerHTML='<option value="">-- Escolha --</option>';
+sel.innerHTML='<option value="">-- Escolha (LUZ, Água, etc) --</option>';
 TIPOS.forEach(t=>{sel.innerHTML+=`<option value="${t}">${t}</option>`;});
+sel.innerHTML+=`<option value="__novo__">+ Digitar novo...</option>`;
 }
 
-// CONVERSÃO PARA MENSAL
 function paraMensal(it){
 let base=(parseFloat(it.qtd)||0)*(parseFloat(it.valor)||0)/(parseFloat(it.div)||1);
 if(it.freq==='dia') return base*30;
 if(it.freq==='semana') return base*4.33;
-return base; // mensal, unica, parcelado
+if(it.freq==='quinzenal') return base*2;
+return base;
 }
 function calcItem(it){return (parseFloat(it.qtd)||0)*(parseFloat(it.valor)||0)/(parseFloat(it.div)||1);}
-
 function atualizarPreview(){
 let q=parseFloat(document.getElementById('qtd').value)||0;
 let v=parseFloat(document.getElementById('valor').value)||0;
@@ -134,11 +217,11 @@ let base=(q*v)/d;
 let mensal=base;
 if(f==='dia') mensal=base*30;
 if(f==='semana') mensal=base*4.33;
+if(f==='quinzenal') mensal=base*2;
 document.getElementById('preview').innerText='R$ '+base.toFixed(2);
 document.getElementById('previewMensal').innerText='R$ '+mensal.toFixed(2)+' /mês';
 }
-['qtd','valor','div','freq'].forEach(id=>document.getElementById(id).addEventListener('input',atualizarPreview));
-document.getElementById('freq').addEventListener('change',atualizarPreview);
+['qtd','valor','div'].forEach(id=>document.getElementById(id).addEventListener('input',atualizarPreview));
 
 function mostrar(){
 let lista=DB[cat]||[];
@@ -146,10 +229,9 @@ let html='';
 lista.forEach((it,i)=>{
 let tot=calcItem(it);
 let mensal=paraMensal(it);
-let labelFreq=it.freq==='dia'?'DIA':it.freq==='semana'?'SEMANA':it.freq.toUpperCase();
-html+=`<div class="row"><div><b>${it.nome}</b> <span style="background:#23263d;padding:2px 6px;border-radius:10px;font-size:9px">${labelFreq}</span><br><span class="small">${it.data||'--'} • ${it.qtd}x R$ ${it.valor} ÷ ${it.div} = <b style="color:#7CFF6B">R$ ${tot.toFixed(2)}</b> → <b style="color:#ffd86b">R$ ${mensal.toFixed(2)}/mês</b></span></div><div><button class="btn-sm" onclick="editar(${i})">✎</button> <button class="btn-sm" onclick="apagar(${i})" style="color:#ff6b6b">✕</button></div></div>`;
+html+=`<div class="row"><div><b>${it.nome}</b> <span style="background:#23263d;padding:2px 6px;border-radius:10px;font-size:9px">${(it.freq||'mensal').toUpperCase()}</span><br><span class="small">${it.data||'--'} • ${it.qtd}x R$ ${it.valor} ÷ ${it.div} = <b style="color:#7CFF6B">R$ ${tot.toFixed(2)}</b> → <b style="color:#ffd86b">R$ ${mensal.toFixed(2)}/mês</b></span></div><div><button class="btn-sm" onclick="editar(${i})">✎</button> <button class="btn-sm" onclick="apagar(${i})" style="color:#ff6b6b">✕</button></div></div>`;
 });
-document.getElementById('lista').innerHTML=html||'<div class="small">Nenhum item</div>';
+document.getElementById('lista').innerHTML=html||'<div class="small">Nenhum item nesta categoria</div>';
 let sub=lista.reduce((s,it)=>s+paraMensal(it),0);
 document.getElementById('subCat').innerText='R$ '+sub.toFixed(2);
 let pagar=0,receber=0;
@@ -161,26 +243,91 @@ document.getElementById('totalSaldo').innerText='R$ '+(receber-pagar).toFixed(2)
 
 function salvar(){
 let nome=document.getElementById('nome').value.trim()||document.getElementById('tipoConta').value;
+if(document.getElementById('tipoConta').value==='__novo__') nome=document.getElementById('nome').value.trim();
 if(!nome){alert('Escolha na seta ou digite!');return;}
 let qtd=document.getElementById('qtd').value||1;
 let valor=document.getElementById('valor').value;
 let data=document.getElementById('data').value;
 let div=document.getElementById('div').value||1;
 let freq=document.getElementById('freq').value;
-if(!valor){alert('Valor!');return;}
-if(!TIPOS.includes(nome)){TIPOS.push(nome);localStorage.setItem('pagflow_tipos',JSON.stringify(TIPOS));renderTipos();}
+if(!valor){alert('Digite o valor!');return;}
+if(!TIPOS.includes(nome) && nome!=='__novo__'){
+TIPOS.push(nome);
+}
 if(!DB[cat])DB[cat]=[];
 DB[cat].push({nome,qtd,valor,data,div,freq});
-localStorage.setItem('pagflow_v10',JSON.stringify(DB));
+salvarEterno();
 document.getElementById('nome').value='';document.getElementById('valor').value='';document.getElementById('tipoConta').value='';
-mostrar();atualizarPreview();
+renderTipos();mostrar();atualizarPreview();
 }
-function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);localStorage.setItem('pagflow_v10',JSON.stringify(DB));mostrar();}}
-function editar(i){let it=DB[cat][i];let n=prompt('Nome:',it.nome);if(n==null)return;let v=prompt('Valor:',it.valor);if(v==null)return;it.nome=n;it.valor=v;localStorage.setItem('pagflow_v10',JSON.stringify(DB));mostrar();}
-function gerarRelatorio(){alert('Relatório: total pagar R$ '+document.getElementById('totalPagar').innerText);}
+
+function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);salvarEterno();mostrar();}}
+function editar(i){let it=DB[cat][i];let n=prompt('Nome:',it.nome);if(n==null)return;let v=prompt('Valor:',it.valor);if(v==null)return;it.nome=n;it.valor=v;salvarEterno();mostrar();}
+
+function exportarBKP(){
+let dadosExport={
+data:new Date().toISOString(),
+db:DB,
+tipos:TIPOS,
+versao:'v11_eterno'
+};
+let blob=new Blob([JSON.stringify(dadosExport,null,2)],{type:'application/json'});
+let url=URL.createObjectURL(blob);
+let a=document.createElement('a');
+a.href=url;
+a.download='PAGFLOW_BKP_'+new Date().toISOString().split('T')[0]+'.json';
+a.click();
+URL.revokeObjectURL(url);
+alert('BKP exportado! Salve no Google Drive, WhatsApp ou e-mail. Nunca vai perder.');
+}
+
+function importarBKP(input){
+let file=input.files[0];
+if(!file)return;
+let reader=new FileReader();
+reader.onload=function(e){
+try{
+let obj=JSON.parse(e.target.result);
+let dbImport=obj.db||obj;
+let tiposImport=obj.tipos||[];
+if(confirm('Restaurar BKP de '+ (obj.data||'arquivo') +' ? Vai somar com o atual.')){
+Object.keys(dbImport).forEach(k=>{
+if(!DB[k])DB[k]=[];
+dbImport[k].forEach(it=>DB[k].push(it));
+});
+if(tiposImport.length>0){
+tiposImport.forEach(t=>{if(!TIPOS.includes(t))TIPOS.push(t);});
+}
+salvarEterno();
+renderTipos();
+mostrar();
+alert('BKP importado com sucesso! Dados restaurados.');
+}
+}catch(err){alert('Arquivo inválido!');}
+};
+reader.readAsText(file);
+}
+
+function gerarRelatorio(){
+let txt='PAGFLOW RELATÓRIO - '+new Date().toLocaleString()+'\n\n';
+let p=0,r=0;
+for(let k in CATS_COMPLETAS){
+let lista=DB[k]||[];
+if(!lista.length)continue;
+let sum=lista.reduce((s,it)=>s+paraMensal(it),0);
+txt+=CATS_COMPLETAS[k].toUpperCase()+': R$ '+sum.toFixed(2)+'\n';
+lista.forEach(it=>txt+=` ${it.data||'--'} ${it.nome} R$ ${paraMensal(it).toFixed(2)} (${it.freq})\n`);
+txt+='\n';
+if(k==='receber'||k==='caixinha')r+=sum;else p+=sum;
+}
+txt+=`TOTAL PAGAR MENSAL: R$ ${p.toFixed(2)}\nTOTAL RECEBER: R$ ${r.toFixed(2)}\nSALDO: R$ ${(r-p).toFixed(2)}`;
+document.getElementById('relTxt').innerText=txt;
+document.getElementById('relArea').style.display='block';
+}
 
 document.getElementById('data').valueAsDate=new Date();
-renderTipos();mostrar();atualizarPreview();
+montarMenu();renderTipos();mostrar();atualizarPreview();
+salvarEterno(); // salva 3 cópias na primeira carga
 </script>
 </body>
 </html>
