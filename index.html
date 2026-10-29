@@ -3,154 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAGFLOW V5</title>
+<title>PAGFLOW V7</title>
 <style>
-:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--blue:#6bb8ff;--yellow:#ffd86b;--line:#23263d;--text:#fff;--muted:#9aa0b8}
+:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--red:#ff6b6b;--line:#23263d;--text:#fff;--muted:#9aa0b8}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
-header{padding:14px;background:#15182a;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between}
-#menuBtn{font-size:26px;background:none;border:none;color:#fff}
+header{padding:14px 16px;background:#15182a;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+#btnMenu{font-size:28px;background:none;border:none;color:#fff}
 #sideMenu{position:fixed;top:0;left:-300px;width:285px;height:100%;background:#1a1d2e;z-index:30;transition:.3s;overflow:auto}
 #sideMenu.open{left:0}
 .menu-head{padding:16px;background:#15182a;font-weight:900}
-.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);cursor:pointer;display:flex;justify-content:space-between}
+.menu-item{padding:13px 18px;border-bottom:1px solid var(--line);cursor:pointer}
 #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:20}
 #overlay.show{display:block}
 main{padding:12px}
-.card{background:var(--card);border-radius:14px;padding:12px;margin:10px 0;border-left:4px solid var(--green)}
-.card.red{border-color:var(--red)}.card.blue{border-color:var(--blue)}.card.yellow{border-color:var(--yellow)}
-.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);gap:6px}
+.card{background:var(--card);border-radius:16px;padding:14px;margin:10px 0;border-left:4px solid var(--green)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .small{font-size:11px;color:var(--muted)}
-input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#23263d;color:#fff;margin-top:5px}
-button{padding:10px;border-radius:8px;border:none;font-weight:800;cursor:pointer}
-.btn-green{background:var(--green);color:#000;width:100%;margin-top:6px}
-.btn-sm{padding:5px 9px;background:#23263d;color:#fff;font-size:11px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center}
-.tab{padding:6px 10px;background:#23263d;border-radius:20px;font-size:11px;cursor:pointer}
-.tab.active{background:var(--green);color:#000}
-@media print{header,#sideMenu,#overlay,.noPrint{display:none}body{background:#fff;color:#000}.card{border:1px solid #000;break-inside:avoid}}
+input,select{width:100%;padding:12px;border-radius:10px;border:none;background:#23263d;color:#fff;margin-top:6px}
+.btn-green{background:var(--green);color:#000;width:100%;padding:14px;border:none;border-radius:10px;font-weight:900;margin-top:8px;font-size:16px}
+.btn-sm{padding:6px 10px;background:#23263d;color:#fff;border-radius:8px;border:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center}
 </style>
 </head>
 <body>
-<div id="overlay" onclick="toggleMenu()"></div>
+<div id="overlay" onclick="fecharMenu()"></div>
 <div id="sideMenu">
 <div class="menu-head">PAGFLOW MENU</div>
-<div class="menu-item" onclick="openCat('pagar')">Contas a pagar</div>
-<div class="menu-item" onclick="openCat('receber')">Contas a receber</div>
-<div class="menu-item" onclick="openCat('carro')">Parcelas do carro</div>
-<div class="menu-item" onclick="openCat('medicenter')">Parcelas Medicenter</div>
-<div class="menu-item" onclick="openCat('carol')">Parcelas Carol</div>
-<div class="menu-item" onclick="openCat('bancos')">Dívidas em bancos</div>
-<div class="menu-item" onclick="openCat('caixinha')">💰 Minha caixinha</div>
-<div class="menu-item" onclick="openCat('viagem')">✈️ Viagem</div>
-<div class="menu-item" onclick="openCat('casa')">🏠 Casa</div>
-<div class="menu-item" onclick="openCat('pais')">🌍 Sair do país</div>
-<div class="menu-item" onclick="openCat('combustivel')">⛽ Combustível</div>
-<div class="menu-item" onclick="openCat('reparos')">🔧 Reparos carro</div>
-<div class="menu-item" onclick="openCat('aparelhagem')">🎧 Aparelhagem</div>
-<div class="menu-item" onclick="openCat('extras')">💸 Extras</div>
-<div class="menu-item" onclick="openCat('familia')">👨‍👩‍👧 Família</div>
-<div class="menu-item" onclick="openCat('mercado')">🛒 Mercado</div>
-<div class="menu-item" onclick="openCat('saude')">❤️ Saúde</div>
-<div class="menu-item" onclick="openCat('roupas')">👕 Roupas</div>
-<div class="menu-item" onclick="openCat('aluguel')">🏠 Aluguel</div>
-<div class="menu-item" style="margin-top:10px;background:#15182a" onclick="openRelatorio()">📊 RELATÓRIO COMPLETO</div>
-<div class="menu-item" onclick="window.print()">🖨️ IMPRIMIR / PDF</div>
-<div class="menu-item" onclick="instalar()">📲 INSTALAÇÃO APP</div>
+<div class="menu-item" onclick="mudarCat('pagar')">Contas a pagar</div>
+<div class="menu-item" onclick="mudarCat('receber')">Contas a receber</div>
+<div class="menu-item" onclick="mudarCat('carro')">Parcelas do carro</div>
+<div class="menu-item" onclick="mudarCat('medicenter')">Parcelas Medicenter</div>
+<div class="menu-item" onclick="mudarCat('carol')">Parcelas Carol</div>
+<div class="menu-item" onclick="mudarCat('bancos')">Dívidas em bancos</div>
+<div class="menu-item" onclick="mudarCat('caixinha')">💰 Minha caixinha</div>
+<div class="menu-item" onclick="mudarCat('viagem')">✈️ Viagem</div>
+<div class="menu-item" onclick="mudarCat('casa')">🏠 Casa</div>
+<div class="menu-item" onclick="mudarCat('pais')">🌍 Sair do país</div>
+<div class="menu-item" onclick="mudarCat('combustivel')">⛽ Combustível</div>
+<div class="menu-item" onclick="mudarCat('reparos')">🔧 Reparos carro</div>
+<div class="menu-item" onclick="mudarCat('aparelhagem')">🎧 Aparelhagem</div>
+<div class="menu-item" onclick="mudarCat('extras')">💸 Extras</div>
+<div class="menu-item" onclick="mudarCat('familia')">👨‍👩‍👧 Família</div>
+<div class="menu-item" onclick="mudarCat('mercado')">🛒 Mercado</div>
+<div class="menu-item" onclick="mudarCat('saude')">❤️ Saúde</div>
+<div class="menu-item" onclick="mudarCat('roupas')">👕 Roupas</div>
+<div class="menu-item" onclick="mudarCat('aluguel')">🏠 Aluguel</div>
+<div class="menu-item" style="margin-top:12px;background:#15182a" onclick="gerarRelatorio()">📊 Relatório + Imprimir</div>
 </div>
 
-<header>
-<h1 style="margin:0;letter-spacing:2px">PAGFLOW</h1>
-<button id="menuBtn" onclick="toggleMenu()">☰</button>
-</header>
+<header><h1 style="margin:0;letter-spacing:3px">PAGFLOW</h1><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
 
 <main>
 <div class="card">
 <div class="grid3">
-<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0</b></div>
-<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0</b></div>
-<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0</b></div>
+<div><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0,00</b></div>
+<div><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0,00</b></div>
+<div><div class="small">SALDO</div><b id="totalSaldo">R$ 0,00</b></div>
 </div>
-<div class="grid2" style="margin-top:8px">
-<div><small class="small">Filtrar por dia:</small><input id="filtroDia" type="date" onchange="render()"></div>
-<div><small class="small">Ver:</small><select id="filtroTipo" onchange="render()"><option value="todos">Todos os dias</option><option value="dia">Só do dia</option><option value="atrasado">Atrasados</option></select></div>
+<div class="grid2" style="margin-top:10px">
+<div><small class="small">Filtrar por dia:</small><input id="filtroDia" type="date" onchange="mostrar()"></div>
+<div><small class="small">Ver:</small><select id="filtroVer" onchange="mostrar()"><option value="todos">Todos os dias</option><option value="dia">Só deste dia</option></select></div>
 </div>
-</div>
-
-<div id="areaRelatorio" class="card blue" style="display:none">
-<h3 style="margin:0">📊 Relatório Financeiro</h3>
-<div id="relConteudo"></div>
-<button class="btn-green noPrint" onclick="window.print()">🖨️ Imprimir este relatório</button>
-<button class="btn-sm noPrint" onclick="document.getElementById('areaRelatorio').style.display='none'">Fechar</button>
 </div>
 
-<div class="card yellow">
-<h3 id="catTitle" style="margin:0">Contas a pagar</h3>
-<div id="catList"></div>
+<div id="relArea" class="card" style="display:none">
+<h3 style="margin:0">📊 Relatório</h3>
+<pre id="relTxt" style="white-space:pre-wrap;font-size:12px"></pre>
+<button class="btn-green" onclick="window.print()">🖨️ IMPRIMIR / PDF</button>
+</div>
 
-<div class="noPrint" style="margin-top:12px;background:#15182a;padding:10px;border-radius:10px">
-<b style="font-size:12px">+ ADICIONAR COM DATA</b>
-<input id="f_nome" placeholder="Ex: Conta luz">
+<div class="card" style="border-color:#ffd86b">
+<h3 id="tituloCat" style="margin:0">Contas a pagar</h3>
+<div id="lista" style="margin-top:8px"></div>
+
+<div style="margin-top:14px;background:#15182a;padding:12px;border-radius:12px">
+<b style="font-size:13px">+ ADICIONAR COM DATA</b>
+<input id="nome" placeholder="Ex: Luz" value="Luz">
 <div class="grid2">
-<input id="f_qtd" type="number" value="1" placeholder="Qtd">
-<input id="f_valor" type="number" step="0.01" placeholder="Valor R$">
+<div><small class="small">Qtd</small><input id="qtd" type="number" value="1"></div>
+<div><small class="small">Valor R$</small><input id="valor" type="number" value="230"></div>
 </div>
 <div class="grid2">
-<div><small class="small">Vencimento</small><input id="f_data" type="date"></div>
-<div><small class="small">Dividir por</small><input id="f_div" type="number" value="1"></div>
+<div><small class="small">Vencimento</small><input id="data" type="date" value="2026-11-10"></div>
+<div><small class="small">Dividir por</small><input id="div" type="number" value="1"></div>
 </div>
-<select id="f_tipoCat"><option value="mensal">Mensal</option><option value="unica">Única</option><option value="parcelado">Parcelado</option></select>
-<div class="small" style="margin-top:6px">Cálculo: <span id="preview">R$ 0,00</span> = Qtd × Valor ÷ Div</div>
-<button class="btn-green" onclick="addItem()">SALVAR</button>
-<div style="margin-top:8px;display:flex;justify-content:space-between"><span class="small">Subtotal categoria:</span><b id="subCat">R$ 0</b></div>
+<select id="tipo" style="margin-top:6px"><option>Mensal</option><option>Única</option><option>Parcelado</option></select>
+<div style="margin-top:8px;padding:8px;background:#23263d;border-radius:8px;display:flex;justify-content:space-between">
+<span class="small">Cálculo:</span><b id="preview" style="color:#7CFF6B">R$ 230,00</b><span class="small">= Qtd × Valor ÷ Div</span>
+</div>
+<button type="button" class="btn-green" onclick="salvar()">SALVAR</button>
+<div style="margin-top:10px;display:flex;justify-content:space-between"><span class="small">Subtotal desta:</span><b id="subCat">R$ 0,00</b></div>
+<div style="display:flex;justify-content:space-between"><span class="small">Total geral:</span><b id="totalGeral">R$ 0,00</b></div>
 </div>
 </div>
 </main>
 
 <script>
-let catAtual='pagar', deferredPrompt=null;
-let dados=JSON.parse(localStorage.getItem('pagflow_v5')||'{}');
-const cats={pagar:'Contas a pagar',receber:'Contas a receber',carro:'Parcelas do carro',medicenter:'Medicenter',carol:'Carol',bancos:'Dívidas bancos',caixinha:'Minha caixinha',viagem:'Viagem',casa:'Casa',pais:'Sair do país',combustivel:'Combustível',reparos:'Reparos',aparelhagem:'Aparelhagem',extras:'Extras',familia:'Família',mercado:'Supermercados',saude:'Saúde',roupas:'Roupas',aluguel:'Aluguel'};
+// LIMPA VERSÕES ANTIGAS COM BUG
+// localStorage.clear() foi removido pra não apagar seu, mas vamos usar chave nova
+let cat='pagar';
+let DB=JSON.parse(localStorage.getItem('pagflow_v7_final')||'{}');
 
-function toggleMenu(){document.getElementById('sideMenu').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
-function openCat(c){catAtual=c;toggleMenu();render();}
-function calcItem(it){return (parseFloat(it.qtd||1)*parseFloat(it.valor||0))/(parseFloat(it.div||1));}
+function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
+function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+function mudarCat(c){cat=c;document.getElementById('tituloCat').innerText=c;fecharMenu();mostrar();}
 
-document.getElementById('f_qtd').addEventListener('input',upPrev);document.getElementById('f_valor').addEventListener('input',upPrev);document.getElementById('f_div').addEventListener('input',upPrev);
-function upPrev(){let q=document.getElementById('f_qtd').value||1,v=document.getElementById('f_valor').value||0,d=document.getElementById('f_div').value||1;document.getElementById('preview').innerText='R$ '+((q*v)/d).toFixed(2);}
+function calcItem(it){let q=parseFloat(it.qtd)||0;let v=parseFloat(it.valor)||0;let d=parseFloat(it.div)||1;if(d==0)d=1;return (q*v)/d;}
 
-function render(){
-let filtroDia=document.getElementById('filtroDia').value;
-let filtroTipo=document.getElementById('filtroTipo').value;
-document.getElementById('catTitle').innerText=cats[catAtual];
-let lista=dados[catAtual]||[];
-let listaFiltrada=lista.filter(it=>{
-if(!filtroDia||filtroTipo==='todos')return true;
-if(filtroTipo==='dia')return it.data===filtroDia;
-if(filtroTipo==='atrasado'){return it.data && it.data < new Date().toISOString().split('T')[0];}
-return true;
+function atualizarPreview(){
+let q=parseFloat(document.getElementById('qtd').value)||0;
+let v=parseFloat(document.getElementById('valor').value)||0;
+let d=parseFloat(document.getElementById('div').value)||1;
+if(d==0)d=1;
+let total=(q*v)/d;
+document.getElementById('preview').innerText='R$ '+total.toFixed(2);
+}
+
+// ATUALIZA PREVIEW A CADA DIGITAÇÃO
+['qtd','valor','div'].forEach(id=>{
+document.getElementById(id).addEventListener('input',atualizarPreview);
+document.getElementById(id).addEventListener('keyup',atualizarPreview);
 });
-let html=listaFiltrada.map((it,realIdx)=>{
-let idx=lista.indexOf(it);
-let atrasado=it.data && it.data < new Date().toISOString().split('T')[0] ? '🔴' : '📅';
-return `<div class="row"><div><b>${it.nome}</b> ${atrasado}<br><span class="small">${it.data||'sem data'} • ${it.qtd}×R$${Number(it.valor).toFixed(2)}÷${it.div}= <b style="color:var(--green)">R$${calcItem(it).toFixed(2)}</b></span></div><div><button class="btn-sm" onclick="editItem(${idx})">✎</button> <button class="btn-sm" style="color:var(--red)" onclick="delItem(${idx})">✕</button></div></div>`;
-}).join('');
-document.getElementById('catList').innerHTML=html||'<div class="small">Nenhum item neste filtro. Mude o dia ou adicione.</div>';
-let sub=listaFiltrada.reduce((s,it)=>s+calcItem(it),0);
+
+function mostrar(){
+let filtroDia=document.getElementById('filtroDia').value;
+let filtroVer=document.getElementById('filtroVer').value;
+let lista=DB[cat]||[];
+let filtrada=lista;
+if(filtroDia && filtroVer==='dia'){filtrada=lista.filter(it=>it.data===filtroDia);}
+
+let html='';
+for(let i=0;i<filtrada.length;i++){
+let it=filtrada[i];
+let idxReal=lista.indexOf(it);
+let tot=calcItem(it);
+html+=`<div class="row"><div><b>${it.nome}</b><br><span class="small">${it.data||'--'} • ${it.qtd} x ${it.valor} / ${it.div} = <b style="color:#7CFF6B">R$ ${tot.toFixed(2)}</b></span></div><div><button class="btn-sm" onclick="editar(${idxReal})">✎</button> <button class="btn-sm" onclick="apagar(${idxReal})" style="color:#ff6b6b">✕</button></div></div>`;
+}
+document.getElementById('lista').innerHTML=html||'<div class="small">Nenhum item</div>';
+
+let sub=filtrada.reduce((s,it)=>s+calcItem(it),0);
 document.getElementById('subCat').innerText='R$ '+sub.toFixed(2);
-calcTotals();
+
+// totais gerais
+let pagar=0,receber=0;
+for(let k in DB){
+let s=DB[k].reduce((a,it)=>a+calcItem(it),0);
+if(k==='receber'||k==='caixinha')receber+=s;else pagar+=s;
 }
-function addItem(){
-let nome=document.getElementById('f_nome').value||'Item';
-let qtd=document.getElementById('f_qtd').value||1;
-let valor=document.getElementById('f_valor').value;
-if(!valor)return alert('Valor!');
-let data=document.getElementById('f_data').value;
-let div=document.getElementById('f_div').value||1;
-let tipo=document.getElementById('f_tipoCat').value;
-if(!dados[catAtual])dados[catAtual]=[];
-dados[catAtual].push({nome,qtd,valor,data,div,tipo});
-localStorage.setItem('pagflow_v5',JSON.stringify(dados));
-document.getElementById('f_nome').value='';document.getElementById('f_valor').value='';render();
+document.getElementById('totalPagar').innerText='R$ '+pagar.toFixed(2);
+document.getElementById('totalReceber').innerText='R$ '+receber.toFixed(2);
+document.getElementById('totalSaldo').innerText='R$ '+(receber-pagar).toFixed(2);
+document.getElementById('totalGeral').innerText='R$ '+pagar.toFixed(2);
 }
-function delItem(i){if(confirm('Apagar?')){dados[catAtual].s
+
+function salvar(){
+let nome=document.getElementById('nome').value||'Item';
+let qtd=document.getElementById('qtd').value||1;
+let valor=document.getElementById('valor').value;
+let data=document.getElementById('data').value;
+let div=document.getElementById('div').value||1;
+let tipo=document.getElementById('tipo').value;
+
+if(!valor || Number(valor)==0){alert('Digite o valor!');return;}
+
+if(!DB[cat])DB[cat]=[];
+DB[cat].push({nome,qtd,valor,data,div,tipo});
+localStorage.setItem('pagflow_v7_final',JSON.stringify(DB));
+
+// limpa
+document.getElementById('nome').value='';
+document.getElementById('valor').value='';
+mostrar();
+atualizarPreview();
+alert('Salvo! '+nome+' R$ '+calcItem({qtd,valor,div}).toFixed(2));
+}
+
+function apagar(i){
+if(confirm('Apagar?')){DB[cat].splice(i,1);localStorage.setItem('pagflow_v7_final',JSON.stringify(DB));mostrar();}
+}
+function editar(i){
+let it=DB[cat][i];
+let n=prompt('Nome:',it.nome);if(n==null)return;
+let v=prompt('Valor:',it.valor);if(v==null)return;
+let d=prompt('Data:',it.data);if(d==null)return;
+it.nome=n;it.valor=v;it.data=d;
+localStorage.setItem('pagflow_v7_final',JSON.stringify(DB));
+mostrar();
+}
+function gerarRelatorio(){
+let dia=document.getElementById('filtroDia').value||'Todos os dias';
+let txt='PAGFLOW - Relatório: '+dia+'\n\n';
+let totP=0,totR=0;
+for(let k in DB){
+let lista=DB[k];
+if(dia!='Todos os dias') lista=lista.filter(it=>it.data===dia);
+if(lista.length==0) continue;
+let sum=lista.reduce((s,it)=>s+calcItem(it),0);
+txt+=k.toUpperCase()+':\n';
+lista.forEach(it=>{txt+=` ${it.data} - ${it.nome}: R$ ${calcItem(it).toFixed(2)}\n`;});
+txt+=` Subtotal: R$ ${sum.toFixed(2)}\n\n`;
+if(k==='receber'||k==='caixinha')totR+=sum;else totP+=sum;
+}
+txt+=`TOTAL PAGAR: R$ ${totP.toFixed(2)}\nTOTAL RECEBER: R$ ${totR.toFixed(2)}\nSALDO: R$ ${(totR-totP).toFixed(2)}`;
+document.getElementById('relTxt').innerText=txt;
+document.getElementById('relArea').style.display='block';
+}
+mostrar();atualizarPreview();
+</script>
+</body>
+</html>
