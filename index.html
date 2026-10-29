@@ -5,58 +5,131 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAGFLOW</title>
 <style>
-body{margin:0;background:#0f111a;color:#fff;font-family:Arial;padding:16px}
-h1{font-size:32px;letter-spacing:3px}
-.card{background:#1a1d2e;border-radius:16px;padding:16px;margin:14px 0;border-left:4px solid #7CFF6B}
-.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222}
-button{width:100%;padding:14px;background:#7CFF6B;color:#000;font-weight:900;border:none;border-radius:12px;margin-top:10px}
-input,select{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;background:#23263d;color:#fff}
-.tabs{display:flex;gap:6px;margin:12px 0}
-.tab{padding:8px 14px;background:#23263d;border-radius:20px;font-size:12px}
-.tab.active{background:#7CFF6B;color:#000}
+:root{--bg:#0f111a;--card:#1a1d2e;--green:#7CFF6B;--text:#fff;--muted:#9aa0b8}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text);padding:0}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px;background:#15182a;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:28px;letter-spacing:3px}
+#menuBtn{font-size:28px;background:none;border:none;color:#fff;cursor:pointer}
+#sideMenu{position:fixed;top:0;left:-260px;width:250px;height:100%;background:#1a1d2e;padding:20px;transition:0.3s;z-index:20}
+#sideMenu.open{left:0}
+#sideMenu a{display:block;padding:12px 0;color:#fff;text-decoration:none;border-bottom:1px solid #23263d}
+#overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:15}
+#overlay.show{display:block}
+main{padding:16px}
+.card{background:var(--card);border-radius:18px;padding:16px;margin:14px 0;border-left:4px solid var(--green)}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #23263d}
+.tabs{display:flex;gap:8px;margin:12px 0;overflow:auto}
+.tab{padding:8px 16px;background:#23263d;border-radius:20px;font-size:12px;cursor:pointer;white-space:nowrap}
+.tab.active{background:var(--green);color:#000;font-weight:800}
+input,select,button{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;background:#23263d;color:#fff;font-size:14px}
+button.green{background:var(--green);color:#000;font-weight:900;cursor:pointer}
+.small{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
-<h1>PAGFLOW</h1>
 
-<div class="card">
-<div class="row"><span>💧 Água</span><b>R$ 85,00</b></div>
-<div class="row"><span>💡 Luz</span><b>R$ 180,00</b></div>
-<div class="row"><span>📞 Telefone/Internet</span><b>R$ 89,90</b></div>
-<div class="row"><span>🏠 Aluguel</span><b>R$ 1.800,00</b></div>
-<div class="row"><span>💳 Cartão</span><b>R$ 943,10</b></div>
-<div style="margin-top:10px;font-weight:900;color:#7CFF6B">TOTAL: R$ 3.098,00 / mês</div>
+<div id="overlay" onclick="toggleMenu()"></div>
+<div id="sideMenu">
+<h2>PAGFLOW</h2>
+<a href="#" onclick="showSection('dashboard');toggleMenu()">📊 Dashboard</a>
+<a href="#" onclick="showSection('contas');toggleMenu()">💳 Minhas Contas</a>
+<a href="#" onclick="showSection('proj');toggleMenu()">📈 Projeção 2032</a>
+<a href="#" onclick="clearAll();toggleMenu()">🗑️ Limpar tudo</a>
+<div class="small" style="margin-top:20px">v2.0 • até 2032</div>
 </div>
+
+<header>
+<h1>PAGFLOW</h1>
+<button id="menuBtn" onclick="toggleMenu()">☰</button>
+</header>
+
+<main>
+<div id="dashboard">
+<div class="card" id="cardContas"></div>
 
 <div class="card">
 <b>Projeção até 2032</b>
 <div class="tabs">
-<div class="tab active">Mensal</div>
-<div class="tab">Anual</div>
-<div class="tab">Até 2032</div>
+<div class="tab active" id="t-mensal" onclick="setProj('mensal')">Mensal</div>
+<div class="tab" id="t-anual" onclick="setProj('anual')">Anual</div>
+<div class="tab" id="t-2032" onclick="setProj('2032')">Até 2032</div>
 </div>
-<div>💰 Em 7 anos (2026-2032): <b style="color:#7CFF6B">R$ 260.232,00</b></div>
-<div style="font-size:12px;color:#9aa0b8;margin-top:6px">Diário: R$ 103,26 | Semanal: R$ 722,00 | Quinzenal: R$ 1.549,00</div>
+<div id="projText" style="font-size:18px;font-weight:800;color:var(--green)"></div>
+<div class="small" id="projSmall"></div>
 </div>
 
 <div class="card">
 <b>➕ Adicionar conta</b>
-<select id="t"><option>Água</option><option>Luz</option><option>Telefone</option><option>Aluguel</option><option>Cartão</option><option>Outro</option></select>
-<input id="v" type="number" placeholder="Valor R$">
-<button onclick="add()">SALVAR</button>
-<div id="l" style="margin-top:10px"></div>
+<select id="tipo"><option>Água</option><option>Luz</option><option>Telefone/Internet</option><option>Aluguel</option><option>Cartão</option><option>Internet</option><option>Gás</option><option>Mercado</option><option>Outro</option></select>
+<input id="nome" placeholder="Nome ex: Vivo Fibra (opcional)">
+<input id="valor" type="number" step="0.01" placeholder="Valor R$ ex: 89.90">
+<button class="green" onclick="addConta()">SALVAR</button>
+<div id="listaExtra" style="margin-top:10px"></div>
 </div>
+</div>
+</main>
 
 <script>
-let contas=[];
-function add(){
-let val=Number(document.getElementById('v').value);
-let tip=document.getElementById('t').value;
-if(!val)return alert('Digite o valor');
-contas.push({tip,val});
-document.getElementById('l').innerHTML+=`<div class="row"><span>${tip}</span><b>R$ ${val.toFixed(2)}</b></div>`;
-document.getElementById('v').value='';
+let proj='mensal';
+let contasPadrao=[
+{name:'💧 Água',valor:85},
+{name:'💡 Luz',valor:180},
+{name:'📞 Telefone/Internet',valor:89.90},
+{name:'🏠 Aluguel',valor:1800},
+{name:'💳 Cartão',valor:943.10}
+];
+let contas=JSON.parse(localStorage.getItem('pagflow')||'null')||[...contasPadrao];
+
+function toggleMenu(){
+document.getElementById('sideMenu').classList.toggle('open');
+document.getElementById('overlay').classList.toggle('show');
 }
+function showSection(s){window.scrollTo(0,0);}
+
+function renderContas(){
+let total=contas.reduce((a,c)=>a+c.valor,0);
+let html=contas.map((c,i)=>`<div class="row"><span>${c.name}</span><span><b>R$ ${c.valor.toFixed(2)}</b> <span style="color:#ff7b7b;cursor:pointer" onclick="rem(${i})">✕</span></span></div>`).join('');
+html+=`<div style="margin-top:10px;font-weight:900;color:var(--green)">TOTAL: R$ ${total.toFixed(2)} / mês</div>`;
+document.getElementById('cardContas').innerHTML=html;
+updateProj();
+renderExtra();
+}
+function updateProj(){
+let total=contas.reduce((a,c)=>a+c.valor,0);
+let txt=document.getElementById('projText');
+let small=document.getElementById('projSmall');
+if(proj==='mensal'){txt.innerText=`R$ ${total.toFixed(2)} por mês`;small.innerText=`Diário: R$ ${(total/30).toFixed(2)} | Semanal: R$ ${(total/4.3).toFixed(2)}`;}
+if(proj==='anual'){txt.innerText=`R$ ${(total*12).toFixed(2)} por ano`;small.innerText=`12 meses x R$ ${total.toFixed(2)}`;}
+if(proj==='2032'){txt.innerText=`R$ ${(total*12*7).toFixed(2)} até 2032`;small.innerText=`7 anos (2026-2032) • ${total.toFixed(2)} x 84 meses`;}
+}
+function setProj(p){
+proj=p;
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.getElementById('t-'+p).classList.add('active');
+updateProj();
+}
+function addConta(){
+let v=parseFloat(document.getElementById('valor').value);
+if(!v)return alert('Digite o valor!');
+let t=document.getElementById('tipo').value;
+let n=document.getElementById('nome').value;
+let nome=n ? n : t;
+contas.push({name:nome,valor:v});
+localStorage.setItem('pagflow',JSON.stringify(contas));
+document.getElementById('valor').value='';
+document.getElementById('nome').value='';
+renderContas();
+}
+function rem(i){
+contas.splice(i,1);
+localStorage.setItem('pagflow',JSON.stringify(contas));
+renderContas();
+}
+function renderExtra(){}
+function clearAll(){
+if(confirm('Apagar tudo?')){contas=[...contasPadrao];localStorage.removeItem('pagflow');renderContas();}
+}
+renderContas();
 </script>
 </body>
 </html>
