@@ -1,231 +1,74 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAGFLOW V14 - TUDO EM CONTAS A PAGAR</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#120e24;--bg2:#1a1433;--card:#1e1a36;--card2:#2a2450;--purple:#8B5CF6;--purple2:#7C3AED;--green:#A7F3D0;--red:#FCA5A5;--line:#2e2850;--text:#fff;--muted:#9ca3c7}
-*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:linear-gradient(180deg,var(--bg),#0f0c1f);color:var(--text);min-height:100vh}
-header{padding:18px 20px;background:rgba(18,14,36,.9);backdrop-filter:blur(12px);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line)}
-.logo{font-weight:700;letter-spacing:5px;font-size:20px}
-.logo span{color:var(--purple)}
-#btnMenu{font-size:24px;background:var(--card2);width:40px;height:40px;border-radius:10px;border:1px solid var(--line);color:#fff}
-#sideMenu{position:fixed;top:0;left:-320px;width:300px;height:100%;background:#13102a;z-index:40;transition:.35s;overflow:auto;border-right:1px solid var(--line);padding-bottom:20px}
-#sideMenu.open{left:0}
-.menu-head{padding:22px 20px;font-weight:700;letter-spacing:3px;background:#0f0c1f;position:sticky;top:0;border-bottom:1px solid var(--line)}
-.menu-item{padding:14px 20px;border-bottom:1px solid #1e1a36;cursor:pointer;font-size:13px;display:flex;justify-content:space-between}
-.menu-item.active{background:var(--card2);border-left:3px solid var(--purple)}
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30}
-#overlay.show{display:block}
-main{padding:16px;max-width:460px;margin:0 auto}
-.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.sum-card{background:linear-gradient(135deg,var(--card),var(--bg2));border-radius:16px;padding:14px;text-align:center;border:1px solid var(--line)}
-.card{background:var(--card);border-radius:20px;padding:16px;margin:14px 0;border:1px solid var(--line)}
-.card-title{font-weight:600;font-size:14px;margin:0 0 12px 0;display:flex;justify-content:space-between}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #242046}
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V16 FINAL</title>
+<style>:root{--bg:#fff;--card:#f5f5f5;--card2:#eee;--line:#ddd;--text:#000;--green:#15803d;--red:#b91c1c;--muted:#666}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
+header{padding:14px 18px;background:var(--card);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+#btnMenu{width:38px;height:38px;border-radius:8px;border:1px solid var(--line);background:var(--card2)}
+#sideMenu{position:fixed;top:0;left:-300px;width:280px;height:100%;background:#fff;z-index:20;transition:.3s;overflow:auto;border-right:1px solid var(--line)}
+#sideMenu.open{left:0}.menu-head{padding:18px;font-weight:800;border-bottom:1px solid var(--line);background:var(--card)}
+.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:15}#overlay.show{display:block}
+main{padding:12px;max-width:460px;margin:0 auto}
+.sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.sum b{display:block;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:none}
 .small{font-size:11px;color:var(--muted)}
-.badge{font-size:9px;background:var(--card2);padding:4px 8px;border-radius:20px;border:1px solid var(--line)}
-input,select{width:100%;padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:#fff;margin-top:6px;font-size:14px}
-.select-wrap{position:relative}
-.select-wrap::after{content:'▼';position:absolute;right:14px;top:55%;color:var(--purple);pointer-events:none;font-size:10px}
-.btn-main{background:linear-gradient(135deg,var(--purple),var(--purple2));color:#fff;width:100%;padding:15px;border:none;border-radius:12px;font-weight:700;margin-top:12px;font-size:14px;cursor:pointer}
-.btn-sm{padding:6px 10px;background:var(--card2);color:#fff;border-radius:8px;border:1px solid var(--line);font-size:11px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.calc-box{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:10px;display:flex;justify-content:space-between}
-</style>
-</head>
-<body>
+.badge{font-size:10px;border:1px solid var(--line);border-radius:12px;padding:2px 6px;background:var(--card2)}
+.badge.pago{color:var(--green);border-color:#86efac;background:#dcfce7}
+.badge.dev{color:var(--red);border-color:#fca5a5;background:#fee2e2}
+input,select{width:100%;padding:11px;border-radius:8px;border:1px solid var(--line);background:#fff;color:#000;margin-top:4px}
+.btn{width:100%;padding:13px;background:#000;color:#fff;border:none;border-radius:8px;font-weight:700;margin-top:8px}
+.btn2{padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card2);font-size:11px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.calc{border:1px dashed var(--line);border-radius:8px;padding:8px;margin-top:6px;display:flex;justify-content:space-between;background:var(--card2)}
+</style></head><body>
 <div id="overlay" onclick="fecharMenu()"></div>
-<div id="sideMenu">
-<div class="menu-head">PAGFLOW <span style="color:#8B5CF6">PRO</span></div>
-<div class="menu-item active" onclick="mudarCat('pagar')"><span>📌 Contas a pagar (PRINCIPAL)</span><span id="qtdPagarMenu" class="small"></span></div>
-<div class="menu-item" onclick="mudarCat('receber')"><span>Contas a receber</span></div>
-<div class="menu-item" onclick="mudarCat('carro')"><span>Parcelas do carro</span></div>
-<div class="menu-item" onclick="mudarCat('medicenter')"><span>Medicenter</span></div>
-<div class="menu-item" onclick="mudarCat('carol')"><span>Carol</span></div>
-<div class="menu-item" onclick="mudarCat('bancos')"><span>Dívidas bancos</span></div>
-<div class="menu-item" onclick="mudarCat('caixinha')"><span>💰 Caixinha</span></div>
-<div class="menu-item" onclick="mudarCat('viagem')"><span>✈️ Viagem</span></div>
-<div class="menu-item" onclick="mudarCat('casa')"><span>🏠 Casa</span></div>
-<div class="menu-item" onclick="mudarCat('pais')"><span>🌍 Sair do país</span></div>
-<div class="menu-item" onclick="mudarCat('combustivel')"><span>⛽ Combustível</span></div>
-<div class="menu-item" onclick="mudarCat('reparos')"><span>🔧 Reparos carro</span></div>
-<div class="menu-item" onclick="mudarCat('aparelhagem')"><span>🎧 Aparelhagem</span></div>
-<div class="menu-item" onclick="mudarCat('extras')"><span>💸 Extras</span></div>
-<div class="menu-item" onclick="mudarCat('familia')"><span>👨‍👩‍👧 Família</span></div>
-<div class="menu-item" onclick="mudarCat('mercado')"><span>🛒 Mercado</span></div>
-<div class="menu-item" onclick="mudarCat('saude')"><span>❤️ Saúde</span></div>
-<div class="menu-item" onclick="mudarCat('roupas')"><span>👕 Roupas</span></div>
-<div class="menu-item" onclick="mudarCat('aluguel')"><span>🏠 Aluguel</span></div>
-<div style="padding:12px;margin-top:10px;border-top:1px solid var(--line)">
-<button onclick="exportarBKP()" style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;margin-bottom:8px">📤 Exportar BKP</button>
-<button onclick="document.getElementById('inputImport').click()" style="width:100%;padding:12px;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff">📥 Importar BKP</button>
-<input type="file" id="inputImport" style="display:none" accept=".json" onchange="importarBKP(this)">
-<div class="small" style="text-align:center;margin-top:8px" id="bkpInfo">3 cópias seguras</div>
-</div>
-</div>
-
-<header><div class="logo">PAGFLOW <span>PRO</span></div><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
-
+<div id="sideMenu"><div class="menu-head">PAGFLOW</div>
+<div class="menu-item" onclick="mudarCat('pagar')"><b>📌 Contas a pagar (PRINCIPAL)</b></div>
+<div class="menu-item" onclick="mudarCat('receber')">Contas a receber</div>
+<div class="menu-item" onclick="mudarCat('carro')">Parcelas carro</div>
+<div class="menu-item" onclick="mudarCat('bancos')">Dívidas bancos</div>
+<div class="menu-item" onclick="mudarCat('mercado')">Mercado</div>
+<div class="menu-item" onclick="mudarCat('aluguel')">Aluguel</div>
+<div style="padding:10px"><button onclick="exportarBKP()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px">📤 Exportar BKP</button>
+<button onclick="document.getElementById('imp').click()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;margin-top:6px">📥 Importar BKP</button>
+<input type="file" id="imp" style="display:none" accept=".json" onchange="importarBKP(this)"><div id="bkp" class="small" style="text-align:center;margin-top:6px"></div></div></div>
+<header><div style="font-weight:800;letter-spacing:3px">PAGFLOW</div><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
 <main>
-<div class="summary">
-<div class="sum-card"><div class="small">A PAGAR</div><b id="totalPagar" style="color:var(--red)">R$ 0,00</b></div>
-<div class="sum-card"><div class="small">A RECEBER</div><b id="totalReceber" style="color:var(--green)">R$ 0,00</b></div>
-<div class="sum-card"><div class="small">SALDO</div><b id="totalSaldo">R$ 0,00</b></div>
-</div>
-
-<div class="card">
-<div class="card-title"><span id="tituloCat">📌 Contas a pagar (PRINCIPAL)</span><span class="badge" id="qtdCat">0 itens</span></div>
-<div class="small" style="margin-bottom:10px">Tudo que você adicionar na seta vai cair aqui dentro, igual seu print com LUZ</div>
-<div id="lista"></div>
-
-<div style="margin-top:16px;background:var(--bg2);padding:14px;border-radius:14px;border:1px solid var(--line)">
-<div style="font-weight:600;font-size:13px;margin-bottom:10px">+ ADICIONAR COM DATA → vai para Contas a pagar</div>
-
-<div>
-<div class="small">O que é? (LUZ, Água, etc)</div>
-<div class="select-wrap"><select id="tipoConta" onchange="preencherNome()"></select></div>
-</div>
-
-<input id="nome" placeholder="Ou digite novo (vai pra seta + Contas a pagar)" style="margin-top:8px">
-
-<div class="grid2" style="margin-top:8px">
-<div><div class="small">Qtd</div><input id="qtd" type="number" value="1"></div>
-<div><div class="small">Valor R$</div><input id="valor" type="number" placeholder="0,00"></div>
-</div>
-
-<div class="grid2" style="margin-top:8px">
-<div><div class="small">Vencimento</div><input id="data" type="date"></div>
-<div><div class="small">Dividir</div><input id="div" type="number" value="1"></div>
-</div>
-
-<div style="margin-top:8px">
-<div class="small">Frequência</div>
-<div class="select-wrap">
-<select id="freq" onchange="atualizarPreview()">
-<option value="dia">Dia • x30/mês</option>
-<option value="semana">Semana • x4,33</option>
-<option value="quinzenal">Quinzenal • x2</option>
-<option value="mensal" selected>Mensal</option>
-<option value="unica">Única</option>
-<option value="parcelado">Parcelado</option>
-</select>
-</div>
-</div>
-
-<div class="calc-box">
-<div><div class="small">Cálculo</div><div class="small">Mensal</div></div>
-<div style="text-align:right"><b id="preview" style="color:var(--green)">R$ 0,00</b><br><b id="previewMensal" style="color:#c4b5fd">R$ 0,00 /mês</b></div>
-</div>
-
-<button class="btn-main" onclick="salvar()">SALVAR EM CONTAS A PAGAR</button>
-<div style="margin-top:12px;display:flex;justify-content:space-between"><span class="small">Subtotal Contas a pagar</span><b id="subCat">R$ 0,00</b></div>
-</div>
-</div>
-</main>
-
+<div class="sum"><div><div class="small">A PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b></div><div><div class="small">A RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b></div><div><div class="small">SALDO</div><b id="tSaldo">R$ 0,00</b></div></div>
+<div class="card"><div style="display:flex;justify-content:space-between"><b id="tit">📌 Contas a pagar</b><span class="badge" id="qtd">0 itens</span></div><div class="small">Tudo que escolher na seta cai aqui - igual seu print com LUZ</div><div id="lista" style="margin-top:8px"></div>
+<div style="background:var(--card2);padding:10px;border-radius:10px;margin-top:12px;border:1px solid var(--line)">
+<div style="font-weight:700;font-size:12px">+ ADICIONAR → Contas a pagar</div>
+<div class="small">O que é?</div><select id="tipo" onchange="document.getElementById('nome').value=this.value"></select>
+<input id="nome" placeholder="Ou digite novo (vira opção da seta)">
+<div class="grid2" style="margin-top:6px"><div><div class="small">Qtd</div><input id="qtdI" type="number" value="1"></div><div><div class="small">Valor R$</div><input id="valor" type="number"></div></div>
+<div class="grid2" style="margin-top:6px"><div><div class="small">Vencimento</div><input id="data" type="date"></div><div><div class="small">Dividir</div><input id="div" type="number" value="1"></div></div>
+<div style="margin-top:6px"><div class="small">Frequência</div><select id="freq" onchange="prev()"><option value="dia">Dia x30</option><option value="semana">Semana x4,33</option><option value="quinzenal">Quinzenal x2</option><option value="mensal" selected>Mensal</option><option value="unica">Única</option></select></div>
+<div class="calc"><div><div class="small">Total</div><div class="small" style="color:var(--green)">Mensal</div></div><div style="text-align:right"><b id="pv">R$ 0,00</b><br><b id="pm" style="color:var(--green)">R$ 0,00</b></div></div>
+<button class="btn" onclick="salvar()">SALVAR EM CONTAS A PAGAR</button>
+<div style="display:flex;justify-content:space-between;margin-top:8px"><span class="small">Subtotal</span><b id="sub">R$ 0,00</b></div>
+</div></div></main>
 <script>
-function carregarAntigo(){
-let finalDB={};
-['pagflow_v13_nubank','pagflow_v12_pro','pagflow_v11_eterno','pagflow_v10','pagflow_v9','pagflow_v8','pagflow_backup_1'].forEach(k=>{
-try{let d=JSON.parse(localStorage.getItem(k)||'{}');Object.keys(d).forEach(cat=>{if(!finalDB[cat])finalDB[cat]=[];if(Array.isArray(d[cat]))d[cat].forEach(it=>finalDB[cat].push(it));});}catch(e){}
-});
-return finalDB;
-}
-let DB_MIGRADO=carregarAntigo();
-let DB_ATUAL=JSON.parse(localStorage.getItem('pagflow_v14_contasapagar')||'null');
-let DB=DB_ATUAL && Object.keys(DB_ATUAL).length>0 ? DB_ATUAL : DB_MIGRADO;
-if(!DB)DB={};
-if(!DB.pagar)DB.pagar=[];
-
-let cat='pagar';
+let DB=JSON.parse(localStorage.getItem('pagflow_v16_final')||'null');
+if(!DB){let o={};['pagflow_v15_simples','pagflow_v14_contasapagar','pagflow_v13_nubank','pagflow_v11_eterno','pagflow_backup_1'].forEach(k=>{try{let d=JSON.parse(localStorage.getItem(k)||'{}');Object.keys(d).forEach(c=>{if(!o[c])o[c]=[];if(Array.isArray(d[c]))d[c].forEach(x=>o[c].push(x));})}catch{}});DB=o;}
+if(!DB.pagar)DB.pagar=[];let cat='pagar';
 let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'null')||["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA"];
-
-function salvarEterno(){
-localStorage.setItem('pagflow_v14_contasapagar',JSON.stringify(DB));
-localStorage.setItem('pagflow_backup_1',JSON.stringify(DB));
-localStorage.setItem('pagflow_backup_2',JSON.stringify(DB));
-localStorage.setItem('pagflow_tipos_v11',JSON.stringify(TIPOS));
-document.getElementById('qtdPagarMenu').innerText=DB.pagar.length+' itens';
-document.getElementById('bkpInfo').innerText='Salvo: '+new Date().toLocaleTimeString();
-}
+function salvarE(){localStorage.setItem('pagflow_v16_final',JSON.stringify(DB));localStorage.setItem('pagflow_backup_1',JSON.stringify(DB));localStorage.setItem('pagflow_tipos_v11',JSON.stringify(TIPOS));document.getElementById('bkp').innerText='Salvo '+new Date().toLocaleTimeString();}
 function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
 function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
-function mudarCat(c){cat=c;let nomes={pagar:'📌 Contas a pagar (PRINCIPAL)',receber:'Contas a receber',carro:'Parcelas do carro',medicenter:'Medicenter',carol:'Carol',bancos:'Dívidas bancos',caixinha:'💰 Caixinha',viagem:'✈️ Viagem',casa:'🏠 Casa',pais:'🌍 Sair do país',combustivel:'⛽ Combustível',reparos:'🔧 Reparos carro',aparelhagem:'🎧 Aparelhagem',extras:'💸 Extras',familia:'👨‍👩‍👧 Família',mercado:'🛒 Mercado',saude:'❤️ Saúde',roupas:'👕 Roupas',aluguel:'🏠 Aluguel'};document.getElementById('tituloCat').innerText=nomes[c]||c;fecharMenu();mostrar();}
-function preencherNome(){let v=document.getElementById('tipoConta').value;if(v)document.getElementById('nome').value=v;}
-function renderTipos(){
-let sel=document.getElementById('tipoConta');
-sel.innerHTML='<option value="">-- Escolha (LUZ, Água, etc) --</option>';
-TIPOS.forEach(t=>sel.innerHTML+=`<option value="${t}">${t}</option>`);
-}
-function paraMensal(it){let b=(parseFloat(it.qtd)||0)*(parseFloat(it.valor)||0)/(parseFloat(it.div)||1);if(it.freq==='dia')return b*30;if(it.freq==='semana')return b*4.33;if(it.freq==='quinzenal')return b*2;return b;}
-function calcItem(it){return (parseFloat(it.qtd)||0)*(parseFloat(it.valor)||0)/(parseFloat(it.div)||1);}
-function atualizarPreview(){
-let q=parseFloat(document.getElementById('qtd').value)||0;let v=parseFloat(document.getElementById('valor').value)||0;let d=parseFloat(document.getElementById('div').value)||1;let f=document.getElementById('freq').value;if(d==0)d=1;let base=(q*v)/d;let mensal=base;if(f==='dia')mensal=base*30;if(f==='semana')mensal=base*4.33;if(f==='quinzenal')mensal=base*2;
-document.getElementById('preview').innerText='R$ '+base.toFixed(2);
-document.getElementById('previewMensal').innerText='R$ '+mensal.toFixed(2)+' /mês';
-}
-['qtd','valor','div'].forEach(id=>document.getElementById(id).addEventListener('input',atualizarPreview));
-
-function mostrar(){
-let lista=DB[cat]||[];
-let html='';
-lista.forEach((it,i)=>{
-let tot=calcItem(it);let mensal=paraMensal(it);
-html+=`<div class="row"><div style="flex:1"><div style="display:flex;gap:8px;align-items:center"><b>${it.nome}</b><span class="badge">${(it.freq||'mensal').toUpperCase()}</span></div><div class="small">${it.data||'--'} • ${it.qtd}x R$ ${it.valor} ÷ ${it.div} = <span style="color:#A7F3D0">R$ ${tot.toFixed(2)}</span> → <span style="color:#c4b5fd">R$ ${mensal.toFixed(2)}/mês</span></div></div><div style="display:flex;gap:6px"><button class="btn-sm" onclick="editar(${i})">✎</button><button class="btn-sm" onclick="apagar(${i})" style="color:#FCA5A5">✕</button></div></div>`;
-});
-document.getElementById('lista').innerHTML=html||'<div class="small" style="padding:12px;text-align:center">Nenhum item. Adicione LUZ, Água, etc</div>';
-document.getElementById('qtdCat').innerText=lista.length+' itens';
-document.getElementById('subCat').innerText='R$ '+lista.reduce((s,it)=>s+paraMensal(it),0).toFixed(2);
-let pagar=(DB.pagar||[]).reduce((a,it)=>a+paraMensal(it),0);
-let receber=(DB.receber||[]).reduce((a,it)=>a+paraMensal(it),0)+(DB.caixinha||[]).reduce((a,it)=>a+paraMensal(it),0);
-document.getElementById('totalPagar').innerText='R$ '+pagar.toFixed(2);
-document.getElementById('totalReceber').innerText='R$ '+receber.toFixed(2);
-document.getElementById('totalSaldo').innerText='R$ '+(receber-pagar).toFixed(2);
-document.getElementById('qtdPagarMenu').innerText=DB.pagar.length+' itens';
-}
-
-// AQUI ESTÁ O SEGREDO QUE VOCÊ PEDIU: SEMPRE SALVA EM CONTAS A PAGAR
-function salvar(){
-let nome=document.getElementById('nome').value.trim()||document.getElementById('tipoConta').value;
-if(!nome){alert('Escolha na seta ou digite!');return;}
-let qtd=document.getElementById('qtd').value||1;
-let valor=document.getElementById('valor').value;
-let data=document.getElementById('data').value;
-let div=document.getElementById('div').value||1;
-let freq=document.getElementById('freq').value;
-if(!valor){alert('Digite o valor!');return;}
-if(!TIPOS.includes(nome)){TIPOS.push(nome);renderTipos();}
-
-// SEMPRE VAI PARA CONTAS A PAGAR
-if(!DB.pagar)DB.pagar=[];
-DB.pagar.push({nome,qtd,valor,data,div,freq});
-
-salvarEterno();
-document.getElementById('nome').value='';
-document.getElementById('valor').value='';
-document.getElementById('tipoConta').value='';
-cat='pagar';
-document.getElementById('tituloCat').innerText='📌 Contas a pagar (PRINCIPAL)';
-mostrar();atualizarPreview();
-}
-
-function apagar(i){if(confirm('Apagar este item de Contas a pagar?')){DB[cat].splice(i,1);salvarEterno();mostrar();}}
-function editar(i){let it=DB[cat][i];let n=prompt('Nome:',it.nome);if(n==null)return;let v=prompt('Valor:',it.valor);if(v==null)return;it.nome=n;it.valor=v;salvarEterno();mostrar();}
-function exportarBKP(){
-let blob=new Blob([JSON.stringify({data:new Date().toISOString(),db:DB,tipos:TIPOS},null,2)],{type:'application/json'});
-let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='PAGFLOW_CONTAS_A_PAGAR_'+new Date().toISOString().split('T')[0]+'.json';a.click();URL.revokeObjectURL(url);
-}
-function importarBKP(input){
-let file=input.files[0];if(!file)return;let r=new FileReader();
-r.onload=function(e){try{let obj=JSON.parse(e.target.result);let dbI=obj.db||obj;let tI=obj.tipos||[];if(confirm('Restaurar BKP? Vai somar com Contas a pagar.')){Object.keys(dbI).forEach(k=>{if(!DB[k])DB[k]=[];dbI[k].forEach(it=>DB[k].push(it));});tI.forEach(t=>{if(!TIPOS.includes(t))TIPOS.push(t);});salvarEterno();renderTipos();mostrar();alert('Restaurado em Contas a pagar!');}}catch{alert('Inválido');}};
-r.readAsText(file);
-}
-
-document.getElementById('data').valueAsDate=new Date();
-renderTipos();mostrar();atualizarPreview();salvarEterno();
-</script>
-</body>
-</html>
+function mudarCat(c){cat=c;document.getElementById('tit').innerText=c==='pagar'?'📌 Contas a pagar':c;fecharMenu();mostrar();}
+function renderT(){let s=document.getElementById('tipo');s.innerHTML='<option value="">-- Escolha --</option>';TIPOS.forEach(t=>s.innerHTML+=`<option value="${t}">${t}</option>`);}
+function pm(it){let b=(+it.qtdI||+it.qtd||1)*(+it.valor||0)/(+it.div||1);if(it.freq==='dia')return b*30;if(it.freq==='semana')return b*4.33;if(it.freq==='quinzenal')return b*2;return b;}
+function tot(it){return (+it.qtdI||+it.qtd||1)*(+it.valor||0)/(+it.div||1);}
+function prev(){let q=+document.getElementById('qtdI').value||1;let v=+document.getElementById('valor').value||0;let d=+document.getElementById('div').value||1;let f=document.getElementById('freq').value;let b=(q*v)/d;let m=b;if(f==='dia')m=b*30;if(f==='semana')m=b*4.33;if(f==='quinzenal')m=b*2;document.getElementById('pv').innerText='R$ '+b.toFixed(2);document.getElementById('pm').innerText='R$ '+m.toFixed(2);}
+['qtdI','valor','div'].forEach(id=>document.getElementById(id).addEventListener('input',prev));
+function mostrar(){let l=DB[cat]||[];let h='';l.forEach((it,i)=>{let t=tot(it);let m=pm(it);let st=cat==='receber'?'pago':'dev';h+=`<div class="row"><div><div style="display:flex;gap:6px;align-items:center"><b>${it.nome}</b><span class="badge ${st}">${it.freq||'mensal'}</span><span class="badge ${st}">${st==='pago'?'PAGO':'DEVEDOR'}</span></div><div class="small">${it.data||'--'} ${it.qtdI||it.qtd||1}x R$ ${it.valor} ÷ ${it.div||1} = R$ ${t.toFixed(2)} → <b style="color:${st==='pago'?'var(--green)':'var(--red)'}">R$ ${m.toFixed(2)}/mês</b></div></div><div><button class="btn2" onclick="editar(${i})">✎</button> <button class="btn2" onclick="apagar(${i})" style="color:var(--red)">✕</button></div></div>`;});document.getElementById('lista').innerHTML=h||'<div class="small" style="text-align:center;padding:10px">Nenhum item</div>';document.getElementById('qtd').innerText=l.length+' itens';document.getElementById('sub').innerText='R$ '+l.reduce((s,it)=>s+pm(it),0).toFixed(2);let p=(DB.pagar||[]).reduce((a,i)=>a+pm(i),0);let r=(DB.receber||[]).reduce((a,i)=>a+pm(i),0);document.getElementById('tPagar').innerText='R$ '+p.toFixed(2);document.getElementById('tReceber').innerText='R$ '+r.toFixed(2);let s=r-p;document.getElementById('tSaldo').innerText='R$ '+s.toFixed(2);document.getElementById('tSaldo').style.color=s>=0?'var(--green)':'var(--red)';}
+function salvar(){let nome=document.getElementById('nome').value.trim()||document.getElementById('tipo').value;if(!nome){alert('Escolha ou digite');return;}let qtdI=document.getElementById('qtdI').value||1;let valor=document.getElementById('valor').value;let data=document.getElementById('data').value;let div=document.getElementById('div').value||1;let freq=document.getElementById('freq').value;if(!valor){alert('Valor');return;}if(!TIPOS.includes(nome)){TIPOS.push(nome);renderT();}if(!DB.pagar)DB.pagar=[];DB.pagar.push({nome,qtd:qtdI,qtdI,valor,data,div,freq});salvarE();document.getElementById('nome').value='';document.getElementById('valor').value='';document.getElementById('tipo').value='';cat='pagar';document.getElementById('tit').innerText='📌 Contas a pagar';mostrar();prev();}
+function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);salvarE();mostrar();}}
+function editar(i){let it=DB[cat][i];let n=prompt('Nome',it.nome);if(n==null)return;let v=prompt('Valor',it.valor);if(v==null)return;it.nome=n;it.valor=v;salvarE();mostrar();}
+function exportarBKP(){let blob=new Blob([JSON.stringify({db:DB,tipos:TIPOS},null,2)],{type:'application/json'});let u=URL.createObjectURL(blob);let a=document.createElement('a');a.href=u;a.download='PAGFLOW_BKP.json';a.click();}
+function importarBKP(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{try{let o=JSON.parse(e.target.result);let d=o.db||o;Object.keys(d).forEach(k=>{if(!DB[k])DB[k]=[];d[k].forEach(x=>DB[k].push(x));});salvarE();mostrar();alert('Restaurado');}catch{alert('Inválido');}};r.readAsText(f);}
+document.getElementById('data').valueAsDate=new Date();renderT();mostrar();prev();salvarE();
+</script></body></html>
