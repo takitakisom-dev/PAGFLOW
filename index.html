@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAGFLOW</title>
+<style>
+body{margin:0;background:#0f111a;color:#fff;font-family:Arial;padding:16px}
+h1{font-size:32px;letter-spacing:3px}
+.card{background:#1a1d2e;border-radius:16px;padding:16px;margin:14px 0;border-left:4px solid #7CFF6B}
+.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #222}
+button{width:100%;padding:14px;background:#7CFF6B;color:#000;font-weight:900;border:none;border-radius:12px;margin-top:10px}
+input,select{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;background:#23263d;color:#fff}
+.tabs{display:flex;gap:6px;margin:12px 0}
+.tab{padding:8px 14px;background:#23263d;border-radius:20px;font-size:12px}
+.tab.active{background:#7CFF6B;color:#000}
+</style>
+</head>
+<body>
+<h1>PAGFLOW</h1>
+
+<div class="card">
+<div class="row"><span>💧 Água</span><b>R$ 85,00</b></div>
+<div class="row"><span>💡 Luz</span><b>R$ 180,00</b></div>
+<div class="row"><span>📞 Telefone/Internet</span><b>R$ 89,90</b></div>
+<div class="row"><span>🏠 Aluguel</span><b>R$ 1.800,00</b></div>
+<div class="row"><span>💳 Cartão</span><b>R$ 943,10</b></div>
+<div style="margin-top:10px;font-weight:900;color:#7CFF6B">TOTAL: R$ 3.098,00 / mês</div>
+</div>
+
+<div class="card">
+<b>Projeção até 2032</b>
+<div class="tabs">
+<div class="tab active">Mensal</div>
+<div class="tab">Anual</div>
+<div class="tab">Até 2032</div>
+</div>
+<div>💰 Em 7 anos (2026-2032): <b style="color:#7CFF6B">R$ 260.232,00</b></div>
+<div style="font-size:12px;color:#9aa0b8;margin-top:6px">Diário: R$ 103,26 | Semanal: R$ 722,00 | Quinzenal: R$ 1.549,00</div>
+</div>
+
+<div class="card">
+<b>➕ Adicionar conta</b>
+<select id="t"><option>Água</option><option>Luz</option><option>Telefone</option><option>Aluguel</option><option>Cartão</option><option>Outro</option></select>
+<input id="v" type="number" placeholder="Valor R$">
+<button onclick="add()">SALVAR</button>
+<div id="l" style="margin-top:10px"></div>
+</div>
+
+<script>
+let contas=[];
+function add(){
+let val=Number(document.getElementById('v').value);
+let tip=document.getElementById('t').value;
+if(!val)return alert('Digite o valor');
+contas.push({tip,val});
+document.getElementById('l').innerHTML+=`<div class="row"><span>${tip}</span><b>R$ ${val.toFixed(2)}</b></div>`;
+document.getElementById('v').value='';
+}
+</script>
+</body>
+</html>
