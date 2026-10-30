@@ -1,21 +1,9 @@
 {
-  "name": "Finanças Pessoais 2026-2032",
-  "short_name": "Finanças",
-  "description": "Controle pessoal até 2032 - água, luz, telefone, aluguel, cartão",
-  "start_url": "./index.html",
+  "name": "PAGFLOW V36",
+  "short_name": "PAGFLOW",
+  "start_url": "./?v=36",
   "display": "standalone",
-  "background_color": "#0f111a",
-  "theme_color": "#7CFF6B",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#2563eb",
+  "theme_color": "#2563eb",
+  "icons": [{"src":"https://cdn-icons-png.flaticon.com/512/2830/2830284.png","sizes":"512x512","type":"image/png"}]
 }
