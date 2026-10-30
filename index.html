@@ -1,7 +1,72 @@
-<!-- ADICIONE ISSO DENTRO DO <head> DO V26, logo depois do <title> -->
-<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUEFHRkxPVyBWMjciLCJzaG9ydF9uYW1lIjoiUEFHRkxPVyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjMjU2M2ViIiwidGhlbWVfY29sb3IiOiIjMjU2M2ViIiwiaWNvbnMiOlt7InNyYyI6Imh0dHBzOi8vY2RuLmljb25zY291dC5jb20vaWNvbi9mcmVlL3BuZy0yNTYvZmluYW5jZS0xNDQyODUucG5nIiwic2l6ZXMiOiIyNTZ4MjU2IiwidHlwZSI6ImltYWdlL3BuZyJ9XX0=">
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="theme-color" content="#2563eb"><title>PAGFLOW V28</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>:root{--blue:#2563eb;--green:#16a34a;--red:#dc2626;--bg:#f1f5f9;--card:#fff;--line:#e2e8f0}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:var(--bg);font-size:15px}
+header{position:sticky;top:0;z-index:20;background:var(--blue);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+#btnMenu{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-size:22px;font-weight:800}
+#sideMenu{position:fixed;top:0;left:-320px;width:300px;height:100%;background:#fff;z-index:30;transition:.3s;overflow:auto;border-right:2px solid var(--line)}
+#sideMenu.open{left:0}.menu-head{padding:16px;background:var(--blue);color:#fff;font-weight:800;font-size:16px}
+.menu-item{padding:14px 16px;border-bottom:1px solid var(--line);font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.menu-sep{padding:10px 16px 6px;font-size:11px;font-weight:800;color:#64748b;background:var(--bg);text-transform:uppercase}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:25}#overlay.show{display:block}
+main{max-width:520px;margin:0 auto;padding:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:8px}.sum div{border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center;background:#fff}
+.sum .t{font-size:11px;font-weight:800;color:#64748b}.sum b{font-size:20px;font-weight:800;display:block;margin-top:4px}
+.bigBtn{width:100%;padding:16px;border-radius:14px;border:none;font-weight:800;font-size:16px;cursor:pointer}
+.btnRed{background:var(--red);color:#fff}.btnGreen{background:var(--green);color:#fff}.btnBlue{background:var(--blue);color:#fff}.btnWhite{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+input,select{width:100%;padding:14px;border-radius:12px;border:2px solid var(--line);font-size:15px;font-weight:700;background:#fff}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:2px solid var(--bg)}
+.view{display:none}.view.active{display:block}
+#calc{position:fixed;bottom:20px;right:20px;width:64px;height:64px;border-radius:50%;background:#0f172a;color:#fff;font-size:28px;border:none;z-index:20;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+</style></head><body>
+<div id="overlay" onclick="fecharMenu()"></div>
+<div id="sideMenu">
+<div class="menu-head">PAGFLOW V28</div>
+<button id="btnInstalar" onclick="instalarApp()" style="display:none;width:90%;margin:12px auto;padding:14px;border-radius:12px;background:#16a34a;color:#fff;border:none;font-weight:800;justify-content:center;gap:8px">📲 INSTALAR APP NO CELULAR</button>
+<div id="btnInstalarManual" onclick="alert('No Chrome: clica nos 3 pontinhos em cima > Instalar app ou Adicionar à tela inicial')" style="width:90%;margin:0 auto 12px auto;padding:12px;border-radius:12px;background:#eff6ff;color:var(--blue);border:2px solid var(--blue);font-weight:800;text-align:center;cursor:pointer">📲 Como instalar (se o botão de cima não aparecer)</div>
+<div class="menu-item" onclick="irHome()"><span>🏠 Início</span></div>
+<div class="menu-sep">📊 Relatórios com filtro</div>
+<div class="menu-item" onclick="abrirRelatorio('dia')"><span>📅 Hoje</span><span>›</span></div>
+<div class="menu-item" onclick="abrirRelatorio('semana')"><span>📅 Esta semana</span><span>›</span></div>
+<div class="menu-item" onclick="abrirRelatorio('mes')"><span>📅 Este mês</span><span>›</span></div>
+<div class="menu-item" onclick="abrirRelatorio('ano')"><span>📅 Este ano</span><span>›</span></div>
+<div class="menu-item" onclick="abrirRelatorio('tudo')"><span>📊 Tudo</span><span>›</span></div>
+<div class="menu-sep">🔍 Filtros rápidos</div>
+<div class="menu-item" onclick="filtrarTipo('todos')"><span>👁️ Ver tudo</span></div>
+<div class="menu-item" onclick="filtrarTipo('pagar')"><span>🔴 Só pagar</span></div>
+<div class="menu-item" onclick="filtrarTipo('receber')"><span>🟢 Só receber</span></div>
+<div class="menu-item" onclick="filtrarTipo('aberto')"><span>⏳ Só em aberto</span></div>
+<div class="menu-item" onclick="filtrarTipo('pago')"><span>✅ Só pago</span></div>
+<div class="menu-sep">💾 Dados eternos</div>
+<div style="padding:12px"><button onclick="exportar()" style="width:100%;padding:12px;border-radius:10px;border:2px solid var(--blue);background:#eff6ff;font-weight:800;color:var(--blue)">📤 Backup</button><div id="infoBkp" style="font-size:11px;text-align:center;margin-top:6px;color:#64748b"></div></div>
+</div>
 
-<!-- TROQUE TODO O BLOCO DA CALCULADORA ANTIGA POR ESSE NOVO -->
+<header><div style="display:flex;align-items:center;gap:10px"><button id="btnMenu" onclick="abrirMenu()">☰</button><b>PAGFLOW V28</b></div><div style="display:flex;gap:6px"><button onclick="exportar()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 10px;border-radius:10px;font-weight:800">BKP</button><button onclick="abrirRelatorio('mes')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 10px;border-radius:10px;font-weight:800">Relatórios</button></div></header>
+
+<main>
+<div id="viewHome" class="view active">
+<div class="sum"><div style="border-color:var(--red)"><div class="t">TENHO QUE PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b><div id="dPagar" style="font-size:11px;color:#64748b">0 contas</div></div><div style="border-color:var(--green)"><div class="t">TENHO QUE RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b><div id="dReceber" style="font-size:11px;color:#64748b">0 contas</div></div></div>
+<div class="card" style="background:linear-gradient(135deg,var(--blue),#1e40af);color:#fff;text-align:center"><div style="font-size:11px;font-weight:800;letter-spacing:1px;opacity:.9">SALDO REAL = RECEBER - PAGAR</div><b id="tSaldo" style="font-size:32px;display:block;margin-top:4px">R$ 0,00</b><div id="explicacaoSaldo" style="font-size:11px;opacity:.8;margin-top:4px">Soma automático</div></div>
+<div id="aviso" style="display:none;background:#fef3c7;border:2px solid #f59e0b;border-radius:14px;padding:12px;margin:10px 0"><b>⏰ Vence amanhã</b><div id="listaAviso"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button class="bigBtn btnRed" onclick="abrirAdd('pagar')">➖ PAGAR</button><button class="bigBtn btnGreen" onclick="abrirAdd('receber')">➕ RECEBER</button></div>
+<div id="formAdd" class="card" style="display:none;border:3px solid var(--blue)"><b id="titAdd">Novo</b>
+<div style="margin-top:10px"><label style="font-weight:800;font-size:12px">O QUE É?</label><input id="nome" placeholder="Ex: LUZ, ALUGUEL"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div><label style="font-weight:800;font-size:12px">QTD VEZES?</label><input id="qtd" type="number" value="1"></div><div><label style="font-weight:800;font-size:12px">VALOR CADA R$</label><input id="valor" type="number" placeholder="100"></div></div>
+<div style="background:#f8fafc;border-radius:12px;padding:12px;margin-top:10px;text-align:center;border:2px dashed var(--blue)"><div style="font-size:11px;font-weight:800;color:#64748b">CONTA AUTOMÁTICA</div><b id="preview" style="font-size:22px;color:var(--blue)">R$ 0,00</b><div id="detPreview" style="font-size:12px;color:#475569"></div></div>
+<div style="margin-top:10px"><label style="font-weight:800;font-size:12px">VENCE?</label><input id="data" type="date"></div>
+<div style="margin-top:10px"><label style="font-weight:800;font-size:12px">DIVIDIR?</label><select id="divisao"><option value="1">Não dividir</option><option value="2">2x</option><option value="3">3x</option><option value="6">6x</option><option value="12">12x</option></select></div>
+<button class="bigBtn btnBlue" style="margin-top:12px" onclick="salvar()">✅ SALVAR - SOMA AUTOMÁTICO</button><button class="bigBtn btnWhite" style="margin-top:8px" onclick="fecharAdd()">Cancelar</button>
+</div>
+<div class="card"><div style="display:flex;justify-content:space-between"><b id="titLista">📋 Minhas contas</b><span id="filtroAtual" style="font-size:11px;background:#f1f5f9;padding:4px 8px;border-radius:8px;font-weight:800">todos</span></div><div id="lista" style="margin-top:10px"></div></div>
+<div class="card"><b>💱 Moedas hoje</b><div id="moedas" style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"></div></div>
+</div>
+<div id="viewRel" class="view"><div class="card"><b style="font-size:18px">📊 Relatório - <span id="titRel">Mês</span></b><div style="margin-top:12px"><canvas id="graf"></canvas></div><div id="resRel" style="margin-top:14px"></div><button class="bigBtn btnWhite" style="margin-top:12px" onclick="irHome()">← Voltar</button></div></div>
+</main>
+
+<button id="calc" onclick="abrirCalc()">🧮</button>
+
 <div id="calcBox" style="display:none;position:fixed;bottom:20px;right:10px;left:10px;max-width:380px;margin:0 auto;background:#fff;border:2px solid #0f172a;border-radius:20px;padding:14px;z-index:40;box-shadow:0 20px 40px rgba(0,0,0,.35)">
 <div style="display:flex;justify-content:space-between;align-items:center"><b>🧮 Calculadora PRO</b><button onclick="fecharCalc()" style="border:none;background:#f1f5f9;padding:8px 12px;border-radius:10px;font-weight:800">X</button></div>
 <div style="background:#0f172a;border-radius:12px;padding:12px;margin:10px 0">
@@ -13,58 +78,56 @@
 <button onclick="cBack()" style="padding:14px;border-radius:12px;background:#fef3c7;color:#92400e;font-weight:800;border:1px solid #fde68a">⌫</button>
 <button onclick="cPress('%')" style="padding:14px;border-radius:12px;background:#f1f5f9;font-weight:800">%</button>
 <button onclick="cPress('/')" style="padding:14px;border-radius:12px;background:#eff6ff;color:var(--blue);font-weight:800">÷</button>
-
 <button onclick="cPress('7')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">7</button>
 <button onclick="cPress('8')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">8</button>
 <button onclick="cPress('9')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">9</button>
 <button onclick="cPress('*')" style="padding:16px;border-radius:12px;background:#eff6ff;color:var(--blue);font-weight:800">×</button>
-
 <button onclick="cPress('4')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">4</button>
 <button onclick="cPress('5')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">5</button>
 <button onclick="cPress('6')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">6</button>
 <button onclick="cPress('-')" style="padding:16px;border-radius:12px;background:#eff6ff;color:var(--blue);font-weight:800">-</button>
-
 <button onclick="cPress('1')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">1</button>
 <button onclick="cPress('2')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">2</button>
 <button onclick="cPress('3')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">3</button>
 <button onclick="cPress('+')" style="padding:16px;border-radius:12px;background:#eff6ff;color:var(--blue);font-weight:800">+</button>
-
 <button onclick="cPress('(')" style="padding:14px;border-radius:12px;background:#f1f5f9;font-weight:800">( )</button>
 <button onclick="cPress('0')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:18px">0</button>
 <button onclick="cPress('.')" style="padding:16px;border-radius:12px;background:#fff;border:2px solid var(--line);font-weight:800">.</button>
 <button onclick="cPress('=')" style="padding:16px;border-radius:12px;background:var(--blue);color:#fff;font-weight:800;font-size:20px">=</button>
 </div>
-<button onclick="cUsar()" style="width:100%;margin-top:10px;padding:14px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;border:none">✅ USAR ESSE VALOR NO FORMULÁRIO</button>
-<div style="font-size:11px;color:#64748b;text-align:center;margin-top:6px">⌫ apaga 1 número • AC limpa tudo • % calcula porcentagem</div>
+<button onclick="cUsar()" style="width:100%;margin-top:10px;padding:14px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;border:none">✅ USAR ESSE VALOR</button>
+<div style="font-size:11px;color:#64748b;text-align:center;margin-top:6px">⌫ apaga 1 número • AC limpa tudo</div>
 </div>
 
 <script>
-// NOVA LÓGICA DA CALCULADORA PRO
-let expr=''; let hist='';
-function abrirCalc(){document.getElementById('calcBox').style.display='block';}
-function fecharCalc(){document.getElementById('calcBox').style.display='none';}
-function cPress(v){
- let d=document.getElementById('calcDisp'); let h=document.getElementById('calcHist');
- if(v==='C'){expr=''; hist=''; d.innerText='0'; h.innerText=''; return;}
- if(v==='='){try{let res=eval(expr.replace(/%/g,'/100')); hist=expr+' ='; h.innerText=hist; expr=res.toString(); d.innerText=expr;}catch{d.innerText='Erro';} return;}
- if(v==='('){expr+= (expr.slice(-1)==='('||'+-*/('.includes(expr.slice(-1)))?'(' : ')');}
- else expr+=v;
- d.innerText=expr||'0'; h.innerText=hist;
-}
-function cBack(){ // ISSO QUE VOCÊ PEDIU - APAGA 1 SÓ
- expr=expr.slice(0,-1);
- document.getElementById('calcDisp').innerText=expr||'0';
-}
-function cUsar(){let v=parseFloat(expr)||0; if(v){document.getElementById('valor').value=v; if(typeof updPrev==='function') updPrev(); fecharCalc(); abrirAdd(tipo);}}
-
-// BOTÃO INSTALAR NO MENU
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e; let btn=document.getElementById('btnInstalar'); if(btn) btn.style.display='flex';});
-function instalarApp(){if(deferredPrompt){deferredPrompt.prompt(); deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted') alert('Instalado! Agora tá na sua tela inicial'); deferredPrompt=null;});}else alert('Pra instalar: Já está instalado ou abre no Chrome e clica em Instalar no menu');}
-</script>
-
-<!-- ADICIONE ESSE ITEM DENTRO DO SEU #sideMenu, logo depois de <div class="menu-head"> -->
-<!-- 
-<div class="menu-head">PAGFLOW V27 - MENU</div>
-<button id="btnInstalar" onclick="instalarApp()" style="display:none;width:90%;margin:12px auto;padding:14px;border-radius:12px;background:#16a34a;color:#fff;border:none;font-weight:800;justify-content:center;gap:8px">📲 INSTALAR APP NO CELULAR</button>
--->
+const KEY='pagflow_final_eterno_v1';
+let DB=JSON.parse(localStorage.getItem(KEY)||'null')||{contas:[],historico:[]};
+let tipo='pagar'; let filtro='todos'; let chart=null; let expr=''; let hist=''; let deferredPrompt=null;
+function salvarEterno(){localStorage.setItem(KEY,JSON.stringify(DB));localStorage.setItem(KEY+'_bkp',JSON.stringify(DB));let el=document.getElementById('infoBkp');if(el) el.innerText='Salvo '+new Date().toLocaleTimeString();}
+function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
+function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+function irHome(){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('viewHome').classList.add('active');fecharMenu();}
+function abrirRelatorio(p){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('viewRel').classList.add('active');fecharMenu();rel(p);}
+function abrirAdd(t){tipo=t;document.getElementById('formAdd').style.display='block';document.getElementById('titAdd').innerText=t==='pagar'?'➖ TENHO QUE PAGAR':'➕ TENHO QUE RECEBER';document.getElementById('data').valueAsDate=new Date();updPrev();window.scrollTo(0,400);}
+function fecharAdd(){document.getElementById('formAdd').style.display='none';}
+function updPrev(){let q=parseFloat(document.getElementById('qtd').value)||1;let v=parseFloat(document.getElementById('valor').value)||0;let d=parseFloat(document.getElementById('divisao').value)||1;let total=(q*v)/d;document.getElementById('preview').innerText='R$ '+total.toFixed(2);document.getElementById('detPreview').innerText=q+' x R$ '+v.toFixed(2)+(d>1?' ÷ '+d:'')+' = R$ '+total.toFixed(2);}
+['qtd','valor','divisao'].forEach(id=>document.getElementById(id).addEventListener('input',updPrev));
+function calcTot(c){return ((parseFloat(c.qtd)||1)*(parseFloat(c.valor)||0))/(parseFloat(c.divisao)||1);}
+function salvar(){let n=document.getElementById('nome').value.trim();if(!n)return alert('Escreve o nome');let q=document.getElementById('qtd').value||1;let v=document.getElementById('valor').value;if(!v)return alert('Valor');let d=document.getElementById('data').value;if(!d)return alert('Data');let div=document.getElementById('divisao').value;DB.contas.push({id:Date.now(),tipo,nome:n,qtd:q,valor:v,data:d,divisao:div,pago:false,criado:Date.now()});DB.historico.push({acao:'criou',quando:Date.now()});salvarEterno();fecharAdd();document.getElementById('nome').value='';document.getElementById('valor').value='';atualizar();}
+function baixar(id){let c=DB.contas.find(x=>x.id===id);c.pago=!c.pago;DB.historico.push({acao:c.pago?'pagou':'desfez',quando:Date.now(),conta:{...c}});salvarEterno();atualizar();}
+function apagar(id){if(!confirm('Apagar?'))return;DB.contas=DB.contas.filter(x=>x.id!==id);salvarEterno();atualizar();}
+function filtrarTipo(f){filtro=f;let el=document.getElementById('filtroAtual');if(el) el.innerText=f;fecharMenu();atualizar();}
+function atualizar(){let pagar=DB.contas.filter(c=>c.tipo==='pagar'&&!c.pago);let receber=DB.contas.filter(c=>c.tipo==='receber'&&!c.pago);let tp=pagar.reduce((a,c)=>a+calcTot(c),0);let tr=receber.reduce((a,c)=>a+calcTot(c),0);document.getElementById('tPagar').innerText='R$ '+tp.toFixed(2);document.getElementById('tReceber').innerText='R$ '+tr.toFixed(2);document.getElementById('tSaldo').innerText='R$ '+(tr-tp).toFixed(2);document.getElementById('dPagar').innerText=pagar.length+' contas • R$ '+tp.toFixed(2);document.getElementById('dReceber').innerText=receber.length+' contas • R$ '+tr.toFixed(2);document.getElementById('explicacaoSaldo').innerText=tr.toFixed(2)+' - '+tp.toFixed(2)+' = '+(tr-tp).toFixed(2);lista();aviso();salvarEterno();}
+function lista(){let l=DB.contas.slice().sort((a,b)=>new Date(a.data)-new Date(b.data));if(filtro==='pagar') l=l.filter(c=>c.tipo==='pagar');if(filtro==='receber') l=l.filter(c=>c.tipo==='receber');if(filtro==='pago') l=l.filter(c=>c.pago);if(filtro==='aberto') l=l.filter(c=>!c.pago);let h='';if(l.length===0) h='<div style="text-align:center;padding:20px;color:#64748b">Nada em '+filtro+'</div>';else l.forEach(c=>{let tot=calcTot(c);h+=`<div class="row ${c.pago?'pago':''}" style="${c.pago?'opacity:.5':''}"><div style="flex:1"><div><b>${c.nome}</b> <span style="font-size:10px;padding:3px 6px;border-radius:10px;background:${c.tipo==='pagar'?'#fee2e2':'#dcfce7'};color:${c.tipo==='pagar'?'var(--red)':'var(--green)'};font-weight:800">${c.tipo.toUpperCase()}</span></div><div style="font-size:12px;color:#475569">${c.qtd}x R$ ${parseFloat(c.valor).toFixed(2)}${c.divisao>1?' ÷ '+c.divisao:''} = <b>R$ ${tot.toFixed(2)}</b></div><div style="font-size:11px;color:#64748b">Vence ${c.data.split('-').reverse().join('/')} ${c.pago?'✅ PAGO':''}</div></div><div style="display:flex;flex-direction:column;gap:6px"><button onclick="baixar(${c.id})" class="bigBtn ${c.pago?'btnWhite':'btnGreen'}" style="padding:8px 12px;font-size:12px">${c.pago?'Desfazer':'Paguei'}</button><button onclick="apagar(${c.id})" style="border:none;background:#f1f5f9;padding:6px;border-radius:8px;color:var(--red);font-weight:800">🗑️</button></div></div>`;});document.getElementById('lista').innerHTML=h;let tl=document.getElementById('titLista');if(tl) tl.innerText='📋 Minhas contas ('+l.length+')';}
+function aviso(){let hoje=new Date();hoje.setHours(0,0,0,0);let am=new Date(hoje);am.setDate(hoje.getDate()+1);let v=DB.contas.filter(c=>!c.pago&&new Date(c.data).toDateString()===am.toDateString());let av=document.getElementById('aviso');if(!av) return;if(v.length>0){av.style.display='block';let h='';v.forEach(c=>h+=`<div style="padding:4px 0"><b>${c.nome}</b> R$ ${calcTot(c).toFixed(2)}</div>`);document.getElementById('listaAviso').innerHTML=h;}else av.style.display='none';}
+function rel(p){document.getElementById('titRel').innerText=p;let agora=new Date();let ini=new Date();if(p==='dia') ini.setHours(0,0,0,0);else if(p==='semana') ini.setDate(agora.getDate()-7);else if(p==='mes') ini.setMonth(agora.getMonth()-1);else if(p==='ano') ini.setFullYear(agora.getFullYear()-1);else ini=new Date(0);let fil=DB.contas.filter(c=>new Date(c.data)>=ini);let pag=fil.filter(c=>c.tipo==='pagar').reduce((a,c)=>a+calcTot(c),0);let rec=fil.filter(c=>c.tipo==='receber').reduce((a,c)=>a+calcTot(c),0);let pagoQtd=DB.historico.filter(h=>h.acao==='pagou'&&h.quando>=ini.getTime()).length;if(chart) chart.destroy();chart=new Chart(document.getElementById('graf'),{type:'bar',data:{labels:['A pagar','A receber','Saldo'],datasets:[{label:'R$',data:[pag,rec,rec-pag],backgroundColor:['#dc2626','#16a34a','#2563eb']}]},options:{responsive:true,plugins:{legend:{display:false}}}});document.getElementById('resRel').innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="card" style="margin:0"><div style="font-size:11px;font-weight:800;color:#64748b">COMO ESTAVA</div><b>Pagar R$ ${pag.toFixed(2)}</b><br><b>Receber R$ ${rec.toFixed(2)}</b></div><div class="card" style="margin:0;background:#eff6ff"><div style="font-size:11px;font-weight:800;color:#64748b">COMO ESTÁ</div><b>Saldo R$ ${(rec-pag).toFixed(2)}</b><br><b>Baixas: ${pagoQtd}</b></div></div>`;}
+function abrirCalc(){document.getElementById('calcBox').style.display='block';}function fecharCalc(){document.getElementById('calcBox').style.display='none';}
+function cPress(v){let d=document.getElementById('calcDisp');let h=document.getElementById('calcHist');if(v==='C'){expr='';hist='';d.innerText='0';h.innerText='';return;}if(v==='='){try{let e=expr.replace(/%/g,'/100');let r=eval(e);hist=expr+' =';h.innerText=hist;expr=r.toString();d.innerText=expr;}catch{d.innerText='Erro';}return;}if(v==='('){expr+= (expr===''||'+-*/('.includes(expr.slice(-1)))?'(' : ')');}else expr+=v; d.innerText=expr||'0';}
+function cBack(){expr=expr.slice(0,-1);document.getElementById('calcDisp').innerText=expr||'0';}
+function cUsar(){let val=parseFloat(expr)||0;if(val){document.getElementById('valor').value=val;updPrev();fecharCalc();abrirAdd(tipo);}}
+function exportar(){let blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PAGFLOW_V28_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;let b=document.getElementById('btnInstalar');if(b) b.style.display='flex';});
+function instalarApp(){if(deferredPrompt){deferredPrompt.prompt();}else{alert('No seu celular: clica nos 3 pontinhos > Adicionar à tela inicial > Instalar');}}
+function moedas(){fetch('https://api.exchangerate-api.com/v4/latest/BRL').then(r=>r.json()).then(d=>{let el=document.getElementById('moedas');if(!el) return;let html='';['USD','EUR','GBP'].forEach(m=>{let v=d.rates[m]? (1/d.rates[m]).toFixed(2):'--';html+=`<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:8px;text-align:center"><div style="font-size:10px;font-weight:800;color:#64748b">${m}</div><b style="font-size:12px">R$ ${v}</b></div>`;});el.innerHTML=html;}).catch(()=>{});}
+document.getElementById('data').valueAsDate=new Date();atualizar();moedas();setInterval(salvarEterno,30000);
+</script></body></html>
