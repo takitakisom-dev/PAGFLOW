@@ -1,97 +1,113 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V24 FIX CHAVE</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-<style>:root{--bg:#f8fafc;--card:#fff;--card2:#eef2ff;--line:#e0e7ff;--text:#0f172a;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--muted:#475569}
-*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:var(--bg);color:var(--text);font-weight:500}
-b{font-weight:600 !important}header{padding:14px 18px;background:var(--blue);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;color:#fff}
-#btnMenu{width:38px;height:38px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:18px}
-#sideMenu{position:fixed;top:0;left:-310px;width:300px;height:100%;background:var(--card);z-index:20;transition:.3s;overflow:auto;border-right:1px solid var(--line)}
-#sideMenu.open{left:0}.menu-head{padding:18px;font-weight:700;background:var(--card2);color:var(--blue)}
-.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;display:flex;justify-content:space-between}
-.menu-item.active{background:var(--card2);font-weight:600;border-left:3px solid var(--blue);color:var(--blue)}
-.menu-sep{padding:10px 18px 5px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg)}
-#overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.3);z-index:15}#overlay.show{display:block}
-main{padding:12px;max-width:460px;margin:0 auto}
-.sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.sum div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
-.sum .small{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}.sum b{display:block;margin-top:4px;font-size:15px;font-weight:700 !important}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
-.small{font-size:11px;color:var(--muted)}.label{font-size:12px;font-weight:600;margin-bottom:2px;display:block}
-input,select{width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:14px}
-.btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-weight:700;margin-top:8px;cursor:pointer}
-.btn-green{background:var(--green)}.btn-red{background:var(--red)}.view{display:none}.view.active{display:block}
-.pixBox{background:linear-gradient(135deg,var(--blue),#1e40af);color:#fff;border-radius:14px;padding:16px;margin:12px 0}
-.badge{font-size:10px;border-radius:12px;padding:3px 8px;font-weight:600}.badge.dev{background:var(--red);color:#fff}
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><meta name="theme-color" content="#2563eb"><title>PAGFLOW FINAL</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>:root{--blue:#2563eb;--green:#16a34a;--red:#dc2626;--bg:#f1f5f9;--card:#ffffff;--line:#e2e8f0;--text:#0f172a}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:var(--bg);color:var(--text);font-size:16px;line-height:1.4}
+header{position:sticky;top:0;z-index:20;background:var(--blue);color:#fff;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+header b{font-size:18px;letter-spacing:1px}
+main{max-width:520px;margin:0 auto;padding:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.bigBtn{width:100%;padding:18px;border-radius:14px;border:none;font-weight:800;font-size:17px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px}
+.btnBlue{background:var(--blue);color:#fff}.btnGreen{background:var(--green);color:#fff}.btnRed{background:var(--red);color:#fff}.btnWhite{background:var(--card);color:var(--blue);border:2px solid var(--blue)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sum{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sum div{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.sum .t{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase}.sum b{font-size:22px;font-weight:800 !important;display:block;margin-top:4px}
+input,select{width:100%;padding:16px;border-radius:12px;border:2px solid var(--line);font-size:16px;font-weight:600;background:#fff}
+input:focus{border-color:var(--blue);outline:none}
+.row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:2px solid var(--bg)}
+.row.pago{opacity:.6}.row.pago b{text-decoration:line-through}
+.badge{padding:6px 10px;border-radius:20px;font-size:11px;font-weight:800}.badge-pagar{background:#fee2e2;color:var(--red)}.badge-receber{background:#dcfce7;color:var(--green)}
+.view{display:none}.view.active{display:block}
+#calc{position:fixed;bottom:20px;right:20px;width:64px;height:64px;border-radius:50%;background:var(--text);color:#fff;font-size:28px;font-weight:800;border:none;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:30}
+#calcModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;justify-content:center;align-items:center}#calcModal.show{display:flex}
+.calcBox{background:#fff;border-radius:18px;padding:16px;width:92%;max-width:360px}
+.calcDisplay{width:100%;padding:18px;background:#0f172a;color:#fff;border-radius:12px;font-size:28px;text-align:right;font-weight:800;margin-bottom:12px}
+.calcGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.calcGrid button{padding:18px;border-radius:12px;border:1px solid var(--line);font-size:18px;font-weight:800;background:#f8fafc}
+#avisoVencimento{display:none;background:#fef3c7;border:2px solid #f59e0b;border-radius:14px;padding:14px;margin:12px 0}
 </style></head><body>
-<div id="overlay" onclick="fecharMenu()"></div>
-<div id="sideMenu">
-<div class="menu-head">PAGFLOW V24 • FIX CHAVE</div>
-<div class="menu-item active" onclick="irHome()"><span>🏠 Início</span></div>
-<div class="menu-sep">BANKING</div>
-<div class="menu-item" onclick="mudarCat('pix')"><span>💠 Receber Pix</span></div>
-<div class="menu-item" onclick="mudarCat('pagar')"><span>📌 Contas a pagar</span><span class="badge dev" id="qtdMenu">0</span></div>
-<div class="menu-sep">CONFIG CHAVE (NOVO)</div>
-<div style="padding:10px"><button onclick="limparChaveInsistente()" style="width:100%;padding:12px;border:2px solid var(--red);border-radius:8px;background:#fff;font-weight:700;color:var(--red)">🧹 Apagar chave insistente e digitar nova</button><button onclick="restaurarBackup()" style="width:100%;padding:12px;border:2px solid var(--blue);border-radius:8px;background:var(--card2);font-weight:700;color:var(--blue);margin-top:8px">♻️ Restaurar meus R$ 6260 perdidos</button><div id="bkp" class="small" style="text-align:center;margin-top:6px"></div></div>
-</div>
-<header><div style="font-weight:700;letter-spacing:2px">PAGFLOW BANK</div><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
+<header><b>PAGFLOW FINAL</b><div style="display:flex;gap:8px"><button onclick="exportar()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700">📤 BKP</button><button onclick="mostrarView('relatorio')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:10px;font-weight:700">📊 Relatórios</button></div></header>
 <main>
 <div id="viewHome" class="view active">
-<div class="sum"><div><div class="small">A PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b></div><div><div class="small">A RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b></div><div><div class="small">SALDO BANK</div><b id="tSaldo" style="color:var(--blue)">R$ 0,00</b></div></div>
+<div id="avisoVencimento"><b>⏰ Vence amanhã:</b><div id="listaAviso" style="margin-top:8px"></div></div>
 
-<div class="pixBox"><b>💠 Receber Pix - CHAVE ATUAL</b>
-<div style="background:rgba(255,255,255,.15);border-radius:8px;padding:12px;margin-top:10px"><div style="font-size:11px;opacity:.8">Chave configurada agora:</div><b id="chavePix" style="font-size:15px;word-break:break-all">--</b><div id="detalheChave" style="font-size:11px;margin-top:6px;opacity:.9"></div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button class="btn" style="background:#fff;color:var(--blue)" onclick="copiarPix()">📋 Copiar</button><button class="btn" style="background:#fbbf24;color:#000" onclick="trocarChave()">✏️ Trocar</button></div>
-<button class="btn btn-green" onclick="simularPix()">🧪 Simular Pix R$ 500 - vai pro SALDO BANK</button>
-<button class="btn" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3)" onclick="limparChaveInsistente()">🗑️ Limpar chave insistente</button>
+<div class="sum"><div><div class="t">A PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b><div id="qtdPagar" style="font-size:11px;color:#64748b;margin-top:4px">0 contas</div></div><div><div class="t">A RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b><div id="qtdReceber" style="font-size:11px;color:#64748b;margin-top:4px">0 contas</div></div></div>
+<div class="card" style="background:linear-gradient(135deg,var(--blue),#1e40af);color:#fff;text-align:center"><div style="font-size:12px;opacity:.9;font-weight:700;letter-spacing:1px">SALDO REAL (RECEBER - PAGAR)</div><b id="tSaldo" style="font-size:32px;margin-top:6px;display:block">R$ 0,00</b><div style="font-size:11px;opacity:.8;margin-top:4px">Atualiza automático quando cadastra ou dá baixa</div></div>
+
+<div class="grid2"><button class="bigBtn btnRed" onclick="abrirAdd('pagar')">➖ TENHO QUE PAGAR</button><button class="bigBtn btnGreen" onclick="abrirAdd('receber')">➕ TENHO QUE RECEBER</button></div>
+
+<div id="formAdd" class="card" style="display:none;border:2px solid var(--blue)"><b id="tituloAdd" style="font-size:18px;color:var(--blue)">➕ Novo</b>
+<div style="margin-top:12px"><label style="font-weight:800;font-size:13px">O QUE É? (LUZ, Água, Salário)</label><input id="nome" placeholder="Ex: LUZ"></div>
+<div class="grid2" style="margin-top:12px"><div><label style="font-weight:800;font-size:13px">QUANTAS VEZES?</label><input id="qtd" type="number" value="1" inputmode="numeric"></div><div><label style="font-weight:800;font-size:13px">VALOR DE CADA (R$)</label><input id="valor" type="number" inputmode="decimal" placeholder="100"></div></div>
+<div style="background:#f8fafc;border-radius:12px;padding:12px;margin-top:12px;text-align:center"><div style="font-size:12px;font-weight:700;color:#64748b">CONTA AUTOMÁTICA</div><b id="previewConta" style="font-size:20px;color:var(--blue)">R$ 0,00</b><div style="font-size:11px;color:#64748b" id="detalheConta">1 x R$ 0</div></div>
+<div style="margin-top:12px"><label style="font-weight:800;font-size:13px">QUANDO VENCE?</label><input id="data" type="date"></div>
+<div style="margin-top:12px"><label style="font-weight:800;font-size:13px">DIVIDIR? (opcional)</label><select id="divisao"><option value="1">Não dividir - valor cheio</option><option value="2">Dividir em 2x</option><option value="3">Dividir em 3x</option><option value="6">Dividir em 6x</option><option value="12">Dividir em 12x</option></select></div>
+<button class="bigBtn btnBlue" style="margin-top:16px" onclick="salvar()">✅ SALVAR - SOMA AUTOMÁTICO</button><button class="bigBtn btnWhite" style="margin-top:8px" onclick="fecharAdd()">Cancelar</button>
 </div>
 
-<div class="card"><b>💰 Extrato - Pra onde vai o Pix?</b><div id="extrato" style="margin-top:8px"></div></div>
-<div class="card"><b>+ Adicionar rápido</b><select id="tipoHome" style="margin-top:8px"></select><input id="nomeHome" placeholder="Ex: LUZ" style="margin-top:6px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><input id="valorHome" type="number" placeholder="Valor R$"><input id="dataHome" type="date"></div><button class="btn" onclick="salvarHome()">SALVAR</button></div>
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:18px">📋 Minhas contas</b><div style="display:flex;gap:6px"><button onclick="filtrar('todos')" id="fTodos" class="badge" style="background:var(--blue);color:#fff">Todos</button><button onclick="filtrar('pagar')" id="fPagar" class="badge badge-pagar">A pagar</button><button onclick="filtrar('receber')" id="fReceber" class="badge badge-receber">A receber</button></div></div><div id="lista" style="margin-top:12px"></div></div>
+
+<div class="card"><b>💱 Moedas do mundo - tempo real</b><div style="font-size:11px;color:#64748b">Atualiza online, funciona offline com último valor</div><div id="moedas" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px"></div><button class="bigBtn btnWhite" style="margin-top:10px;font-size:14px" onclick="atualizarMoedas()">🔄 Atualizar moedas agora</button></div>
 </div>
 
-<div id="viewLista" class="view"><div class="card">
-<div id="pixView" style="display:none"><div class="pixBox" style="text-align:center"><b id="chavePix2">--</b><div style="margin-top:10px"><button class="btn" style="background:#fff;color:var(--blue)" onclick="copiarPix()">📋 Copiar chave</button></div></div></div>
-<div id="normalView"><b id="tit">Contas</b><div id="lista"></div><div style="background:var(--card2);padding:12px;border-radius:10px;margin-top:12px;border:1px solid var(--line)"><select id="tipo" style="margin-top:6px"></select><input id="nome" placeholder="Nome" style="margin-top:6px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><input id="valor" type="number" placeholder="Valor"><input id="data" type="date"></div><button class="btn" onclick="salvarCat()">SALVAR</button></div></div>
-<button class="btn" style="background:#fff;color:var(--blue);border:1px solid var(--line)" onclick="irHome()">← Voltar</button>
+<div id="viewRelatorio" class="view"><div class="card"><b style="font-size:20px">📊 Relatórios - Como estava e como está</b><div class="grid2" style="margin-top:12px"><button class="badge" style="padding:10px;background:var(--blue);color:#fff" onclick="relatorio('dia')">HOJE</button><button class="badge" style="padding:10px;background:#f1f5f9" onclick="relatorio('semana')">SEMANA</button><button class="badge" style="padding:10px;background:#f1f5f9" onclick="relatorio('mes')">MÊS</button><button class="badge" style="padding:10px;background:#f1f5f9" onclick="relatorio('ano')">ANO</button></div>
+<div style="margin-top:16px"><canvas id="grafico"></canvas></div>
+<div id="resumoRelatorio" style="margin-top:16px"></div>
+<button class="bigBtn btnWhite" style="margin-top:16px" onclick="mostrarView('home')">← Voltar</button>
 </div></div>
 </main>
-<script>
-const KEY_DB='pagflow_v23_fix';
-const KEY_CHAVE='pagflow_pix_chave_unica_v24';
-let DB=JSON.parse(localStorage.getItem(KEY_DB)||'null')||{pagar:[],receber:[],caixinha:[],extrato:[],aluguel:[],mercado:[],casa:[],pets:[],carro:[],combustivel:[],bancos:[],cartao:[],viagem:[]};
-let CHAVE=localStorage.getItem(KEY_CHAVE)||localStorage.getItem('pagflow_pix_chave_real')||localStorage.getItem('pagflow_pix_chave')||'takitakisom@gmail.com';
-// LIMPA CHAVES ANTIGAS INSISTENTES
-localStorage.removeItem('pagflow_pix_chave');
-localStorage.removeItem('pagflow_pix_chave_real');
-localStorage.setItem(KEY_CHAVE, CHAVE);
+<button id="calc" onclick="abrirCalc()">🧮</button>
+<div id="calcModal" onclick="if(event.target===this)fecharCalc()"><div class="calcBox"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><b>Calculadora</b><button onclick="fecharCalc()" style="border:none;background:#f1f5f9;padding:8px 12px;border-radius:8px;font-weight:800">X</button></div><div id="calcDisplay" class="calcDisplay">0</div><div class="calcGrid"><button onclick="calcPress('7')">7</button><button onclick="calcPress('8')">8</button><button onclick="calcPress('9')">9</button><button onclick="calcPress('/')">÷</button><button onclick="calcPress('4')">4</button><button onclick="calcPress('5')">5</button><button onclick="calcPress('6')">6</button><button onclick="calcPress('*')">×</button><button onclick="calcPress('1')">1</button><button onclick="calcPress('2')">2</button><button onclick="calcPress('3')">3</button><button onclick="calcPress('-')">-</button><button onclick="calcPress('0')">0</button><button onclick="calcPress('.')">.</button><button onclick="calcPress('=')" style="background:var(--blue);color:#fff">=</button><button onclick="calcPress('+')">+</button><button onclick="calcPress('C')" style="grid-column:span 2;background:var(--red);color:#fff">Limpar</button><button onclick="usarCalc()" style="grid-column:span 2;background:var(--green);color:#fff">Usar no valor</button></div></div></div>
 
-let cat='pagar';
-let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'[]')||["LUZ","Água","Internet"];
-function salvarE(){localStorage.setItem(KEY_DB,JSON.stringify(DB));localStorage.setItem(KEY_CHAVE,CHAVE);document.getElementById('bkp').innerText='Salvo '+new Date().toLocaleTimeString();}
-function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
-function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
-function irHome(){document.getElementById('viewHome').classList.add('active');document.getElementById('viewLista').classList.remove('active');fecharMenu();}
-function mudarCat(c){cat=c;document.getElementById('viewHome').classList.remove('active');document.getElementById('viewLista').classList.add('active');if(c==='pix'){document.getElementById('pixView').style.display='block';document.getElementById('normalView').style.display='none';}else{document.getElementById('pixView').style.display='none';document.getElementById('normalView').style.display='block';document.getElementById('tit').innerText=c;}fecharMenu();if(c!=='pix')mostrar();atualizar();}
-function renderT(){let html='<option value="">-- Escolha --</option>';TIPOS.forEach(t=>html+=`<option>${t}</option>`);document.getElementById('tipoHome').innerHTML=html;document.getElementById('tipo').innerHTML=html;}
-function pm(it){return parseFloat(it.valor)||0;}
-function mostrar(){let l=DB[cat]||[];let h='';l.forEach((it,i)=>{h+=`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)"><div><b>${it.nome}</b><div class="small">${it.data||''} • R$ ${pm(it).toFixed(2)}</div></div><button onclick="apagar(${i})" style="color:red;border:1px solid #ddd;padding:6px 8px;border-radius:6px">✕</button></div>`;});document.getElementById('lista').innerHTML=h||'Vazio';}
-function atualizar(){let p=(DB.pagar||[]).reduce((a,i)=>a+pm(i),0);let r=(DB.receber||[]).reduce((a,i)=>a+pm(i),0);let pix=DB.extrato.reduce((a,i)=>a+pm(i),0);let saldo=r-p+pix;document.getElementById('tPagar').innerText='R$ '+p.toFixed(2);document.getElementById('tReceber').innerText='R$ '+r.toFixed(2);document.getElementById('tSaldo').innerText='R$ '+saldo.toFixed(2);document.getElementById('qtdMenu').innerText=DB.pagar.length;document.getElementById('chavePix').innerText=CHAVE;document.getElementById('chavePix2').innerText=CHAVE;document.getElementById('detalheChave').innerText=CHAVE.includes('@')?'E-mail (valida 100%) - única chave':CHAVE.length>15?'Aleatória (valida 100%)':'Celular/CPF';let ext='';if(DB.extrato.length===0)ext='<div class="small">Nenhum Pix ainda. Quando receber, aumenta o SALDO BANK azul aqui.</div>';else DB.extrato.slice().reverse().forEach(e=>{ext+=`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><div><b>💠 ${e.nome}</b><div class="small">${e.data}</div></div><b style="color:var(--green)">+ R$ ${pm(e).toFixed(2)}</b></div>`;});document.getElementById('extrato').innerHTML=ext;}
-function salvarHome(){let nome=document.getElementById('nomeHome').value.trim()||document.getElementById('tipoHome').value;if(!nome)return alert('Nome');let v=document.getElementById('valorHome').value;let d=document.getElementById('dataHome').value;if(!v)return alert('Valor');DB.pagar.push({nome,valor:v,data:d});salvarE();document.getElementById('nomeHome').value='';document.getElementById('valorHome').value='';atualizar();mostrar();}
-function salvarCat(){let nome=document.getElementById('nome').value.trim()||document.getElementById('tipo').value;if(!nome)return alert('Nome');let v=document.getElementById('valor').value;let d=document.getElementById('data').value;if(!v)return alert('Valor');if(!DB[cat])DB[cat]=[];DB[cat].push({nome,valor:v,data:d});salvarE();document.getElementById('nome').value='';document.getElementById('valor').value='';mostrar();atualizar();}
-function apagar(i){DB[cat].splice(i,1);salvarE();mostrar();atualizar();}
-function copiarPix(){let ta=document.createElement('textarea');ta.value=CHAVE;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');alert('Copiado: '+CHAVE);}catch{prompt('Copie:',CHAVE);}document.body.removeChild(ta);}
-function trocarChave(){let n=prompt('Digite sua chave Pix REAL (e-mail, celular, CPF):',CHAVE);if(n===null)return;n=n.trim();if(!n)return;CHAVE=n;localStorage.setItem(KEY_CHAVE,CHAVE);localStorage.removeItem('pagflow_pix_chave');localStorage.removeItem('pagflow_pix_chave_real');salvarE();atualizar();alert('Nova chave salva: '+CHAVE+' - Agora é a única!');}
-function limparChaveInsistente(){if(!confirm('Apagar chave insistente? Vai limpar todas as chaves antigas e deixar você digitar nova.'))return;localStorage.removeItem('pagflow_pix_chave');localStorage.removeItem('pagflow_pix_chave_real');localStorage.removeItem('pagflow_pix_chave_unica_v24');CHAVE='';let n=prompt('Digite sua chave Pix REAL agora (ex: takitakisom@gmail.com):','takitakisom@gmail.com');if(n&&n.trim()){CHAVE=n.trim();localStorage.setItem(KEY_CHAVE,CHAVE);salvarE();atualizar();alert('Chave nova: '+CHAVE);}else{atualizar();}}
-function simularPix(){let v=prompt('Valor Pix recebido','500');if(v===null)return;v=parseFloat(v.replace(',','.'));if(!v)return;let n=prompt('De quem?','Pix Teste')||'Teste';DB.extrato.push({nome:n,valor:v,data:new Date().toLocaleString()});salvarE();atualizar();alert('Pix R$ '+v.toFixed(2)+' entrou no SALDO BANK! Veja no extrato.');}
-function restaurarBackup(){
-  let achou=[];
-  for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k&&k.startsWith('pagflow_')&&k!==KEY_DB&&k!==KEY_CHAVE){try{let d=JSON.parse(localStorage.getItem(k));let src=d.db||d;Object.keys(src).forEach(cat=>{if(Array.isArray(src[cat])&&cat!=='extrato'){if(src[cat].length>0) achou.push(k+': '+cat+'='+src[cat].length);}});}catch{}}}
-  if(achou.length===0) return alert('Nenhum backup antigo encontrado. Seus R$ 6260 foram zerados mesmo.');
-  if(!confirm('Encontrei backups antigos:\n'+achou.join('\n')+'\n\nRestaurar? Vai trazer seus R$ 6260 de volta (sem duplicar).'))return;
-  let base={pagar:[],receber:[],caixinha:[],extrato:DB.extrato,aluguel:[],mercado:[],casa:[],pets:[],carro:[],combustivel:[]};
-  let mapa=new Set();
-  for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k&&k.startsWith('pagflow_')&&k!==KEY_DB&&k!==KEY_CHAVE){try{let d=JSON.parse(localStorage.getItem(k));let src=d.db||d;Object.keys(src).forEach(c=>{if(Array.isArray(src[c])&&c!=='extrato'){src[c].forEach(it=>{if(it&&it.nome){let id=(it.nome+'|'+it.valor+'|'+it.data).toLowerCase();if(!mapa.has(c+'|'+id)){mapa.add(c+'|'+id);if(base[c]!==undefined) base[c].push(it); else base.pagar.push(it);}}});}});}catch{}}}
-  DB=base; salvarE(); atualizar(); mostrar(); alert('Restaurado! A PAGAR agora deve voltar pra R$ 6260 aproximado.');
+<script>
+const DB_KEY='pagflow_final_eterno_v1';
+const BKP_KEY='pagflow_final_bkp_auto';
+let DB=JSON.parse(localStorage.getItem(DB_KEY)||'null');
+if(!DB){try{let old=JSON.parse(localStorage.getItem('pagflow_final_bkp_auto')||'null')||JSON.parse(localStorage.getItem('pagflow_v23_fix')||'null'); if(old&&old.pagar) DB=old; else DB={contas:[],historico:[]};}catch{DB={contas:[],historico:[]};}}
+if(!DB.contas) DB.contas=[]; if(!DB.historico) DB.historico=[];
+let tipoAdd='pagar'; let filtro='todos'; let chart=null;
+
+function salvarEterno(){localStorage.setItem(DB_KEY,JSON.stringify(DB));localStorage.setItem(BKP_KEY,JSON.stringify(DB));localStorage.setItem(DB_KEY+'_backup_'+Date.now(),JSON.stringify(DB));if('indexedDB' in window){let req=indexedDB.open('pagflow_eternal',1);req.onupgradeneeded=e=>{e.target.result.createObjectStore('data');};req.onsuccess=e=>{let tx=e.target.result.transaction('data','readwrite');tx.objectStore('data').put(DB,'main');};}}
+
+function calcTotal(conta){let q=parseFloat(conta.qtd)||1; let v=parseFloat(conta.valor)||0; let d=parseFloat(conta.divisao)||1; return (q*v)/d;}
+
+function abrirAdd(t){tipoAdd=t;document.getElementById('formAdd').style.display='block';document.getElementById('tituloAdd').innerText=t==='pagar'?'➖ TENHO QUE PAGAR':'➕ TENHO QUE RECEBER';document.getElementById('tituloAdd').style.color=t==='pagar'?'var(--red)':'var(--green)';document.getElementById('data').valueAsDate=new Date();atualizarPreview();window.scrollTo(0,300);}
+function fecharAdd(){document.getElementById('formAdd').style.display='none';}
+function atualizarPreview(){let q=parseFloat(document.getElementById('qtd').value)||1; let v=parseFloat(document.getElementById('valor').value)||0; let d=parseFloat(document.getElementById('divisao').value)||1; let total=(q*v)/d; document.getElementById('previewConta').innerText='R$ '+total.toFixed(2); document.getElementById('detalheConta').innerText=q+' x R$ '+v.toFixed(2)+(d>1?' ÷ '+d+' parcelas':'')+' = R$ '+total.toFixed(2)+' (soma automático)';}
+['qtd','valor','divisao'].forEach(id=>{document.getElementById(id).addEventListener('input',atualizarPreview);});
+
+function salvar(){let nome=document.getElementById('nome').value.trim(); if(!nome) return alert('Escreve o que é, ex: LUZ'); let qtd=document.getElementById('qtd').value||1; let valor=document.getElementById('valor').value; if(!valor) return alert('Coloca o valor'); let data=document.getElementById('data').value; if(!data) return alert('Coloca quando vence'); let divisao=document.getElementById('divisao').value||1; let conta={id:Date.now(),tipo:tipoAdd,nome,qtd,valor,data,divisao,pago:false,criado:Date.now()}; DB.contas.push(conta); DB.historico.push({acao:'criou',conta,quando:Date.now()}); salvarEterno(); fecharAdd(); document.getElementById('nome').value='';document.getElementById('valor').value=''; atualizar(); checarVencimentos();}
+function darBaixa(id){let c=DB.contas.find(x=>x.id===id); if(!c) return; c.pago=!c.pago; DB.historico.push({acao:c.pago?'pagou':'desfez',conta:{...c},quando:Date.now()}); salvarEterno(); atualizar();}
+function apagar(id){if(!confirm('Apagar essa conta?'))return; DB.contas=DB.contas.filter(x=>x.id!==id); DB.historico.push({acao:'apagou',id,quando:Date.now()}); salvarEterno(); atualizar();}
+function filtrar(f){filtro=f; document.querySelectorAll('[id^=f]').forEach(b=>b.style.background='#f1f5f9'); let el=document.getElementById('f'+f.charAt(0).toUpperCase()+f.slice(1)); if(el) el.style.background='var(--blue)'; el.style.color='#fff'; atualizarLista();}
+
+function atualizar(){let pagar=DB.contas.filter(c=>c.tipo==='pagar'&&!c.pago); let receber=DB.contas.filter(c=>c.tipo==='receber'&&!c.pago); let tPagar=pagar.reduce((a,c)=>a+calcTotal(c),0); let tReceber=receber.reduce((a,c)=>a+calcTotal(c),0); document.getElementById('tPagar').innerText='R$ '+tPagar.toFixed(2); document.getElementById('tReceber').innerText='R$ '+tReceber.toFixed(2); document.getElementById('tSaldo').innerText='R$ '+(tReceber-tPagar).toFixed(2); document.getElementById('qtdPagar').innerText=pagar.length+' contas'; document.getElementById('qtdReceber').innerText=receber.length+' contas'; atualizarLista(); salvarEterno();}
+
+function atualizarLista(){let lista=DB.contas.slice().sort((a,b)=>new Date(a.data)-new Date(b.data)); if(filtro!=='todos') lista=lista.filter(c=>c.tipo===filtro); let html=''; if(lista.length===0) html='<div style="text-align:center;padding:24px;color:#64748b">Nenhuma conta aqui.<br>Clique em TENHO QUE PAGAR ou RECEBER</div>'; else lista.forEach(c=>{let total=calcTotal(c); let venc=new Date(c.data); let hoje=new Date(); hoje.setHours(0,0,0,0); let amanha=new Date(hoje); amanha.setDate(hoje.getDate()+1); let status=''; if(!c.pago&&venc<hoje) status='⚠️ VENCIDO'; else if(!c.pago&&venc.toDateString()===amanha.toDateString()) status='⏰ VENCE AMANHÃ'; html+=`<div class="row ${c.pago?'pago':''}"><div style="flex:1"><div style="display:flex;gap:6px;align-items:center"><b style="font-size:16px">${c.nome}</b><span class="badge ${c.tipo==='pagar'?'badge-pagar':'badge-receber'}">${c.tipo==='pagar'?'A PAGAR':'A RECEBER'}</span></div><div style="font-size:13px;color:#475569;margin-top:2px">${c.qtd}x R$ ${parseFloat(c.valor).toFixed(2)}${c.divisao>1?' ÷ '+c.divisao+'x':''} = <b>R$ ${total.toFixed(2)}</b> ${status?'<span style="color:var(--red);font-weight:800">'+status+'</span>':''}</div><div style="font-size:12px;color:#64748b">Vence: ${c.data.split('-').reverse().join('/')}</div></div><div style="display:flex;flex-direction:column;gap:6px;margin-left:10px"><button onclick="darBaixa(${c.id})" class="bigBtn ${c.pago?'btnWhite':'btnGreen'}" style="padding:10px 14px;font-size:13px">${c.pago?'↩️ Desfazer':'✅ Paguei'}</button><button onclick="apagar(${c.id})" style="border:none;background:#f1f5f9;padding:8px;border-radius:8px;font-weight:700;color:var(--red)">🗑️</button></div></div>`;}); document.getElementById('lista').innerHTML=html;}
+
+function checarVencimentos(){let hoje=new Date(); hoje.setHours(0,0,0,0); let amanha=new Date(hoje); amanha.setDate(hoje.getDate()+1); let venceAmanha=DB.contas.filter(c=>!c.pago&&new Date(c.data).toDateString()===amanha.toDateString()); if(venceAmanha.length>0){document.getElementById('avisoVencimento').style.display='block'; let h=''; venceAmanha.forEach(c=>{h+=`<div style="padding:6px 0;border-bottom:1px solid #fde68a"><b>${c.nome}</b> - R$ ${calcTotal(c).toFixed(2)} - ${c.tipo==='pagar'?'PAGAR':'RECEBER'}</div>`;}); document.getElementById('listaAviso').innerHTML=h; if('Notification' in window&&Notification.permission==='granted'){new Notification('⏰ Vence amanhã: '+venceAmanha[0].nome,{body:'R$ '+calcTotal(venceAmanha[0]).toFixed(2)});} } else {document.getElementById('avisoVencimento').style.display='none';}
+if('Notification' in window&&Notification.permission!=='granted') Notification.requestPermission();}
+
+function mostrarView(v){document.querySelectorAll('.view').forEach(el=>el.classList.remove('active')); document.getElementById(v==='relatorio'?'viewRelatorio':'viewHome').classList.add('active'); if(v==='relatorio') relatorio('mes');}
+function relatorio(periodo){
+let agora=new Date(); let inicio=new Date(); if(periodo==='dia') inicio.setHours(0,0,0,0); if(periodo==='semana') inicio.setDate(agora.getDate()-7); if(periodo==='mes') inicio.setMonth(agora.getMonth()-1); if(periodo==='ano') inicio.setFullYear(agora.getFullYear()-1);
+let filtradas=DB.contas.filter(c=>new Date(c.data)>=inicio); let pagas=DB.historico.filter(h=>h.acao==='pagou'&&h.quando>=inicio.getTime());
+let tPagar=filtradas.filter(c=>c.tipo==='pagar').reduce((a,c)=>a+calcTotal(c),0); let tReceber=filtradas.filter(c=>c.tipo==='receber').reduce((a,c)=>a+calcTotal(c),0); let pagasValor=pagas.reduce((a,h)=>a+calcTotal(h.conta),0);
+let labels=['A Pagar','A Receber','Pago/Recebido']; let dados=[tPagar,tReceber,pagasValor];
+if(chart) chart.destroy(); chart=new Chart(document.getElementById('grafico'),{type:'bar',data:{labels,datasets:[{label:'R$',data:dados,backgroundColor:['#dc2626','#16a34a','#2563eb']}]},options:{responsive:true,plugins:{legend:{display:false}}}});
+document.getElementById('resumoRelatorio').innerHTML=`<div class="grid2"><div class="card" style="margin:0"><div style="font-size:11px;font-weight:700;color:#64748b">COMO ESTAVA (início ${periodo})</div><b>A pagar: R$ ${tPagar.toFixed(2)}</b><br><b>A receber: R$ ${tReceber.toFixed(2)}</b></div><div class="card" style="margin:0;background:var(--card2)"><div style="font-size:11px;font-weight:700;color:#64748b">COMO ESTÁ AGORA</div><b>Saldo: R$ ${(tReceber-tPagar).toFixed(2)}</b><br><b>Baixas: ${pagas.length} contas</b></div></div><div style="margin-top:12px;font-size:12px;color:#64748b">Total de contas no período: ${filtradas.length} • Pagas: ${pagas.length}</div>`;
 }
-function exportarBKP(){let blob=new Blob([JSON.stringify({db:DB,chave:CHAVE},null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PAGFLOW_V24.json';a.click();}
-document.getElementById('dataHome').valueAsDate=new Date();document.getElementById('data').valueAsDate=new Date();
-renderT();atualizar();mostrar();salvarE();
+
+let calcExpr='';
+function abrirCalc(){document.getElementById('calcModal').classList.add('show');}
+function fecharCalc(){document.getElementById('calcModal').classList.remove('show');}
+function calcPress(v){let disp=document.getElementById('calcDisplay'); if(v==='C'){calcExpr=''; disp.innerText='0'; return;} if(v==='='){try{calcExpr=eval(calcExpr).toString(); disp.innerText=calcExpr;}catch{disp.innerText='Erro'; calcExpr='';} return;} calcExpr+=v; disp.innerText=calcExpr;}
+function usarCalc(){let val=parseFloat(calcExpr)||0; if(val){document.getElementById('valor').value=val; atualizarPreview(); fecharCalc(); document.getElementById('formAdd').style.display='block';}}
+
+function atualizarMoedas(){let el=document.getElementById('moedas'); el.innerHTML='Carregando...'; fetch('https://api.exchangerate-api.com/v4/latest/BRL').then(r=>r.json()).then(d=>{let moedas=['USD','EUR','BTC','GBP','JPY','ARS']; let html=''; moedas.forEach(m=>{let v=d.rates[m]? (1/d.rates[m]).toFixed(2) : '---'; html+=`<div style="background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center"><div style="font-size:11px;font-weight:700;color:#64748b">${m}</div><b style="font-size:14px">R$ ${v}</b></div>`;}); el.innerHTML=html; localStorage.setItem('pagflow_moedas',JSON.stringify({data:d,quando:Date.now()}));}).catch(()=>{let cache=JSON.parse(localStorage.getItem('pagflow_moedas')||'null'); if(cache){let d=cache.data; let html=''; ['USD','EUR','GBP'].forEach(m=>{let v=d.rates[m]? (1/d.rates[m]).toFixed(2):'--'; html+=`<div style="background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center"><div style="font-size:11px">${m} (offline)</div><b>R$ ${v}</b></div>`;}); el.innerHTML=html;} else el.innerHTML='<div style="grid-column:span 2;text-align:center;color:#64748b">Sem internet - moedas offline</div>';});}
+function exportar(){let blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='PAGFLOW_FINAL_ETERN0_'+new Date().toISOString().slice(0,10)+'.json'; a.click(); alert('Backup salvo! Guarda no Drive - nunca perde.');}
+
+document.getElementById('data').valueAsDate=new Date();
+atualizar(); checarVencimentos(); atualizarMoedas();
+setInterval(checarVencimentos, 1000*60*60); // checa toda hora
+setInterval(salvarEterno, 1000*30); // salva a cada 30 seg - nunca perde
 </script></body></html>
