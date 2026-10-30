@@ -1,85 +1,72 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V32 MENU COMPLETO</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V33</title>
 <style>
 body{margin:0;font-family:Arial;background:#f1f5f9}
-header{background:#2563eb;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+header{background:#2563eb;color:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0}
 .card{background:#fff;border:1px solid #ddd;border-radius:14px;padding:12px;margin:10px}
 .sum{display:flex;gap:8px}.sum>div{flex:1;border:2px solid #ddd;border-radius:12px;padding:10px;text-align:center;background:#fff}
 .btn{padding:14px;border-radius:12px;border:none;font-weight:900;color:#fff;width:100%}
 input,select{width:100%;padding:12px;border:2px solid #ccc;border-radius:8px;box-sizing:border-box}
-#menu{position:fixed;top:0;left:-320px;width:300px;height:100%;background:#fff;z-index:99;transition:.3s;overflow:auto;border-right:3px solid #2563eb;display:flex;flex-direction:column}
+#menu{position:fixed;top:0;left:-330px;width:305px;height:100%;background:#fff;z-index:999;transition:.28s;overflow:auto;border-right:3px solid #2563eb}
 #menu.open{left:0}
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:98}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;z-index:998}
 #overlay.show{display:block}
-.menu-head{background:#2563eb;color:#fff;padding:14px;font-weight:900;font-size:16px}
-.menu-item{padding:13px 14px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;font-weight:700;cursor:pointer}
-.menu-item:active{background:#eff6ff}
-.menu-sep{background:#f1f5f9;padding:8px 14px;font-size:11px;font-weight:900;color:#64748b}
 #formAdd{display:none;border:3px solid #2563eb}
-#calc{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:3px solid #000;border-radius:20px 20px 0 0;padding:12px;z-index:100;display:none;max-width:480px;margin:0 auto}
+#calc{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:3px solid #000;border-radius:20px 20px 0 0;padding:12px;z-index:1000;display:none;max-width:480px;margin:0 auto}
+.menu-head{background:#2563eb;color:#fff;padding:12px 14px;font-weight:900;display:flex;justify-content:space-between;align-items:center}
+.menu-item{padding:13px 14px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;font-weight:700}
+.menu-sep{background:#f1f5f9;padding:8px 14px;font-size:11px;font-weight:900;color:#64748b}
 </style></head><body>
 <div id="overlay" onclick="fechar()"></div>
 <div id="menu">
-<div class="menu-head">☰ PAGFLOW V32 - MENU COMPLETO</div>
+<div class="menu-head"><span>☰ PAGFLOW V33</span><button onclick="fechar()" style="width:38px;height:38px;border-radius:10px;border:none;background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:20px">X</button></div>
 
-<button onclick="instalar()" style="width:92%;margin:12px 4%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-weight:900;font-size:14px">📲 INSTALAR APP NO CELULAR</button>
+<button onclick="instalar()" style="width:92%;margin:12px 4%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-weight:900">📲 INSTALAR APP NO CELULAR</button>
 
-<div class="menu-item" onclick="home()"><span>🏠 Início - Cadastrar</span><span>›</span></div>
+<div style="padding:10px"><button onclick="fechar()" style="width:100%;padding:12px;background:#f1f5f9;border:2px solid #2563eb;border-radius:10px;font-weight:900;color:#2563eb">❌ FECHAR MENU - VOLTAR</button></div>
 
-<div class="menu-sep">📊 RELATÓRIOS - COMO ESTAVA E COMO ESTÁ</div>
-<div class="menu-item" onclick="verRel('dia')"><span>📅 Hoje - como estava hoje</span><span>›</span></div>
-<div class="menu-item" onclick="verRel('semana')"><span>📅 Esta semana</span><span>›</span></div>
-<div class="menu-item" onclick="verRel('mes')"><span>📅 Este mês - como estava</span><span>›</span></div>
-<div class="menu-item" onclick="verRel('ano')"><span>📅 Este ano</span><span>›</span></div>
+<div class="menu-item" onclick="home()"><span>🏠 Início</span><span>›</span></div>
+
+<div class="menu-sep">📊 RELATÓRIOS</div>
+<div class="menu-item" onclick="verRel('dia')"><span>📅 Hoje</span><span>›</span></div>
+<div class="menu-item" onclick="verRel('semana')"><span>📅 Semana</span><span>›</span></div>
+<div class="menu-item" onclick="verRel('mes')"><span>📅 Mês</span><span>›</span></div>
+<div class="menu-item" onclick="verRel('ano')"><span>📅 Ano</span><span>›</span></div>
 <div class="menu-item" onclick="verRel('tudo')"><span>📊 Tudo - Como estava e como está</span><span>›</span></div>
 
-<div class="menu-sep">🔍 FILTROS QUE VOCÊ PEDIU NO ÁUDIO</div>
+<div class="menu-sep">🔍 FILTROS QUE VOCÊ PEDIU</div>
 <div class="menu-item" onclick="setFiltro('todos')"><span>👁️ Ver tudo (pagar + receber)</span></div>
-<div class="menu-item" onclick="setFiltro('pagar')"><span>🔴 Só o que tenho que pagar</span></div>
-<div class="menu-item" onclick="setFiltro('receber')"><span>🟢 Só o que tenho que receber</span></div>
-<div class="menu-item" onclick="setFiltro('aberto')"><span>⏳ Só em aberto (não pago)</span></div>
+<div class="menu-item" onclick="setFiltro('pagar')"><span>🔴 Só que tenho que pagar</span></div>
+<div class="menu-item" onclick="setFiltro('receber')"><span>🟢 Só que tenho que receber</span></div>
+<div class="menu-item" onclick="setFiltro('aberto')"><span>⏳ Só em aberto</span></div>
 <div class="menu-item" onclick="setFiltro('pago')"><span>✅ Só pago / recebido</span></div>
 
-<div class="menu-sep">🧮 CALCULADORA</div>
-<div class="menu-item" onclick="document.getElementById('menu').classList.remove('open');document.getElementById('overlay').classList.remove('show');document.getElementById('calc').style.display='block'"><span>🧮 Abrir calculadora PRO</span><span>›</span></div>
+<div class="menu-sep">🧮 CALCULADORA - 0 AO 9 COMPLETO</div>
+<div class="menu-item" onclick="fechar();document.getElementById('calc').style.display='block'"><span>🧮 Abrir calculadora PRO - com ⌫</span><span>›</span></div>
 
-<div class="menu-sep">💾 DADOS ETERNO - NUNCA PERDE</div>
-<div style="padding:10px">
-<button onclick="exportar()" style="width:100%;padding:12px;background:#eff6ff;border:2px solid #2563eb;border-radius:10px;font-weight:900;color:#2563eb">📤 Backup - Salvar no Drive</button>
-<button onclick="zerar()" style="width:100%;margin-top:8px;padding:10px;background:#fff;border:1px solid #dc2626;border-radius:10px;color:#dc2626;font-weight:700">🗑️ Zerar tudo</button>
-<div style="font-size:10px;color:#888;text-align:center;margin-top:6px">Salva automático a cada 30 seg - 3 cópias</div>
+<div class="menu-sep">💾 DADOS</div>
+<div style="padding:10px"><button onclick="exportar()" style="width:100%;padding:12px;background:#eff6ff;border:2px solid #2563eb;border-radius:10px;font-weight:900;color:#2563eb">📤 Backup</button><button onclick="zerar()" style="width:100%;margin-top:8px;padding:10px;background:#fff;border:1px solid #dc2626;border-radius:10px;color:#dc2626;font-weight:700">🗑️ Zerar tudo</button></div>
+<div style="padding:12px;font-size:11px;color:#888;text-align:center">V33 - fecha no X, clica fora ou no botão voltar<br>0-9 funcionando - ⌫ apaga 1 número</div>
 </div>
 
-<div class="menu-sep">VERSÃO</div>
-<div style="padding:12px;font-size:11px;color:#64748b">V32 MENU COMPLETO - 0 ao 9 funcionando - ⌫ apaga 1 número - Soma automática</div>
-</div>
-
-<header><button onclick="document.getElementById('menu').classList.add('open');document.getElementById('overlay').classList.add('show')" style="width:42px;height:42px;border-radius:10px;border:1px solid #fff;background:rgba(255,255,255,.2);color:#fff;font-size:24px">☰</button><b>PAGFLOW V32</b><button onclick="verRel('mes')" style="background:rgba(255,255,255,.2);border:1px solid #fff;color:#fff;padding:8px 12px;border-radius:10px;font-weight:900">Relatórios</button></header>
+<header><button onclick="abrirMenu()" style="width:42px;height:42px;border-radius:10px;border:1px solid #fff;background:rgba(255,255,255,.2);color:#fff;font-size:22px">☰</button><b>PAGFLOW V33</b><button onclick="verRel('mes')" style="background:rgba(255,255,255,.2);border:1px solid #fff;color:#fff;padding:8px 12px;border-radius:10px;font-weight:900">Relatórios</button></header>
 
 <div id="home" style="max-width:520px;margin:auto">
 <div class="sum" style="margin:10px"><div style="border-color:#dc2626"><div style="font-size:11px;font-weight:900">TENHO QUE PAGAR</div><b id="tp" style="color:#dc2626;font-size:20px">R$ 0,00</b><div id="dp" style="font-size:11px">0 contas</div></div><div style="border-color:#16a34a"><div style="font-size:11px;font-weight:900">TENHO QUE RECEBER</div><b id="tr" style="color:#16a34a;font-size:20px">R$ 0,00</b><div id="dr" style="font-size:11px">0 contas</div></div></div>
-<div class="card" style="background:#2563eb;color:#fff;text-align:center"><div style="font-size:11px;font-weight:900">SALDO REAL = RECEBER - PAGAR</div><b id="ts" style="font-size:32px;display:block">R$ 0,00</b><div style="font-size:11px">Soma automático: multiplica, divide, soma</div></div>
+<div class="card" style="background:#2563eb;color:#fff;text-align:center"><div style="font-size:11px;font-weight:900">SALDO REAL</div><b id="ts" style="font-size:32px;display:block">R$ 0,00</b></div>
 <div style="display:flex;gap:10px;margin:10px"><button class="btn" style="background:#dc2626" onclick="abrir('pagar')">➖ PAGAR</button><button class="btn" style="background:#16a34a" onclick="abrir('receber')">➕ RECEBER</button></div>
-<div id="formAdd" class="card"><b id="tit">Novo</b><br><br>
-O QUE É? <input id="nome" placeholder="Ex: LUZ"><br><br>
-<div style="display:flex;gap:10px"><div style="flex:1">QTD <input id="qtd" type="number" value="1" oninput="calc()"></div><div style="flex:1">VALOR <input id="valor" type="number" placeholder="100" oninput="calc()"></div></div><br>
-<div style="background:#f8fafc;border:2px dashed #2563eb;border-radius:10px;padding:10px;text-align:center"><div style="font-size:11px;font-weight:900">CONTA AUTOMÁTICA</div><b id="prev" style="font-size:24px;color:#2563eb">R$ 0,00</b><div id="det" style="font-size:11px"></div></div><br>
-VENCE? <input id="data" type="date"><br><br>
-DIVIDIR? <select id="div" onchange="calc()"><option value="1">Não dividir</option><option value="2">2x</option><option value="3">3x</option><option value="6">6x</option><option value="12">12x</option></select><br><br>
-<button class="btn" style="background:#2563eb" onclick="salvar()">✅ SALVAR</button><br><br><button class="btn" style="background:#fff;color:#2563eb;border:2px solid #2563eb" onclick="document.getElementById('formAdd').style.display='none'">Cancelar</button>
-</div>
-<div class="card"><b>📋 Minhas contas (<span id="ql">0</span>) - <span id="ft">todos</span></b><div id="lista"></div></div>
+<div id="formAdd" class="card"><b id="tit">Novo</b><br><br>O QUE É? <input id="nome"><br><br><div style="display:flex;gap:10px"><div style="flex:1">QTD <input id="qtd" type="number" value="1" oninput="calc()"></div><div style="flex:1">VALOR <input id="valor" type="number" oninput="calc()"></div></div><br><div style="background:#f8fafc;border:2px dashed #2563eb;border-radius:10px;padding:10px;text-align:center"><b id="prev" style="font-size:24px;color:#2563eb">R$ 0,00</b><div id="det" style="font-size:11px"></div></div><br>VENCE? <input id="data" type="date"><br><br>DIVIDIR? <select id="div" onchange="calc()"><option value="1">Não</option><option value="2">2x</option><option value="3">3x</option><option value="12">12x</option></select><br><br><button class="btn" style="background:#2563eb" onclick="salvar()">✅ SALVAR</button><br><br><button class="btn" style="background:#fff;color:#2563eb;border:2px solid #2563eb" onclick="document.getElementById('formAdd').style.display='none'">Cancelar</button></div>
+<div class="card"><b>📋 Contas (<span id="ql">0</span>) - <span id="ft">todos</span></b><div id="lista"></div></div>
 </div>
 
-<div id="viewRel" style="display:none;max-width:520px;margin:auto"><div class="card"><b>📊 Relatório <span id="titRel"></span></b><div id="resRel" style="margin-top:10px"></div><br><button class="btn" style="background:#fff;color:#2563eb;border:2px solid #2563eb" onclick="home()">← Voltar</button></div></div>
+<div id="viewRel" style="display:none;max-width:520px;margin:auto"><div class="card"><b>Relatório <span id="titRel"></span></b><div id="resRel" style="margin-top:10px"></div><br><button class="btn" style="background:#fff;color:#2563eb;border:2px solid #2563eb" onclick="home()">← Voltar</button></div></div>
 
 <button onclick="document.getElementById('calc').style.display='block'" style="position:fixed;bottom:20px;right:20px;width:64px;height:64px;border-radius:50%;background:#000;color:#fff;font-size:28px;border:none;z-index:50">🧮</button>
-
 <div id="calc">
-<div style="display:flex;justify-content:space-between"><b>🧮 Calculadora 0-9 COMPLETA + ⌫</b><button onclick="document.getElementById('calc').style.display='none'" style="padding:6px 12px;border-radius:8px;border:none;background:#eee;font-weight:900">X</button></div>
+<div style="display:flex;justify-content:space-between"><b>🧮 0-9 COMPLETO + ⌫ apaga 1</b><button onclick="document.getElementById('calc').style.display='none'" style="padding:6px 12px">X</button></div>
 <div style="background:#000;color:#fff;padding:10px;border-radius:10px;text-align:right;margin:10px 0"><div id="ch" style="color:#aaa;font-size:12px"></div><div id="cd" style="font-size:30px;font-weight:900">0</div></div>
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
 <button onclick="cp('C')" style="padding:14px;background:#fcc;border-radius:8px;font-weight:900">AC</button><button onclick="cb()" style="padding:14px;background:#fe9;border-radius:8px;font-weight:900">⌫</button><button onclick="cp('%')" style="padding:14px;border-radius:8px">%</button><button onclick="cp('/')" style="padding:14px;background:#def;border-radius:8px">÷</button>
-<button onclick="cp('7')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900;font-size:18px">7</button><button onclick="cp('8')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900;font-size:18px">8</button><button onclick="cp('9')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900;font-size:18px">9</button><button onclick="cp('*')" style="padding:14px;background:#def;border-radius:8px">×</button>
+<button onclick="cp('7')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">7</button><button onclick="cp('8')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">8</button><button onclick="cp('9')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">9</button><button onclick="cp('*')" style="padding:14px;background:#def;border-radius:8px">×</button>
 <button onclick="cp('4')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">4</button><button onclick="cp('5')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">5</button><button onclick="cp('6')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">6</button><button onclick="cp('-')" style="padding:14px;background:#def;border-radius:8px">-</button>
 <button onclick="cp('1')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">1</button><button onclick="cp('2')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">2</button><button onclick="cp('3')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">3</button><button onclick="cp('+')" style="padding:14px;background:#def;border-radius:8px">+</button>
 <button onclick="cp('(')" style="padding:14px;border-radius:8px">(</button><button onclick="cp('0')" style="padding:16px;background:#fff;border:2px solid #ccc;border-radius:10px;font-weight:900">0</button><button onclick="cp('.')" style="padding:14px;border-radius:8px">.</button><button onclick="cp('=')" style="padding:14px;background:#2563eb;color:#fff;border-radius:8px;font-weight:900">=</button>
@@ -88,25 +75,26 @@ DIVIDIR? <select id="div" onchange="calc()"><option value="1">Não dividir</opti
 </div>
 
 <script>
-var DB={contas:[]}; try{var s=localStorage.getItem('pagflow_v32'); if(s) DB=JSON.parse(s);}catch(e){}
+var DB={contas:[]}; try{var s=localStorage.getItem('pagflow_v33'); if(s) DB=JSON.parse(s);}catch(e){}
 var tipo='pagar'; var filtro='todos'; var ex=''; var hi='';
-function save(){localStorage.setItem('pagflow_v32',JSON.stringify(DB));}
+function save(){localStorage.setItem('pagflow_v33',JSON.stringify(DB));}
+function abrirMenu(){document.getElementById('menu').classList.add('open');document.getElementById('overlay').classList.add('show');}
 function fechar(){document.getElementById('menu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
 function home(){document.getElementById('home').style.display='block';document.getElementById('viewRel').style.display='none';fechar();}
-function verRel(p){document.getElementById('home').style.display='none';document.getElementById('viewRel').style.display='block';document.getElementById('titRel').innerText=p;fechar();var ini=new Date();var agora=new Date();if(p==='dia') ini.setHours(0,0,0,0);else if(p==='semana') ini.setDate(agora.getDate()-7);else if(p==='mes') ini.setMonth(agora.getMonth()-1);else if(p==='ano') ini.setFullYear(agora.getFullYear()-1);else ini=new Date(0);var fil=DB.contas.filter(function(c){return new Date(c.data)>=ini});var pg=0,rc=0;for(var i=0;i<fil.length;i++){if(fil[i].tipo==='pagar') pg+=tot(fil[i]); else rc+=tot(fil[i]);}document.getElementById('resRel').innerHTML='<div style="display:flex;gap:8px"><div style="flex:1;background:#fee2e2;padding:12px;border-radius:10px"><div style="font-size:11px">COMO ESTAVA - PAGAR</div><b>R$ '+pg.toFixed(2)+'</b></div><div style="flex:1;background:#dcfce7;padding:12px;border-radius:10px"><div style="font-size:11px">COMO ESTÁ - SALDO</div><b>R$ '+(rc-pg).toFixed(2)+'</b></div></div><div style="margin-top:10px;font-size:12px">Contas no período: '+fil.length+'</div>';}
+function verRel(p){document.getElementById('home').style.display='none';document.getElementById('viewRel').style.display='block';document.getElementById('titRel').innerText=p;fechar();var ini=new Date();var agora=new Date();if(p==='dia') ini.setHours(0,0,0,0);else if(p==='semana') ini.setDate(agora.getDate()-7);else if(p==='mes') ini.setMonth(agora.getMonth()-1);else if(p==='ano') ini.setFullYear(agora.getFullYear()-1);else ini=new Date(0);var fil=DB.contas.filter(function(c){return new Date(c.data)>=ini});var pg=0,rc=0;for(var i=0;i<fil.length;i++){if(fil[i].tipo==='pagar') pg+=tot(fil[i]); else rc+=tot(fil[i]);}document.getElementById('resRel').innerHTML='<div style="display:flex;gap:8px"><div style="flex:1;background:#fee2e2;padding:12px;border-radius:10px"><b>R$ '+pg.toFixed(2)+'</b></div><div style="flex:1;background:#dcfce7;padding:12px;border-radius:10px"><b>R$ '+(rc-pg).toFixed(2)+'</b></div></div><div style="margin-top:8px">Contas: '+fil.length+'</div>';}
 function setFiltro(f){filtro=f;document.getElementById('ft').innerText=f;fechar();atual();}
-function abrir(t){tipo=t;document.getElementById('formAdd').style.display='block';document.getElementById('tit').innerText=t==='pagar'?'➖ TENHO QUE PAGAR':'➕ TENHO QUE RECEBER';document.getElementById('data').value=new Date().toISOString().slice(0,10);calc();window.scrollTo(0,350);}
+function abrir(t){tipo=t;document.getElementById('formAdd').style.display='block';document.getElementById('tit').innerText=t==='pagar'?'➖ PAGAR':'➕ RECEBER';document.getElementById('data').value=new Date().toISOString().slice(0,10);calc();window.scrollTo(0,300);}
 function calc(){var q=parseFloat(document.getElementById('qtd').value)||1;var v=parseFloat(document.getElementById('valor').value)||0;var d=parseFloat(document.getElementById('div').value)||1;var t=(q*v)/d;document.getElementById('prev').innerText='R$ '+t.toFixed(2);document.getElementById('det').innerText=q+' x R$ '+v.toFixed(2)+(d>1?' ÷ '+d:'')+' = R$ '+t.toFixed(2);}
 function tot(c){return ((parseFloat(c.qtd)||1)*(parseFloat(c.valor)||0))/(parseFloat(c.div)||1);}
 function salvar(){var n=document.getElementById('nome').value.trim();if(!n){alert('Nome');return;}var q=document.getElementById('qtd').value||1;var v=document.getElementById('valor').value;if(!v){alert('Valor');return;}var d=document.getElementById('data').value;if(!d){alert('Data');return;}var di=document.getElementById('div').value;DB.contas.push({id:Date.now(),tipo:tipo,nome:n,qtd:q,valor:v,data:d,[STRIPPED] Já somou');}
 function baixa(id){for(var i=0;i<DB.contas.length;i++) if(DB.contas[i].id===id) DB.contas[i].pago=!DB.contas[i].pago;save();atual();}
 function apaga(id){if(!confirm('Apagar?'))return;DB.contas=DB.contas.filter(function(c){return c.id!==id});save();atual();}
-function atual(){var pg=DB.contas.filter(function(c){return c.tipo==='pagar'&&!c.pago});var rc=DB.contas.filter(function(c){return c.tipo==='receber'&&!c.pago});var tp=0,tr=0;for(var i=0;i<pg.length;i++) tp+=tot(pg[i]);for(var i=0;i<rc.length;i++) tr+=tot(rc[i]);document.getElementById('tp').innerText='R$ '+tp.toFixed(2);document.getElementById('tr').innerText='R$ '+tr.toFixed(2);document.getElementById('ts').innerText='R$ '+(tr-tp).toFixed(2);document.getElementById('dp').innerText=pg.length+' contas • R$ '+tp.toFixed(2);document.getElementById('dr').innerText=rc.length+' contas • R$ '+tr.toFixed(2);document.getElementById('ql').innerText=DB.contas.length;var l=DB.contas.slice().sort(function(a,b){return new Date(a.data)-new Date(b.data)});if(filtro==='pagar') l=l.filter(function(c){return c.tipo==='pagar'});if(filtro==='receber') l=l.filter(function(c){return c.tipo==='receber'});if(filtro==='pago') l=l.filter(function(c){return c.pago});if(filtro==='aberto') l=l.filter(function(c){return !c.pago});var h='';if(l.length===0) h='<div style="padding:20px;text-align:center;color:#888">Nada em '+filtro+'<br>Clique em PAGAR</div>';else for(var i=0;i<l.length;i++){var c=l[i];var t=tot(c);h+='<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:2px solid #f1f5f9"><div style="flex:1"><b>'+c.nome+'</b> <span style="font-size:10px;background:'+(c.tipo==='pagar'?'#fee2e2':'#dcfce7')+';padding:3px 6px;border-radius:8px">'+c.tipo+'</span><div style="font-size:12px">'+c.qtd+'x R$ '+parseFloat(c.valor).toFixed(2)+(c.div>1?' ÷ '+c.div:'')+' = <b>R$ '+t.toFixed(2)+'</b></div><div style="font-size:11px;color:#888">'+c.data.split('-').reverse().join('/')+' '+(c.pago?'✅ PAGO':'')+'</div></div><div><button onclick="baixa('+c.id+')" style="padding:8px 12px;background:'+(c.pago?'#fff':'#16a34a')+';color:'+(c.pago?'#2563eb':'#fff')+';border:2px solid #16a34a;border-radius:8px;font-weight:900">'+(c.pago?'Desfazer':'Paguei')+'</button><br><button onclick="apaga('+c.id+')" style="margin-top:4px;padding:6px;background:#f1f5f9;border:none;border-radius:6px;color:#dc2626">🗑️</button></div></div>';}document.getElementById('lista').innerHTML=h;}
-function cp(v){var d=document.getElementById('cd');var h=document.getElementById('ch');if(v==='C'){ex='';hi='';d.innerText='0';h.innerText='';return;}if(v==='='){try{var e=ex.replace(/%/g,'/100');var r=eval(e);hi=ex+' =';h.innerText=hi;ex=r.toString();d.innerText=ex;}catch(e){d.innerText='Erro';}return;}if(v==='('){ex+=(ex===''||'+-*/('.indexOf(ex.slice(-1))>-1)?'(' : ')');}else ex+=v; d.innerText=ex||'0';}
+function atual(){var pg=DB.contas.filter(function(c){return c.tipo==='pagar'&&!c.pago});var rc=DB.contas.filter(function(c){return c.tipo==='receber'&&!c.pago});var tp=0,tr=0;for(var i=0;i<pg.length;i++) tp+=tot(pg[i]);for(var i=0;i<rc.length;i++) tr+=tot(rc[i]);document.getElementById('tp').innerText='R$ '+tp.toFixed(2);document.getElementById('tr').innerText='R$ '+tr.toFixed(2);document.getElementById('ts').innerText='R$ '+(tr-tp).toFixed(2);document.getElementById('dp').innerText=pg.length+' contas';document.getElementById('dr').innerText=rc.length+' contas';document.getElementById('ql').innerText=DB.contas.length;var l=DB.contas.slice().sort(function(a,b){return new Date(a.data)-new Date(b.data)});if(filtro==='pagar') l=l.filter(function(c){return c.tipo==='pagar'});if(filtro==='receber') l=l.filter(function(c){return c.tipo==='receber'});if(filtro==='pago') l=l.filter(function(c){return c.pago});if(filtro==='aberto') l=l.filter(function(c){return !c.pago});var h='';if(l.length===0) h='<div style="padding:20px;text-align:center;color:#888">Nada em '+filtro+'</div>';else for(var i=0;i<l.length;i++){var c=l[i];var t=tot(c);h+='<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee"><div><b>'+c.nome+'</b><div style="font-size:12px">'+c.qtd+'x R$ '+parseFloat(c.valor).toFixed(2)+' = R$ '+t.toFixed(2)+'</div><div style="font-size:11px;color:#888">'+c.data.split('-').reverse().join('/')+' '+(c.pago?'✅':'')+'</div></div><div><button onclick="baixa('+c.id+')" style="padding:8px;background:'+(c.pago?'#fff':'#16a34a')+';color:'+(c.pago?'#2563eb':'#fff')+';border:2px solid #16a34a;border-radius:8px;font-weight:900">'+(c.pago?'Desfazer':'Paguei')+'</button><br><button onclick="apaga('+c.id+')" style="margin-top:4px;padding:6px;background:#f1f5f9;border:none;border-radius:6px;color:#dc2626">🗑️</button></div></div>';}document.getElementById('lista').innerHTML=h;}
+function cp(v){var d=document.getElementById('cd');var h=document.getElementById('ch');if(v==='C'){ex='';hi='';d.innerText='0';h.innerText='';return;}if(v==='='){try{var e=ex.replace(/%/g,'/100');var r=eval(e);hi=ex+' =';h.innerText=hi;ex=r.toString();d.innerText=ex;}catch(e){d.innerText='Erro';}return;}if(v==='('){ex+=(ex===''||'+-*/('.indexOf(ex.slice(-1))>-1)?'(' : ')';}else ex+=v; d.innerText=ex||'0';}
 function cb(){ex=ex.slice(0,-1);document.getElementById('cd').innerText=ex||'0';}
 function cu(){var v=parseFloat(ex)||0;if(v){document.getElementById('valor').value=v;calc();document.getElementById('calc').style.display='none';document.getElementById('formAdd').style.display='block';}}
-function exportar(){var blob=new Blob([JSON.stringify(DB)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PAGFLOW_V32.json';a.click();}
-function instalar(){alert('Pra instalar: clica nos 3 pontinhos do Chrome > Adicionar à tela inicial > Instalar');}
-function zerar(){if(confirm('Zerar tudo mesmo?')){DB={contas:[]};save();atual();}}
+function exportar(){var blob=new Blob([JSON.stringify(DB)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PAGFLOW_V33.json';a.click();}
+function instalar(){alert('Chrome: 3 pontinhos > Adicionar à tela inicial');}
+function zerar(){if(confirm('Zerar?')){DB={contas:[]};save();atual();}}
 atual();
 </script></body></html>
