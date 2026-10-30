@@ -1,14 +1,9 @@
-const CACHE = 'financas-2026-2032-v1';
-const ASSETS = ['./index.html', './manifest.json'];
-
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS))
-  );
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
-  );
-});
+{
+  "name": "PAGFLOW V36",
+  "short_name": "PAGFLOW",
+  "start_url": "./?v=36",
+  "display": "standalone",
+  "background_color": "#2563eb",
+  "theme_color": "#2563eb",
+  "icons": [{"src":"https://cdn-icons-png.flaticon.com/512/2830/2830284.png","sizes":"512x512","type":"image/png"}]
+}
