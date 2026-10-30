@@ -1,127 +1,152 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V22.2 RESTAURA</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V23 FIX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <style>:root{--bg:#f8fafc;--card:#fff;--card2:#eef2ff;--line:#e0e7ff;--text:#0f172a;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--muted:#475569}
 *{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:var(--bg);color:var(--text);font-weight:500}
 b{font-weight:600 !important}header{padding:14px 18px;background:var(--blue);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;color:#fff}
 #btnMenu{width:38px;height:38px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:18px}
-#sideMenu{position:fixed;top:0;left:-310px;width:300px;height:100%;background:var(--card);z-index:20;transition:.3s;overflow:auto;border-right:1px solid var(--line);padding-bottom:20px}
-#sideMenu.open{left:0}.menu-head{padding:18px;font-weight:700;background:var(--card2);color:var(--blue);border-bottom:1px solid var(--line)}
-.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+#sideMenu{position:fixed;top:0;left:-310px;width:300px;height:100%;background:var(--card);z-index:20;transition:.3s;overflow:auto;border-right:1px solid var(--line)}
+#sideMenu.open{left:0}.menu-head{padding:18px;font-weight:700;background:var(--card2);color:var(--blue)}
+.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;display:flex;justify-content:space-between}
 .menu-item.active{background:var(--card2);font-weight:600;border-left:3px solid var(--blue);color:var(--blue)}
-.menu-sep{padding:10px 18px 5px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;background:var(--bg)}
+.menu-sep{padding:10px 18px 5px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;background:var(--bg)}
 #overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.3);z-index:15}#overlay.show{display:block}
 main{padding:12px;max-width:460px;margin:0 auto}
 .sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.sum div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
-.sum .small{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}.sum b{display:block;margin-top:4px;font-size:16px;font-weight:700 !important}
+.sum .small{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase}.sum b{display:block;margin-top:4px;font-size:15px;font-weight:700 !important}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .small{font-size:11px;color:var(--muted)}.label{font-size:12px;font-weight:600;margin-bottom:2px;display:block}
-input,select{width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:14px}
+input,select{width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:14px}
 .btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-weight:700;margin-top:8px;cursor:pointer}
-.btn:active{transform:scale(0.98)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.view{display:none}.view.active{display:block}
+.btn-green{background:var(--green)}.btn-red{background:var(--red)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.view{display:none}.view.active{display:block}
 .pixBox{background:linear-gradient(135deg,var(--blue),#1e40af);color:#fff;border-radius:14px;padding:16px;margin:12px 0}
-.badge{font-size:10px;border-radius:12px;padding:3px 8px;font-weight:600}.badge.dev{background:var(--red);color:#fff}.badge.pago{background:var(--green);color:#fff}.badge.azul{background:var(--card2);color:var(--blue);border:1px solid var(--line)}
+.badge{font-size:10px;border-radius:12px;padding:3px 8px;font-weight:600}.badge.dev{background:var(--red);color:#fff}.badge.pago{background:var(--green);color:#fff}
+.alert{background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;padding:12px;margin:12px 0;font-size:12px;color:#92400e}
 </style></head><body>
 <div id="overlay" onclick="fecharMenu()"></div>
 <div id="sideMenu">
-<div class="menu-head">PAGFLOW V22.2 • RESTAURA TUDO</div>
-<div class="menu-item active" id="m-home" onclick="irHome()"><span>🏠 Início (só totais)</span></div>
-<div class="menu-sep">💳 BANKING - PIX REAL</div>
-<div class="menu-item" onclick="mudarCat('pix')"><span>💠 Receber Pix - takitakisom@gmail.com</span><span class="badge pago">OK</span></div>
+<div class="menu-head">PAGFLOW V23 • FIX DUPLICAÇÃO</div>
+<div class="menu-item active" id="m-home" onclick="irHome()"><span>🏠 Início</span></div>
+<div class="menu-sep">💳 BANKING</div>
+<div class="menu-item" onclick="mudarCat('pix')"><span>💠 Receber Pix</span><span class="badge pago" id="badgePix">0</span></div>
 <div class="menu-item" id="m-pagar" onclick="mudarCat('pagar')"><span>📌 Contas a pagar</span><span class="badge dev" id="qtdPagarMenu">0</span></div>
 <div class="menu-item" id="m-receber" onclick="mudarCat('receber')"><span>💰 Contas a receber</span></div>
-<div class="menu-item" id="m-caixinha" onclick="mudarCat('caixinha')"><span>💰 Caixinha</span></div>
-<div class="menu-sep">🚗 VEÍCULOS</div>
-<div class="menu-item" id="m-carro" onclick="mudarCat('carro')"><span>🚗 Parcelas carro</span></div>
-<div class="menu-item" id="m-moto" onclick="mudarCat('moto')"><span>🏍️ Moto</span></div>
-<div class="menu-item" id="m-combustivel" onclick="mudarCat('combustivel')"><span>⛽ Combustível</span></div>
-<div class="menu-sep">🏦 FINANCEIRO</div>
-<div class="menu-item" id="m-bancos" onclick="mudarCat('bancos')"><span>🏦 Dívidas bancos</span></div>
-<div class="menu-item" id="m-cartao" onclick="mudarCat('cartao')"><span>💳 Cartão crédito</span></div>
 <div class="menu-sep">🏠 CASA E VIDA</div>
 <div class="menu-item" id="m-aluguel" onclick="mudarCat('aluguel')"><span>🏠 Aluguel</span></div>
 <div class="menu-item" id="m-mercado" onclick="mudarCat('mercado')"><span>🛒 Mercado</span></div>
 <div class="menu-item" id="m-casa" onclick="mudarCat('casa')"><span>🏠 Casa / Projetos</span></div>
-<div class="menu-item" id="m-pets" onclick="mudarCat('pets')"><span>🐶 Pets - Ração</span></div>
-<div class="menu-sep">🎯 PLANEJAMENTOS</div>
-<div class="menu-item" id="m-viagem" onclick="mudarCat('viagem')"><span>✈️ Viagem</span></div>
-<div class="menu-item" id="m-saude" onclick="mudarCat('saude')"><span>🏥 Saúde</span></div>
-<div class="menu-item" id="m-educacao" onclick="mudarCat('educacao')"><span>📚 Educação</span></div>
-<div class="menu-sep">💾 BKP</div>
-<div style="padding:10px"><button onclick="restaurarForcado()" style="width:100%;padding:12px;border:2px solid var(--blue);border-radius:8px;background:var(--card2);font-weight:700;color:var(--blue)">♻️ Restaurar tudo de novo (se sumiu)</button><button onclick="exportarBKP()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);margin-top:6px;font-weight:600">📤 Exportar BKP</button><div id="bkp" class="small" style="text-align:center;margin-top:6px"></div></div>
+<div class="menu-item" id="m-pets" onclick="mudarCat('pets')"><span>🐶 Pets</span></div>
+<div class="menu-item" id="m-caixinha" onclick="mudarCat('caixinha')"><span>💰 Caixinha</span></div>
+<div class="menu-sep">🚗 VEÍCULOS</div>
+<div class="menu-item" id="m-carro" onclick="mudarCat('carro')"><span>🚗 Carro</span></div>
+<div class="menu-item" id="m-combustivel" onclick="mudarCat('combustivel')"><span>⛽ Combustível</span></div>
+<div class="menu-sep">💾 BKP E LIMPEZA</div>
+<div style="padding:10px"><button onclick="limparDuplicados()" style="width:100%;padding:12px;border:2px solid #f59e0b;border-radius:8px;background:#fef3c7;font-weight:700;color:#92400e">🧹 Limpar duplicados (corrigir R$ 7mi)</button><button onclick="zerarTudo()" style="width:100%;padding:10px;border:1px solid var(--red);border-radius:8px;background:#fff;margin-top:6px;font-weight:600;color:var(--red)">🗑️ Zerar tudo e começar limpo</button><button onclick="exportarBKP()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);margin-top:6px;font-weight:600">📤 Exportar BKP</button><div id="bkp" class="small" style="text-align:center;margin-top:6px"></div></div>
 </div>
 <header><div style="font-weight:700;letter-spacing:2px">PAGFLOW BANK</div><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
 <main>
 <div id="viewHome" class="view active">
 <div class="sum"><div><div class="small">A PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b></div><div><div class="small">A RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b></div><div><div class="small">SALDO BANK</div><b id="tSaldo" style="color:var(--blue)">R$ 0,00</b></div></div>
 
-<div class="pixBox"><b>💠 Receber Pix no PAGFLOW BANK</b><div style="font-size:12px;margin-top:8px">Sua chave REAL já configurada. Valida 100%.</div>
-<div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px;margin-top:10px"><div style="font-size:11px;opacity:.8">Sua chave Pix ATUAL (real)</div><b id="chavePix" style="font-size:15px;word-break:break-all">carregando...</b><div style="font-size:11px;margin-top:4px;opacity:.9">Tipo: E-mail (valida 100%)</div></div>
-<button class="btn" id="btnCopiar" style="background:#fff;color:var(--blue)" onclick="copiarPix()">📋 Copiar chave Pix</button>
-<button class="btn" id="btnTrocar" style="background:#fbbf24;color:#000" onclick="trocarChave()">✏️ Trocar chave Pix</button>
-<button class="btn" id="btnSimular" style="background:var(--green)" onclick="simularPix()">🧪 Simular Pix de R$ 500</button>
+<div id="alertaDuplicado" class="alert" style="display:none">⚠️ Detectei duplicação! Você tem <b id="qtdDuplicado"></b> itens repetidos causando R$ 7 milhões. Clique no menu ☰ > 🧹 Limpar duplicados pra corrigir.</div>
+
+<div class="pixBox"><b>💠 Receber Pix no PAGFLOW BANK</b><div style="font-size:12px;margin-top:6px">Chave: <b id="chavePix">takitakisom@gmail.com</b></div><div style="font-size:11px;opacity:.9;margin-top:4px">Pra onde vai o Pix? Vai pro SALDO BANK azul. Veja no extrato abaixo.</div>
+<button class="btn" style="background:#fff;color:var(--blue)" onclick="copiarPix()">📋 Copiar chave Pix</button>
+<button class="btn" style="background:#fbbf24;color:#000" onclick="trocarChave()">✏️ Trocar chave</button>
+<button class="btn btn-green" onclick="simularPix()">🧪 Simular Pix R$ 500 (teste)</button>
 </div>
+
+<div class="card"><b style="color:var(--blue)">💰 EXTRATO - Pra onde vai o Pix?</b><div style="font-size:11px;color:var(--muted);margin-top:4px">Todo Pix recebido cai aqui e aumenta o SALDO BANK azul</div><div id="extrato" style="margin-top:10px"></div></div>
 
 <div class="card"><b style="color:var(--blue)">+ Adicionar rápido → Contas a pagar</b>
-<div style="margin-top:10px"><span class="label">O que é?</span><select id="tipoHome" onchange="document.getElementById('nomeHome').value=this.value"></select></div><input id="nomeHome" placeholder="LUZ, Água...">
-<div class="grid2" style="margin-top:10px"><div><span class="label">Valor R$</span><input id="valorHome" type="number" inputmode="decimal"></div><div><span class="label">Vencimento</span><input id="dataHome" type="date"></div></div>
-<button class="btn" onclick="salvarHome()">SALVAR EM CONTAS A PAGAR</button>
+<select id="tipoHome" style="margin-top:8px"></select><input id="nomeHome" placeholder="LUZ, Água..." style="margin-top:6px">
+<div class="grid2" style="margin-top:8px"><div><span class="label">Valor R$</span><input id="valorHome" type="number"></div><div><span class="label">Vencimento</span><input id="dataHome" type="date"></div></div>
+<button class="btn" onclick="salvarHome()">SALVAR</button>
 </div>
-
-<div class="card"><b style="color:var(--blue)">Extrato Bank + Resumo</b><div id="extrato" class="small" style="margin-top:8px"></div></div>
 </div>
 
 <div id="viewLista" class="view"><div class="card">
-<div id="pixView" style="display:none"><div class="pixBox" style="text-align:center"><b style="font-size:16px">Receber Pix - CHAVE REAL</b>
-<div style="background:#fff;color:#000;border-radius:12px;padding:14px;margin:12px 0"><div style="font-size:11px;color:#666">CHAVE PIX</div><b id="chavePix2" style="font-size:16px;word-break:break-all">carregando...</b><div style="margin-top:8px;font-size:12px;color:#16a34a;font-weight:600">✓ Valida 100% no Nubank</div></div>
-<button class="btn" style="background:#fff;color:var(--blue)" onclick="copiarPix()">📋 Copiar chave</button>
-<button class="btn" style="background:#fbbf24;color:#000" onclick="trocarChave()">✏️ Trocar chave</button>
-<button class="btn" style="background:var(--green)" onclick="simularPix()">🧪 Simular R$ 500</button>
-</div></div>
-<div id="normalView"><div style="display:flex;justify-content:space-between"><b id="tit" style="color:var(--blue)">📌 Contas a pagar</b><span class="badge dev" id="qtd">0 itens</span></div><div id="lista" style="margin-top:8px"></div>
-<div style="background:var(--card2);padding:12px;border-radius:10px;margin-top:14px;border:1px solid var(--line)"><b id="titAdd" style="font-size:13px;color:var(--blue)">+ Adicionar</b>
-<div style="margin-top:8px"><span class="label">O que é?</span><select id="tipo" onchange="document.getElementById('nome').value=this.value"></select></div><input id="nome" placeholder="Digite (vira opção da seta)">
-<div class="grid2" style="margin-top:8px"><div><span class="label">Valor R$</span><input id="valor" type="number" inputmode="decimal"></div><div><span class="label">Data a vencer</span><input id="data" type="date"></div></div>
-<div class="grid2" style="margin-top:8px"><div><span class="label">Qtd</span><input id="qtdI" type="number" value="1"></div><div><span class="label">Frequência</span><select id="freq"><option value="mensal" selected>Mensal</option><option value="unica">Única</option><option value="dia">Dia x30</option><option value="semana">Semana</option></select></div></div>
-<button class="btn" id="btnSalvarCat" onclick="salvarCat()">SALVAR NESTA CATEGORIA</button>
-</div></div>
-<button class="btn" style="background:var(--card);color:var(--blue);border:1px solid var(--line)" onclick="irHome()">← Voltar pro Início</button>
+<div id="pixView" style="display:none"><div class="pixBox" style="text-align:center"><b>Receber Pix - ONDE VAI?</b><div style="background:#fff;color:#000;border-radius:12px;padding:14px;margin:12px 0"><b id="chavePix2" style="word-break:break-all">carregando...</b><div style="margin-top:8px;font-size:12px">Vai pro SALDO BANK azul + extrato</div></div><button class="btn" style="background:#fff;color:var(--blue)" onclick="copiarPix()">📋 Copiar</button><button class="btn btn-green" onclick="simularPix()">Simular R$ 500</button></div><div class="card" style="margin-top:12px"><b>Extrato Pix</b><div id="extrato2" style="margin-top:8px"></div></div></div>
+<div id="normalView"><div style="display:flex;justify-content:space-between"><b id="tit" style="color:var(--blue)">📌 Contas</b><span class="badge dev" id="qtd">0 itens</span></div><div id="lista" style="margin-top:8px"></div>
+<div style="background:var(--card2);padding:12px;border-radius:10px;margin-top:12px;border:1px solid var(--line)"><b id="titAdd">+ Adicionar</b><select id="tipo" style="margin-top:6px"></select><input id="nome" placeholder="Nome" style="margin-top:6px"><div class="grid2" style="margin-top:8px"><div><span class="label">Valor R$</span><input id="valor" type="number"></div><div><span class="label">Data a vencer</span><input id="data" type="date"></div></div><button class="btn" id="btnSalvarCat" onclick="salvarCat()">SALVAR</button></div></div>
+<button class="btn" style="background:var(--card);color:var(--blue);border:1px solid var(--line)" onclick="irHome()">← Voltar</button>
 </div></div>
 </main>
 <script>
-let DB=null;
-function carregarTudo(){
-  let base={}; let achou=[];
-  for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); if(k&&k.includes('pagflow')){try{let d=JSON.parse(localStorage.getItem(k)); let src=d.db||d; Object.keys(src).forEach(cat=>{ if(Array.isArray(src[cat])){ if(!base[cat])base[cat]=[]; src[cat].forEach(it=>{ if(it&&it.nome) base[cat].push(it); }); } }); if(Object.keys(src).length) achou.push(k);}catch{}}}
-  if(!base.pagar) base.pagar=[]; if(Object.keys(base).length===0){base={pagar:[],receber:[],caixinha:[],carro:[],moto:[],combustivel:[],bancos:[],cartao:[],aluguel:[],mercado:[],casa:[],pets:[],viagem:[],saude:[],educacao:[]}}
-  base.extrato=base.extrato||[]; return {db:base, keys:achou};
+const KEY_DB='pagflow_v23_fix';
+const KEY_CHAVE='pagflow_pix_chave_real';
+let DB=JSON.parse(localStorage.getItem(KEY_DB)||'null');
+let CHAVE=localStorage.getItem(KEY_CHAVE)||'takitakisom@gmail.com';
+
+function migrarUmaVez(){
+  if(DB) return DB;
+  let base={pagar:[],receber:[],caixinha:[],aluguel:[],mercado:[],casa:[],pets:[],carro:[],combustivel:[],bancos:[],cartao:[],viagem:[],saude:[],educacao:[],moto:[],extrato:[]};
+  let todos=[];
+  for(let i=0;i<localStorage.length;i++){
+    let k=localStorage.key(i);
+    if(k&&k.startsWith('pagflow_')&&k!==KEY_DB){
+      try{let d=JSON.parse(localStorage.getItem(k)); let src=d.db||d; Object.keys(src).forEach(cat=>{ if(Array.isArray(src[cat])) src[cat].forEach(it=>{ if(it&&it.nome&&cat!=='extrato') todos.push({...it, _cat:cat}); else if(cat==='extrato'&&it&&it.valor) base.extrato.push(it); }); }); }catch{}
+    }
+  }
+  // DEDUPLICA: mesmo nome+valor+data = 1 só
+  let mapa=new Map();
+  todos.forEach(it=>{
+    let id=(it.nome||'').toLowerCase().trim()+'|'+(it.valor||'')+'|'+(it.data||'')+'|'+(it._cat||'');
+    if(!mapa.has(id)) mapa.set(id,it);
+  });
+  mapa.forEach(it=>{
+    let c=it._cat;
+    if(base[c]!==undefined) base[c].push(it);
+    else if(c==='pagar'||!c) base.pagar.push(it);
+  });
+  // Se ainda tem duplicata absurda, limita a pagar a 100 itens
+  if(base.pagar.length>200){
+    base.pagar=base.pagar.slice(0,100);
+  }
+  localStorage.setItem(KEY_DB, JSON.stringify(base));
+  return base;
 }
-let carregado=carregarTudo(); DB=carregado.db;
-let TODAS=['pagar','receber','caixinha','carro','moto','combustivel','bancos','cartao','aluguel','mercado','casa','pets','viagem','saude','educacao','extrato'];
-TODAS.forEach(c=>{if(!DB[c])DB[c]=[]; if(!Array.isArray(DB[c]))DB[c]=[];});
+
+DB=migrarUmaVez();
 let cat='pagar';
-let CHAVE=localStorage.getItem('pagflow_pix_chave_real')||localStorage.getItem('pagflow_pix_chave')||'takitakisom@gmail.com';
-if(!localStorage.getItem('pagflow_pix_chave_real')) localStorage.setItem('pagflow_pix_chave_real',CHAVE);
-let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'null')||["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA","Aluguel","Mercado","Combustível"];
-function salvarE(){localStorage.setItem('pagflow_v22_2_restaura',JSON.stringify(DB));localStorage.setItem('pagflow_backup_1',JSON.stringify(DB));localStorage.setItem('pagflow_tipos_v11',JSON.stringify(TIPOS));localStorage.setItem('pagflow_pix_chave_real',CHAVE);let el=document.getElementById('bkp'); if(el) el.innerText='Salvo '+new Date().toLocaleTimeString()+' - '+carregado.keys.length+' bkps encontrados';}
+let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'[]')||["LUZ","Água","Combustível","Internet"];
+function salvarE(){localStorage.setItem(KEY_DB,JSON.stringify(DB));localStorage.setItem(KEY_CHAVE,CHAVE);document.getElementById('bkp').innerText='Salvo '+new Date().toLocaleTimeString();}
 function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
 function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
-function irHome(){document.getElementById('viewHome').classList.add('active');document.getElementById('viewLista').classList.remove('active');document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('active'));let mh=document.getElementById('m-home'); if(mh) mh.classList.add('active');fecharMenu();}
-function mudarCat(c){cat=c;document.getElementById('viewHome').classList.remove('active');document.getElementById('viewLista').classList.add('active');if(c==='pix'){document.getElementById('pixView').style.display='block';document.getElementById('normalView').style.display='none';}else{document.getElementById('pixView').style.display='none';document.getElementById('normalView').style.display='block';let nomes={'pagar':'📌 Contas a pagar','receber':'💰 Contas a receber','caixinha':'💰 Caixinha','carro':'🚗 Parcelas carro','moto':'🏍️ Moto','combustivel':'⛽ Combustível','bancos':'🏦 Dívidas bancos','cartao':'💳 Cartão crédito','aluguel':'🏠 Aluguel','mercado':'🛒 Mercado','casa':'🏠 Casa / Projetos','pets':'🐶 Pets - Ração','viagem':'✈️ Viagem','saude':'🏥 Saúde','educacao':'📚 Educação'};document.getElementById('tit').innerText=nomes[c]||c;document.getElementById('titAdd').innerText='+ Adicionar em '+(nomes[c]||c);document.getElementById('btnSalvarCat').innerText='SALVAR EM '+(nomes[c]||c).toUpperCase();}document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('active'));let el=document.getElementById('m-'+c);if(el)el.classList.add('active');fecharMenu();if(c!=='pix')mostrar();atualizar();}
-function renderT(){let html='<option value="">-- Escolha (LUZ, Água, etc) --</option>';TIPOS.forEach(t=>html+=`<option value="${t}">${t}</option>`);let th=document.getElementById('tipoHome'); let t=document.getElementById('tipo'); if(th) th.innerHTML=html; if(t) t.innerHTML=html;}
-function pm(it){let b=(+it.qtdI||+it.qtd||1)*(+it.valor||0)/(+it.div||1);if(it.freq==='dia')return b*30;if(it.freq==='semana')return b*4.33;if(it.freq==='quinzenal')return b*2;return b;}
-function mostrar(){let l=DB[cat]||[];let h='';l.forEach((it,i)=>{let m=pm(it);h+=`<div class="row"><div><b>${it.nome}</b><div class="small">Vence: ${it.data||'--'} • R$ ${m.toFixed(2)}/mês • ${it.freq||'mensal'}</div></div><div><button onclick="editar(${i})" style="border:1px solid var(--line);background:var(--card2);padding:6px 8px;border-radius:6px;font-size:11px">✎</button> <button onclick="apagar(${i})" style="border:1px solid var(--line);background:var(--card2);padding:6px 8px;border-radius:6px;color:var(--red);font-size:11px">✕</button></div></div>`;});document.getElementById('lista').innerHTML=h||'<div class="small" style="text-align:center;padding:15px">Nenhum item nesta categoria<br>Cadastre com valor e data abaixo</div>';let qtdEl=document.getElementById('qtd'); if(qtdEl) qtdEl.innerText=l.length+' itens';}
-function atualizar(){let p=(DB.pagar||[]).reduce((a,i)=>a+pm(i),0);let r=(DB.receber||[]).reduce((a,i)=>a+pm(i),0)+(DB.caixinha||[]).reduce((a,i)=>a+pm(i),0);let pix=DB.extrato.reduce((a,i)=>a+(+i.valor||0),0);let saldo=r-p+pix;document.getElementById('tPagar').innerText='R$ '+p.toFixed(2);document.getElementById('tReceber').innerText='R$ '+r.toFixed(2);document.getElementById('tSaldo').innerText='R$ '+saldo.toFixed(2);let qp=document.getElementById('qtdPagarMenu');if(qp){qp.innerText=(DB.pagar||[]).length;qp.style.display=(DB.pagar||[]).length?'inline-block':'none';}let ext='';DB.extrato.slice(-5).reverse().forEach(e=>{ext+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)"><span>💠 Pix ${e.nome||''}</span><span style="color:var(--green);font-weight:600">+ R$ ${(+e.valor).toFixed(2)}</span></div>`;});let totalPorCat='';['pagar','aluguel','mercado','carro','combustivel','casa','pets','viagem','caixinha'].forEach(k=>{if((DB[k]||[]).length){let tot=(DB[k]||[]).reduce((a,i)=>a+pm(i),0);totalPorCat+=`<div><b>${k}:</b> ${DB[k].length} itens = R$ ${tot.toFixed(2)}</div>`;}});document.getElementById('extrato').innerHTML=(ext||'<div style="padding:6px 0">Nenhum Pix ainda</div>')+'<div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)">'+totalPorCat+'</div><div class="small" style="margin-top:8px">Bkps encontrados: '+carregado.keys.join(', ')+'</div>';document.getElementById('chavePix').innerText=CHAVE;let el2=document.getElementById('chavePix2'); if(el2) el2.innerText=CHAVE;}
-function salvarHome(){let nome=(document.getElementById('nomeHome').value.trim()||document.getElementById('tipoHome').value);if(!nome){alert('Escolha o que é');return;}let valor=document.getElementById('valorHome').value;let data=document.getElementById('dataHome').value;if(!valor){alert('Valor');return;}if(!TIPOS.includes(nome))TIPOS.push(nome);DB.pagar.push({nome,qtd:1,qtdI:1,valor,data,freq:'mensal',div:1});salvarE();document.getElementById('nomeHome').value='';document.getElementById('valorHome').value='';document.getElementById('tipoHome').value='';atualizar();renderT();alert('Salvo em Contas a pagar!');}
-function salvarCat(){let nome=(document.getElementById('nome').value.trim()||document.getElementById('tipo').value);if(!nome){alert('Digite');return;}let qtdI=document.getElementById('qtdI').value||1;let valor=document.getElementById('valor').value;let data=document.getElementById('data').value;let freq=document.getElementById('freq').value;if(!valor){alert('Valor');return;}if(!data){alert('Data a vencer');return;}if(!TIPOS.includes(nome))TIPOS.push(nome);if(!DB[cat])DB[cat]=[];DB[cat].push({nome,qtd:qtdI,qtdI,valor,data,freq,div:1});salvarE();document.getElementById('nome').value='';document.getElementById('valor').value='';document.getElementById('tipo').value='';mostrar();atualizar();renderT();}
-function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);salvarE();mostrar();atualizar();}}
-function editar(i){let it=DB[cat][i];let n=prompt('Nome',it.nome);if(n==null)return;let v=prompt('Valor R$',it.valor);if(v==null)return;let d=prompt('Data a vencer',it.data);if(d==null)return;it.nome=n;it.valor=v;it.data=d;salvarE();mostrar();atualizar();}
-function copiarPix(){let texto=CHAVE; if(!texto){alert('Sem chave');return;} if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(texto).then(()=>alert('Chave '+texto+' copiada! Cola no Nubank e faz Pix')).catch(()=>fallbackCopy(texto));} else {fallbackCopy(texto);} }
-function fallbackCopy(text){let ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); alert('Chave '+text+' copiada!');}catch(e){prompt('Copie manualmente:',text);} document.body.removeChild(ta);}
-function trocarChave(){let nova=prompt('Cole sua CHAVE PIX REAL\nPode ser e-mail, celular, CPF ou aleatória\nAtual: '+CHAVE, CHAVE); if(nova===null)return; nova=nova.trim(); if(!nova)return; CHAVE=nova; localStorage.setItem('pagflow_pix_chave_real',CHAVE); salvarE(); atualizar(); alert('Chave salva: '+CHAVE+'\nAgora valida 100% no Pix!');}
-function simularPix(){let vStr=prompt('Valor do Pix recebido (teste)', '500'); if(vStr===null)return; let v=parseFloat(vStr.replace(',','.')); if(!v||isNaN(v)) return alert('Valor inválido'); let n=prompt('De quem?','Teste Pix')||'Teste'; DB.extrato.push({nome:n,valor:v,data:new Date().toISOString()}); salvarE(); atualizar(); alert('💠 Pix de R$ '+v.toFixed(2)+' recebido! Saldo azul atualizado');}
-function restaurarForcado(){if(!confirm('Restaurar todos os backups antigos? Vai juntar tudo de novo.'))return; carregado=carregarTudo(); DB=carregado.db; TODAS.forEach(c=>{if(!DB[c])DB[c]=[];}); salvarE(); atualizar(); mostrar(); alert('Restaurado! Encontrados: '+carregado.keys.join(', '));}
-function exportarBKP(){let blob=new Blob([JSON.stringify({db:DB,tipos:TIPOS,chave:CHAVE},null,2)],{type:'application/json'});let u=URL.createObjectURL(blob);let a=document.createElement('a');a.href=u;a.download='PAGFLOW_BKP_TOTAL.json';a.click();}
-document.getElementById('dataHome').valueAsDate=new Date();document.getElementById('data').valueAsDate=new Date();
+function irHome(){document.getElementById('viewHome').classList.add('active');document.getElementById('viewLista').classList.remove('active');fecharMenu();}
+function mudarCat(c){cat=c;document.getElementById('viewHome').classList.remove('active');document.getElementById('viewLista').classList.add('active');if(c==='pix'){document.getElementById('pixView').style.display='block';document.getElementById('normalView').style.display='none';}else{document.getElementById('pixView').style.display='none';document.getElementById('normalView').style.display='block';document.getElementById('tit').innerText=c;document.getElementById('titAdd').innerText='+ Adicionar em '+c;}fecharMenu();if(c!=='pix')mostrar();atualizar();}
+function renderT(){let html='<option value="">-- Escolha --</option>';TIPOS.forEach(t=>html+=`<option>${t}</option>`);document.getElementById('tipoHome').innerHTML=html;document.getElementById('tipo').innerHTML=html;}
+function pm(it){return parseFloat(it.valor)||0;}
+function mostrar(){let l=DB[cat]||[];let h='';l.forEach((it,i)=>{h+=`<div class="row"><div><b>${it.nome}</b><div class="small">${it.data||'--'} • R$ ${pm(it).toFixed(2)}</div></div><button onclick="apagar(${i})" style="color:var(--red);border:1px solid var(--line);padding:6px 8px;border-radius:6px">✕</button></div>`;});document.getElementById('lista').innerHTML=h||'Vazio';document.getElementById('qtd').innerText=l.length+' itens';}
+function atualizar(){
+  let p=(DB.pagar||[]).reduce((a,i)=>a+pm(i),0);
+  let r=(DB.receber||[]).reduce((a,i)=>a+pm(i),0)+(DB.caixinha||[]).reduce((a,i)=>a+pm(i),0);
+  let pix=DB.extrato.reduce((a,i)=>a+pm(i),0);
+  let saldo=r-p+pix;
+  document.getElementById('tPagar').innerText='R$ '+p.toFixed(2);
+  document.getElementById('tReceber').innerText='R$ '+r.toFixed(2);
+  document.getElementById('tSaldo').innerText='R$ '+saldo.toFixed(2);
+  document.getElementById('qtdPagarMenu').innerText=DB.pagar.length;
+  document.getElementById('badgePix').innerText=DB.extrato.length;
+  document.getElementById('chavePix').innerText=CHAVE;
+  document.getElementById('chavePix2').innerText=CHAVE;
+  let ext=''; if(DB.extrato.length===0) ext='<div class="small">Nenhum Pix ainda. Quando receber, aparece aqui e o SALDO BANK azul aumenta.</div>'; else DB.extrato.slice().reverse().forEach((e,i)=>{ext+=`<div class="row"><div><b>💠 Pix ${e.nome||'recebido'}</b><div class="small">${e.data||''} • entrou no SALDO BANK</div></div><div style="color:var(--green);font-weight:700">+ R$ ${pm(e).toFixed(2)}</div></div>`;});
+  document.getElementById('extrato').innerHTML=ext; document.getElementById('extrato2').innerHTML=ext;
+  if(p>100000){document.getElementById('alertaDuplicado').style.display='block'; document.getElementById('qtdDuplicado').innerText=DB.pagar.length+' itens';} else {document.getElementById('alertaDuplicado').style.display='none';}
+}
+function salvarHome(){let nome=document.getElementById('nomeHome').value.trim()||document.getElementById('tipoHome').value; if(!nome) return alert('Nome'); let v=document.getElementById('valorHome').value; let d=document.getElementById('dataHome').value; if(!v) return alert('Valor'); DB.pagar.push({nome,valor:v,data:d}); salvarE(); document.getElementById('nomeHome').value='';document.getElementById('valorHome').value=''; atualizar(); mostrar();}
+function salvarCat(){let nome=document.getElementById('nome').value.trim()||document.getElementById('tipo').value; if(!nome) return alert('Nome'); let v=document.getElementById('valor').value; let d=document.getElementById('data').value; if(!v) return alert('Valor'); if(!DB[cat]) DB[cat]=[]; DB[cat].push({nome,valor:v,data:d}); salvarE(); document.getElementById('nome').value='';document.getElementById('valor').value=''; mostrar(); atualizar();}
+function apagar(i){DB[cat].splice(i,1); salvarE(); mostrar(); atualizar();}
+function copiarPix(){let t=CHAVE; let ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); alert('Chave '+t+' copiada!');}catch{prompt('Copie:',t);} document.body.removeChild(ta);}
+function trocarChave(){let n=prompt('Sua chave Pix REAL:',CHAVE); if(n===null)return; CHAVE=n.trim(); salvarE(); atualizar(); alert('Salva: '+CHAVE);}
+function simularPix(){let vStr=prompt('Valor Pix recebido','500'); if(vStr===null)return; let v=parseFloat(vStr.replace(',','.')); if(!v) return; let n=prompt('De quem?','Teste Pix')||'Teste'; DB.extrato.push({nome:n,valor:v,data:new Date().toLocaleString()}); salvarE(); atualizar(); alert('💠 Pix R$ '+v.toFixed(2)+' entrou! Veja no extrato abaixo e no SALDO BANK azul que aumentou.');}
+function limparDuplicados(){
+  if(!confirm('Limpar duplicados? Isso vai remover itens repetidos e corrigir o R$ 7 milhões.'))return;
+  let mapa=new Map(); let novo={}; Object.keys(DB).forEach(k=>{if(k!=='extrato'){let lista=DB[k]; let semDup=[]; lista.forEach(it=>{let id=(it.nome||'').toLowerCase().trim()+'|'+(it.valor||'')+'|'+(it.data||''); if(!mapa.has(k+'|'+id)){mapa.set(k+'|'+id,true); semDup.push(it);}}); novo[k]=semDup;}else novo[k]=DB[k];});
+  DB=novo; salvarE(); atualizar(); mostrar(); alert('Duplicados removidos! Agora A PAGAR deve voltar ao normal.');
+}
+function zerarTudo(){if(!confirm('Zerar TUDO? Apaga tudo mesmo.'))return; if(!confirm('Tem certeza ABSOLUTA?'))return; DB={pagar:[],receber:[],caixinha:[],aluguel:[],mercado:[],casa:[],pets:[],carro:[],combustivel:[],bancos:[],cartao:[],viagem:[],saude:[],educacao:[],moto:[],extrato:[]}; salvarE(); atualizar(); mostrar(); alert('Zerado!');}
+function exportarBKP(){let blob=new Blob([JSON.stringify({db:DB,chave:CHAVE},null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PAGFLOW_V23_FIX.json';a.click();}
+document.getElementById('dataHome').valueAsDate=new Date(); document.getElementById('data').valueAsDate=new Date();
 renderT(); atualizar(); mostrar(); salvarE();
 </script></body></html>
