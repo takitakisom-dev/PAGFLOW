@@ -1,23 +1,13 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V21 FUNCIONAL</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PAGFLOW V22 BANK - PIX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f8fafc;--card:#fff;--card2:#eef2ff;--line:#e0e7ff;--text:#0f172a;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--muted:#475569}
-[data-tema="branco"]{--bg:#fff;--card:#fff;--card2:#f5f5f5;--line:#ddd;--text:#000;--blue:#000}
-[data-tema="preto"]{--bg:#0f172a;--card:#1e293b;--card2:#334155;--line:#334155;--text:#fff;--blue:#60a5fa}
-[data-tema="apple"]{--bg:#f5f5f7;--card:#fff;--card2:#f5f5f7;--line:#d2d2d7;--text:#1d1d1f;--blue:#0071e3}
-[data-tema="nubank"]{--bg:#f5f5f5;--card:#fff;--card2:#f3e8ff;--line:#e9d5ff;--text:#1a1a1a;--blue:#8a05be}
-[data-tema="ios"]{--bg:#f2f2f7;--card:#fff;--card2:#e5e5ea;--line:#d1d1d6;--text:#000;--blue:#007aff}
-[data-tema="dracula"]{--bg:#282a36;--card:#44475a;--card2:#6272a4;--line:#44475a;--text:#f8f8f2;--blue:#bd93f9}
-[data-tema="blue"]{--bg:#0f172a;--card:#1e293b;--card2:#1e3a8a;--line:#1e40af;--text:#dbeafe;--blue:#3b82f6}
-[data-tema="gold"]{--bg:#fffbeb;--card:#fff;--card2:#fef3c7;--line:#fde68a;--text:#78350f;--blue:#d97706}
-*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:var(--bg);color:var(--text);font-weight:500;transition:.2s}
-b,strong{font-weight:600 !important}
+<style>:root{--bg:#f8fafc;--card:#fff;--card2:#eef2ff;--line:#e0e7ff;--text:#0f172a;--blue:#2563eb;--blue2:#1d4ed8;--green:#16a34a;--red:#dc2626;--muted:#475569}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:var(--bg);color:var(--text);font-weight:500}
+b{font-weight:600 !important}.logo{font-weight:700;letter-spacing:2px;font-size:15px}
 header{padding:14px 18px;background:var(--blue);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;color:#fff}
-.logo{font-weight:700;letter-spacing:2px;font-size:15px}
 #btnMenu{width:38px;height:38px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-weight:600}
 #sideMenu{position:fixed;top:0;left:-310px;width:300px;height:100%;background:var(--card);z-index:20;transition:.3s;overflow:auto;border-right:1px solid var(--line);padding-bottom:20px}
 #sideMenu.open{left:0}.menu-head{padding:18px;font-weight:700;border-bottom:1px solid var(--line);background:var(--card2);color:var(--blue)}
-.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;display:flex;justify-content:space-between;font-weight:500;color:var(--text)}
+.menu-item{padding:12px 18px;border-bottom:1px solid var(--line);font-size:13px;cursor:pointer;display:flex;justify-content:space-between;font-weight:500}
 .menu-item.active{background:var(--card2);font-weight:600;border-left:3px solid var(--blue);color:var(--blue)}
 .menu-sep{padding:10px 18px 5px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;background:var(--bg)}
 #overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.3);z-index:15}#overlay.show{display:block}
@@ -28,105 +18,85 @@ main{padding:12px;max-width:460px;margin:0 auto}
 .sum b{display:block;margin-top:4px;font-size:17px;font-weight:700 !important}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
 .row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
-.small{font-size:11px;color:var(--muted);font-weight:500}.label{font-size:12px;font-weight:600 !important;margin-bottom:2px;display:block;color:var(--text)}
+.small{font-size:11px;color:var(--muted);font-weight:500}.label{font-size:12px;font-weight:600 !important;margin-bottom:2px;display:block}
 .badge{font-size:10px;border-radius:12px;padding:3px 8px;font-weight:600}.badge.dev{color:#fff;background:var(--red)}.badge.pago{color:#fff;background:var(--green)}.badge.azul{color:var(--blue);background:var(--card2);border:1px solid var(--line)}
 input,select{width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:500;font-size:14px}
 .btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-weight:700;margin-top:8px}
-.btn2{padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card2);font-size:11px;color:var(--blue);font-weight:600}
+.btn-green{background:var(--green)}.btn2{padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:var(--card2);font-size:11px;color:var(--blue);font-weight:600}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.view{display:none}.view.active{display:block}
-.tema{padding:7px 10px;border-radius:7px;border:1px solid var(--line);background:var(--card2);font-size:11px;font-weight:600;margin:3px;display:inline-block;cursor:pointer;color:var(--text)}
-.tema.ativo{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pixBox{background:linear-gradient(135deg,var(--blue),#1e40af);color:#fff;border-radius:14px;padding:16px;margin:12px 0}
+.qr{width:160px;height:160px;background:#fff;border-radius:12px;margin:12px auto;display:flex;align-items:center;justify-content:center;color:#000;font-weight:700;font-size:12px;letter-spacing:1px}
 </style></head><body>
 <div id="overlay" onclick="fecharMenu()"></div>
 <div id="sideMenu">
-<div class="menu-head">PAGFLOW V21 • TUDO FUNCIONA</div>
-<div class="menu-item active" id="m-home" onclick="irHome()"><span>🏠 Início (só totais)</span></div>
-<div class="menu-sep">💳 PRINCIPAL</div>
-<div class="menu-item" id="m-pagar" onclick="mudarCat('pagar')"><span>📌 Contas a pagar</span><span class="badge dev" id="qtdPagarMenu">0</span></div>
-<div class="menu-item" id="m-receber" onclick="mudarCat('receber')"><span>💰 Contas a receber</span><span class="badge pago" id="qtdRecMenu" style="display:none">0</span></div>
-<div class="menu-item" id="m-caixinha" onclick="mudarCat('caixinha')"><span>💰 Caixinha</span></div>
+<div class="menu-head">PAGFLOW BANK V22 • PIX</div>
+<div class="menu-item active" id="m-home" onclick="irHome()"><span>🏠 Início</span></div>
+<div class="menu-sep">💳 BANKING</div>
+<div class="menu-item" onclick="mudarCat('pix')"><span>💠 Receber Pix</span><span class="badge pago">NOVO</span></div>
+<div class="menu-item" id="m-pagar" onclick="mudarCat('pagar')"><span>📌 Pagar com Pix</span><span class="badge dev" id="qtdPagarMenu">0</span></div>
+<div class="menu-item" id="m-receber" onclick="mudarCat('receber')"><span>💰 Cobrar com Pix</span></div>
 <div class="menu-sep">🚗 VEÍCULOS</div>
 <div class="menu-item" id="m-carro" onclick="mudarCat('carro')"><span>🚗 Parcelas carro</span></div>
-<div class="menu-item" id="m-moto" onclick="mudarCat('moto')"><span>🏍️ Moto</span></div>
 <div class="menu-item" id="m-combustivel" onclick="mudarCat('combustivel')"><span>⛽ Combustível</span></div>
-<div class="menu-sep">🏦 FINANCEIRO</div>
-<div class="menu-item" id="m-bancos" onclick="mudarCat('bancos')"><span>🏦 Dívidas bancos</span></div>
-<div class="menu-item" id="m-cartao" onclick="mudarCat('cartao')"><span>💳 Cartão crédito</span></div>
-<div class="menu-sep">🏠 CASA E VIDA</div>
+<div class="menu-sep">🏠 CASA</div>
 <div class="menu-item" id="m-aluguel" onclick="mudarCat('aluguel')"><span>🏠 Aluguel</span></div>
 <div class="menu-item" id="m-mercado" onclick="mudarCat('mercado')"><span>🛒 Mercado</span></div>
 <div class="menu-item" id="m-casa" onclick="mudarCat('casa')"><span>🏠 Casa / Projetos</span></div>
 <div class="menu-item" id="m-pets" onclick="mudarCat('pets')"><span>🐶 Pets - Ração</span></div>
-<div class="menu-sep">🎯 PLANEJAMENTOS</div>
+<div class="menu-sep">🎯 PLANOS</div>
 <div class="menu-item" id="m-viagem" onclick="mudarCat('viagem')"><span>✈️ Viagem</span></div>
-<div class="menu-item" id="m-saude" onclick="mudarCat('saude')"><span>🏥 Saúde</span></div>
-<div class="menu-item" id="m-educacao" onclick="mudarCat('educacao')"><span>📚 Educação</span></div>
-<div class="menu-sep">🎨 15 TEMAS - AGORA FUNCIONA</div>
-<div style="padding:8px 10px">
-<span class="tema ativo" id="t-brancoazul" onclick="setTema('brancoazul')">1 Branco/Azul</span>
-<span class="tema" onclick="setTema('branco')">2 Branco Simples</span>
-<span class="tema" onclick="setTema('preto')">3 Preto</span>
-<span class="tema" onclick="setTema('apple')">4 Apple</span>
-<span class="tema" onclick="setTema('nubank')">5 Nubank</span>
-<span class="tema" onclick="setTema('ios')">7 iOS</span>
-<span class="tema" onclick="setTema('dracula')">11 Dracula</span>
-<span class="tema" onclick="setTema('blue')">12 Blue Dark</span>
-<span class="tema" onclick="setTema('gold')">13 Gold</span>
+<div class="menu-item" id="m-caixinha" onclick="mudarCat('caixinha')"><span>💰 Caixinha</span></div>
+<div style="padding:10px;border-top:1px solid var(--line);margin-top:10px"><button onclick="exportarBKP()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-weight:600">📤 Exportar BKP</button><div id="bkp" class="small" style="text-align:center;margin-top:6px"></div></div>
 </div>
-<div class="menu-sep">💾 BKP ETERNO</div>
-<div style="padding:10px"><button onclick="exportarBKP()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);font-weight:600;color:var(--text)">📤 Exportar BKP</button><button onclick="document.getElementById('imp').click()" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;margin-top:6px;background:var(--card);font-weight:600;color:var(--text)">📥 Importar BKP</button><input type="file" id="imp" style="display:none" accept=".json" onchange="importarBKP(this)"><div id="bkp" class="small" style="text-align:center;margin-top:6px"></div></div>
-</div>
-<header><div class="logo">PAGFLOW</div><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
+<header><div class="logo">PAGFLOW BANK</div><button id="btnMenu" onclick="abrirMenu()">☰</button></header>
 <main>
 <div id="viewHome" class="view active">
-<div class="sum"><div><div class="small">A PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b></div><div><div class="small">A RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b></div><div><div class="small">SALDO</div><b id="tSaldo" style="color:var(--blue)">R$ 0,00</b></div></div>
-<div class="card"><b style="font-size:14px;color:var(--blue);font-weight:700 !important">+ Adicionar rápido → Contas a pagar (PRINCIPAL)</b>
-<div style="margin-top:10px"><span class="label">O que é?</span><select id="tipoHome" onchange="document.getElementById('nomeHome').value=this.value"></select></div>
-<input id="nomeHome" placeholder="LUZ, Água, etc">
+<div class="sum"><div><div class="small">A PAGAR</div><b id="tPagar" style="color:var(--red)">R$ 0,00</b></div><div><div class="small">A RECEBER</div><b id="tReceber" style="color:var(--green)">R$ 0,00</b></div><div><div class="small">SALDO BANK</div><b id="tSaldo" style="color:var(--blue)">R$ 0,00</b></div></div>
+
+<div class="pixBox"><b style="font-size:14px">💠 Como enviar dinheiro pra dentro do PAGFLOW BANK?</b><div style="font-size:12px;margin-top:8px;opacity:.9">Qualquer pessoa manda Pix pra sua chave abaixo. O saldo azul sobe na hora.</div><div style="background:rgba(255,255,255,.15);border-radius:8px;padding:10px;margin-top:10px;font-size:12px"><div style="opacity:.8">Sua chave Pix (CNPJ)</div><b id="chavePix" style="font-size:14px">51.123.456/0001-99</b></div><button class="btn" style="background:#fff;color:var(--blue);margin-top:10px" onclick="copiarPix()">📋 Copiar chave Pix</button><button class="btn" style="background:var(--green);margin-top:8px" onclick="simularPix()">🧪 Simular recebimento de R$ 500 Pix teste</button></div>
+
+<div class="card"><b style="font-size:14px;color:var(--blue)">+ Adicionar rápido → Contas a pagar</b>
+<div style="margin-top:10px"><span class="label">O que é?</span><select id="tipoHome"></select></div><input id="nomeHome" placeholder="LUZ, Água...">
 <div class="grid2" style="margin-top:10px"><div><span class="label">Valor R$</span><input id="valorHome" type="number"></div><div><span class="label">Vencimento</span><input id="dataHome" type="date"></div></div>
 <button class="btn" onclick="salvarHome()">SALVAR EM CONTAS A PAGAR</button>
 </div>
-<div class="card"><div style="display:flex;justify-content:space-between"><b style="color:var(--blue)">Resumo</b><span class="badge azul" onclick="abrirMenu()" style="cursor:pointer">Ver no menu →</span></div><div id="resumoHome" class="small" style="margin-top:8px"></div></div>
+
+<div class="card"><b style="color:var(--blue)">Extrato Bank</b><div id="extrato" class="small" style="margin-top:8px"></div></div>
 </div>
+
 <div id="viewLista" class="view">
 <div class="card">
-<div style="display:flex;justify-content:space-between"><b id="tit" style="color:var(--blue);font-weight:700 !important">📌 Contas a pagar</b><span class="badge dev" id="qtd">0 itens</span></div>
-<div id="lista" style="margin-top:8px"></div>
-<div style="background:var(--card2);padding:12px;border-radius:10px;margin-top:14px;border:1px solid var(--line)">
-<b id="titAdd" style="font-size:13px;color:var(--blue);font-weight:700 !important">+ Adicionar em Contas a pagar</b>
-<div style="margin-top:8px"><span class="label">O que é?</span><select id="tipo" onchange="document.getElementById('nome').value=this.value"></select></div>
-<input id="nome" placeholder="Digite (vira opção da seta)">
-<div class="grid2" style="margin-top:8px"><div><span class="label">Valor R$</span><input id="valor" type="number"></div><div><span class="label">Vencimento - Data a vencer</span><input id="data" type="date"></div></div>
-<div class="grid2" style="margin-top:8px"><div><span class="label">Qtd</span><input id="qtdI" type="number" value="1"></div><div><span class="label">Frequência</span><select id="freq"><option value="mensal" selected>Mensal</option><option value="dia">Dia x30</option><option value="semana">Semana x4,33</option><option value="quinzenal">Quinzenal x2</option><option value="unica">Única</option></select></div></div>
-<button class="btn" id="btnSalvarCat" onclick="salvarCat()">SALVAR NESTA CATEGORIA</button>
-</div>
-<button class="btn" style="background:var(--card);color:var(--blue);border:1px solid var(--line);margin-top:12px" onclick="irHome()">← Voltar pro Início limpo</button>
+<div id="pixView" style="display:none"><div class="pixBox" style="text-align:center"><b style="font-size:16px">Receber Pix no PAGFLOW BANK</b><div class="qr" id="qrBox">QR CODE<br>PIX<br><br>51.123.456/0001-99</div><div style="font-size:12px">Chave: <b id="chavePix2">51.123.456/0001-99</b></div><button class="btn" style="background:#fff;color:var(--blue);margin-top:12px" onclick="copiarPix()">📋 Copiar chave</button><button class="btn" style="background:var(--green);margin-top:8px" onclick="simularPix()">Simular Pix de R$ 500 recebido</button><div class="small" style="color:#fff;margin-top:10px;opacity:.9">1. Abra seu Nubank/Itaú<br>2. Pix > Colar chave<br>3. Envie quanto quiser<br>4. Saldo azul sobe na hora</div></div></div>
+<div id="normalView"><div style="display:flex;justify-content:space-between"><b id="tit" style="color:var(--blue)">📌 Contas a pagar</b><span class="badge dev" id="qtd">0 itens</span></div><div id="lista" style="margin-top:8px"></div>
+<div style="background:var(--card2);padding:12px;border-radius:10px;margin-top:14px;border:1px solid var(--line)"><b id="titAdd" style="font-size:13px;color:var(--blue)">+ Adicionar</b>
+<div style="margin-top:8px"><span class="label">O que é?</span><select id="tipo"></select></div><input id="nome" placeholder="Digite">
+<div class="grid2" style="margin-top:8px"><div><span class="label">Valor R$</span><input id="valor" type="number"></div><div><span class="label">Data a vencer</span><input id="data" type="date"></div></div><button class="btn" id="btnSalvarCat" onclick="salvarCat()">SALVAR</button></div></div>
+<button class="btn" style="background:var(--card);color:var(--blue);border:1px solid var(--line);margin-top:12px" onclick="irHome()">← Voltar</button>
 </div>
 </div>
 </main>
 <script>
-let DB=JSON.parse(localStorage.getItem('pagflow_v21_funcional')||'null');
-if(!DB){let o={};['pagflow_v20_menucompleto','pagflow_v19_semibold','pagflow_v18_azul','pagflow_backup_1'].forEach(k=>{try{let d=JSON.parse(localStorage.getItem(k)||'{}');Object.keys(d).forEach(c=>{if(!o[c])o[c]=[];if(Array.isArray(d[c]))d[c].forEach(x=>o[c].push(x));})}catch{}});DB=o;}
-let TODAS=['pagar','receber','caixinha','carro','moto','combustivel','bancos','cartao','aluguel','mercado','casa','pets','viagem','saude','educacao'];
+let DB=JSON.parse(localStorage.getItem('pagflow_v22_bank_pix')||'null');
+if(!DB){let o={};['pagflow_v21_funcional','pagflow_v20_menucompleto','pagflow_backup_1'].forEach(k=>{try{let d=JSON.parse(localStorage.getItem(k)||'{}');Object.keys(d).forEach(c=>{if(!o[c])o[c]=[];if(Array.isArray(d[c]))d[c].forEach(x=>o[c].push(x));})}catch{}});DB=o;}
+let TODAS=['pagar','receber','caixinha','carro','combustivel','bancos','cartao','aluguel','mercado','casa','pets','viagem','pix'];
 TODAS.forEach(c=>{if(!DB[c])DB[c]=[];});
-let cat='pagar';
-let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'null')||["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA","Aluguel","Mercado","Combustível"];
-function salvarE(){localStorage.setItem('pagflow_v21_funcional',JSON.stringify(DB));localStorage.setItem('pagflow_backup_1',JSON.stringify(DB));localStorage.setItem('pagflow_tipos_v11',JSON.stringify(TIPOS));document.getElementById('bkp').innerText='Salvo '+new Date().toLocaleTimeString();}
+if(!DB.extrato)DB.extrato=[];let cat='pagar';
+let TIPOS=JSON.parse(localStorage.getItem('pagflow_tipos_v11')||'null')||["LUZ","Água","Combustível","Internet","Telefone","Carro","Supermercado","Carol","Passeio","RAÇÃO CACHORRO 🐶","RAÇÃO GATOS 😻","ESPOSA","Aluguel","Mercado"];
+function salvarE(){localStorage.setItem('pagflow_v22_bank_pix',JSON.stringify(DB));localStorage.setItem('pagflow_backup_1',JSON.stringify(DB));localStorage.setItem('pagflow_tipos_v11',JSON.stringify(TIPOS));document.getElementById('bkp').innerText='Salvo '+new Date().toLocaleTimeString();}
 function abrirMenu(){document.getElementById('sideMenu').classList.add('open');document.getElementById('overlay').classList.add('show');}
 function fecharMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
 function irHome(){document.getElementById('viewHome').classList.add('active');document.getElementById('viewLista').classList.remove('active');document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('active'));document.getElementById('m-home').classList.add('active');fecharMenu();}
-function mudarCat(c){cat=c;document.getElementById('viewHome').classList.remove('active');document.getElementById('viewLista').classList.add('active');let nomes={'pagar':'📌 Contas a pagar','receber':'💰 Contas a receber','caixinha':'💰 Caixinha','carro':'🚗 Parcelas carro','moto':'🏍️ Moto','combustivel':'⛽ Combustível','bancos':'🏦 Dívidas bancos','cartao':'💳 Cartão crédito','aluguel':'🏠 Aluguel','mercado':'🛒 Mercado','casa':'🏠 Casa / Projetos','pets':'🐶 Pets - Ração','viagem':'✈️ Viagem','saude':'🏥 Saúde','educacao':'📚 Educação'};document.getElementById('tit').innerText=nomes[c]||c;document.getElementById('titAdd').innerText='+ Adicionar em '+(nomes[c]||c);document.getElementById('btnSalvarCat').innerText='SALVAR EM '+(nomes[c]||c).toUpperCase();document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('active'));let el=document.getElementById('m-'+c);if(el)el.classList.add('active');fecharMenu();mostrar();renderT();}
-function renderT(){let html='<option value="">-- Escolha (LUZ, Água, etc) --</option>';TIPOS.forEach(t=>html+=`<option value="${t}">${t}</option>`);document.getElementById('tipo').innerHTML=html;document.getElementById('tipoHome').innerHTML=html;}
+function mudarCat(c){cat=c;document.getElementById('viewHome').classList.remove('active');document.getElementById('viewLista').classList.add('active');if(c==='pix'){document.getElementById('pixView').style.display='block';document.getElementById('normalView').style.display='none';}else{document.getElementById('pixView').style.display='none';document.getElementById('normalView').style.display='block';let nomes={'pagar':'📌 Pagar com Pix','receber':'💰 Cobrar com Pix','aluguel':'🏠 Aluguel','mercado':'🛒 Mercado','casa':'🏠 Casa/Projetos','pets':'🐶 Pets','viagem':'✈️ Viagem','caixinha':'💰 Caixinha'};document.getElementById('tit').innerText=nomes[c]||c;document.getElementById('titAdd').innerText='+ Adicionar em '+(nomes[c]||c);document.getElementById('btnSalvarCat').innerText='SALVAR EM '+(nomes[c]||c).toUpperCase();}document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('active'));let el=document.getElementById('m-'+c);if(el)el.classList.add('active');fecharMenu();if(c!=='pix')mostrar();renderT();}
+function renderT(){let html='<option value="">-- Escolha --</option>';TIPOS.forEach(t=>html+=`<option value="${t}">${t}</option>`);document.getElementById('tipo').innerHTML=html;document.getElementById('tipoHome').innerHTML=html;}
 function pm(it){let b=(+it.qtdI||+it.qtd||1)*(+it.valor||0)/(+it.div||1);if(it.freq==='dia')return b*30;if(it.freq==='semana')return b*4.33;if(it.freq==='quinzenal')return b*2;return b;}
-function mostrar(){let l=DB[cat]||[];let h='';l.forEach((it,i)=>{let m=pm(it);let st=(cat==='receber'||cat==='caixinha')?'pago':'dev';h+=`<div class="row"><div><div style="display:flex;gap:6px;align-items:center"><b style="font-weight:600 !important">${it.nome}</b><span class="badge ${st}">${it.freq||'mensal'}</span></div><div class="small">Vence: ${it.data||'--'} • R$ ${m.toFixed(2)}/mês</div></div><div><button class="btn2" onclick="editar(${i})">✎</button> <button class="btn2" onclick="apagar(${i})" style="color:var(--red)">✕</button></div></div>`;});document.getElementById('lista').innerHTML=h||'<div class="small" style="text-align:center;padding:15px">Nenhum item nesta categoria<br>Cadastre com valor e data a vencer abaixo</div>';document.getElementById('qtd').innerText=l.length+' itens';document.getElementById('qtd').className='badge '+((cat==='receber'||cat==='caixinha')?'pago':'dev');}
-function atualizarHome(){let p=(DB.pagar||[]).reduce((a,i)=>a+pm(i),0);let r=(DB.receber||[]).reduce((a,i)=>a+pm(i),0)+(DB.caixinha||[]).reduce((a,i)=>a+pm(i),0);document.getElementById('tPagar').innerText='R$ '+p.toFixed(2);document.getElementById('tReceber').innerText='R$ '+r.toFixed(2);let s=r-p;document.getElementById('tSaldo').innerText='R$ '+s.toFixed(2);let qp=document.getElementById('qtdPagarMenu');if(qp){qp.innerText=DB.pagar.length;qp.style.display=DB.pagar.length?'inline-block':'none';}let res='';TODAS.forEach(k=>{if((DB[k]||[]).length){let tot=DB[k].reduce((a,i)=>a+pm(i),0);let cor=k==='pagar'?'var(--red)':(k==='receber'||k==='caixinha'?'var(--green)':'var(--blue)');res+=`<span style="color:${cor}">●</span> <b style="font-weight:600">${k}:</b> ${DB[k].length} = R$ ${tot.toFixed(2)}<br>`;}});document.getElementById('resumoHome').innerHTML=res||'Nenhum item';}
-function salvarHome(){let nome=document.getElementById('nomeHome').value.trim()||document.getElementById('tipoHome').value;if(!nome){alert('Escolha');return;}let valor=document.getElementById('valorHome').value;let data=document.getElementById('dataHome').value;if(!valor){alert('Valor');return;}if(!TIPOS.includes(nome)){TIPOS.push(nome);}DB.pagar.push({nome,qtd:1,qtdI:1,valor,data,freq:'mensal',div:1});salvarE();document.getElementById('nomeHome').value='';document.getElementById('valorHome').value='';document.getElementById('tipoHome').value='';atualizarHome();renderT();alert('Salvo em Contas a pagar!');}
-function salvarCat(){let nome=document.getElementById('nome').value.trim()||document.getElementById('tipo').value;if(!nome){alert('Digite o que é');return;}let qtdI=document.getElementById('qtdI').value||1;let valor=document.getElementById('valor').value;let data=document.getElementById('data').value;let freq=document.getElementById('freq').value;if(!valor){alert('Digite valor');return;}if(!data){alert('Digite data a vencer');return;}if(!TIPOS.includes(nome)){TIPOS.push(nome);}if(!DB[cat])DB[cat]=[];DB[cat].push({nome,qtd:qtdI,qtdI,valor,data,freq,div:1});salvarE();document.getElementById('nome').value='';document.getElementById('valor').value='';document.getElementById('tipo').value='';mostrar();atualizarHome();renderT();}
+function mostrar(){let l=DB[cat]||[];let h='';l.forEach((it,i)=>{let m=pm(it);let st=(cat==='receber'||cat==='caixinha')?'pago':'dev';h+=`<div class="row"><div><div style="display:flex;gap:6px;align-items:center"><b>${it.nome}</b><span class="badge ${st}">${it.freq||'mensal'}</span></div><div class="small">Vence: ${it.data||'--'} • R$ ${m.toFixed(2)}</div></div><div><button class="btn2" onclick="editar(${i})">✎</button> <button class="btn2" onclick="apagar(${i})" style="color:var(--red)">✕</button></div></div>`;});document.getElementById('lista').innerHTML=h||'<div class="small" style="text-align:center;padding:15px">Nenhum item<br>Cadastre com valor e data</div>';document.getElementById('qtd').innerText=l.length+' itens';}
+function atualizarHome(){let p=(DB.pagar||[]).reduce((a,i)=>a+pm(i),0);let r=(DB.receber||[]).reduce((a,i)=>a+pm(i),0)+(DB.caixinha||[]).reduce((a,i)=>a+pm(i),0);document.getElementById('tPagar').innerText='R$ '+p.toFixed(2);document.getElementById('tReceber').innerText='R$ '+r.toFixed(2);let saldoPix=DB.extrato.reduce((a,i)=>a+i.valor,0);let s=r-p+saldoPix;document.getElementById('tSaldo').innerText='R$ '+s.toFixed(2);let qp=document.getElementById('qtdPagarMenu');if(qp){qp.innerText=DB.pagar.length;qp.style.display=DB.pagar.length?'inline-block':'none';}let ext='';DB.extrato.slice(-5).reverse().forEach(e=>{ext+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)"><span>💠 Pix recebido ${e.nome}</span><span style="color:var(--green);font-weight:600">+ R$ ${e.valor.toFixed(2)}</span></div>`;});document.getElementById('extrato').innerHTML=ext||'Nenhum Pix ainda. Copie sua chave e envie R$ 1 teste';}
+function salvarHome(){let nome=document.getElementById('nomeHome').value.trim()||document.getElementById('tipoHome').value;if(!nome){alert('Escolha');return;}let valor=document.getElementById('valorHome').value;let data=document.getElementById('dataHome').value;if(!valor){alert('Valor');return;}if(!TIPOS.includes(nome))TIPOS.push(nome);DB.pagar.push({nome,qtd:1,qtdI:1,valor,data,freq:'mensal',div:1});salvarE();document.getElementById('nomeHome').value='';document.getElementById('valorHome').value='';atualizarHome();renderT();}
+function salvarCat(){let nome=document.getElementById('nome').value.trim()||document.getElementById('tipo').value;if(!nome){alert('Digite');return;}let valor=document.getElementById('valor').value;let data=document.getElementById('data').value;if(!valor||!data){alert('Valor e data a vencer');return;}if(!TIPOS.includes(nome))TIPOS.push(nome);if(!DB[cat])DB[cat]=[];DB[cat].push({nome,qtd:1,qtdI:1,valor,data,freq:'mensal',div:1});salvarE();document.getElementById('nome').value='';document.getElementById('valor').value='';mostrar();atualizarHome();renderT();}
 function apagar(i){if(confirm('Apagar?')){DB[cat].splice(i,1);salvarE();mostrar();atualizarHome();}}
-function editar(i){let it=DB[cat][i];let n=prompt('Nome',it.nome);if(n==null)return;let v=prompt('Valor R$',it.valor);if(v==null)return;let d=prompt('Data a vencer',it.data);if(d==null)return;it.nome=n;it.valor=v;it.data=d;salvarE();mostrar();atualizarHome();}
-function exportarBKP(){let blob=new Blob([JSON.stringify({db:DB,tipos:TIPOS},null,2)],{type:'application/json'});let u=URL.createObjectURL(blob);let a=document.createElement('a');a.href=u;a.download='PAGFLOW_BKP.json';a.click();}
-function importarBKP(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{try{let o=JSON.parse(e.target.result);let d=o.db||o;Object.keys(d).forEach(k=>{if(!DB[k])DB[k]=[];if(Array.isArray(d[k]))d[k].forEach(x=>DB[k].push(x));});salvarE();atualizarHome();mostrar();alert('Restaurado');}catch{alert('Inválido');}};r.readAsText(f);}
-function setTema(t){if(t==='brancoazul'){document.documentElement.removeAttribute('data-tema');}else{document.documentElement.setAttribute('data-tema',t);}localStorage.setItem('pagflow_tema_v21',t);document.querySelectorAll('.tema').forEach(e=>e.classList.remove('ativo'));document.getElementById('t-'+t)?.classList.add('ativo');if(event&&event.target)event.target.classList.add('ativo');}
-let temaSalvo=localStorage.getItem('pagflow_tema_v21')||'brancoazul';setTema(temaSalvo);
+function editar(i){let it=DB[cat][i];let n=prompt('Nome',it.nome);if(n==null)return;let v=prompt('Valor',it.valor);if(v==null)return;let d=prompt('Data',it.data);if(d==null)return;it.nome=n;it.valor=v;it.data=d;salvarE();mostrar();atualizarHome();}
+function copiarPix(){navigator.clipboard.writeText(document.getElementById('chavePix').innerText);alert('Chave Pix copiada! Agora abre seu banco e manda Pix pra ela');}
+function simularPix(){let valor=parseFloat(prompt('Valor do Pix recebido (teste)', '500'));if(!valor)return;let nome=prompt('De quem?','Teste Pix');DB.extrato.push({nome,valor,data:new Date().toISOString()});salvarE();atualizarHome();alert('💠 Pix de R$ '+valor.toFixed(2)+' recebido! Saldo azul atualizado');}
+function exportarBKP(){let blob=new Blob([JSON.stringify({db:DB,tipos:TIPOS},null,2)],{type:'application/json'});let u=URL.createObjectURL(blob);let a=document.createElement('a');a.href=u;a.download='PAGFLOW_BANK_BKP.json';a.click();}
 document.getElementById('dataHome').valueAsDate=new Date();document.getElementById('data').valueAsDate=new Date();renderT();atualizarHome();mostrar();salvarE();
 </script></body></html>
